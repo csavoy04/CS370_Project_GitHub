@@ -1,4 +1,6 @@
 # CS370 Project Read Me
+*
+**[Progress: Workshopping/MVP]**
 
 	## Project Overview
 	Our project is an **adventure RPG** with a **2.5d overworld** and **turn based combat**. 
