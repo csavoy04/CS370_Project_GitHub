@@ -1,7 +1,8 @@
 # CS370 Project Read Me
-*
+
 **[Progress: Workshopping/MVP]**
 
+*
 	## Project Overview
 	Our project is an **adventure RPG** with a **2.5d overworld** and **turn based combat**. 
  	The game is currently being developed in **Unity** using **C#**.
@@ -29,3 +30,4 @@
 		_Da He_: Architectural Lead
 
 		_Coleman Savoy_: DevOps Lead
+*
