@@ -2,20 +2,28 @@ using UnityEngine;
 
 public class quickTimeEvents : MonoBehaviour
 {
+        int QuickTimeEventType;
+        bool Generate;
+        int CurrentTestedKey;
+        bool Success;
+        bool Timer;
+        
+        int RandomNum;
+        string Characters;
+        int NumKeys = 5;
+        char[] KeyCombination = new char[5];
+
+        System.Random random = new System.Random();
+
+        
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        int QuickTimeEventType;
-        boolean Generate;
-        int CurrentTestedKey;
-        boolean Success;
-        boolean Timer;
-
         QuickTimeEventType = 0;
         Generate = true;
         CurrentTestedKey = 0;
         Success = false;
-        Timer = false;
+        Timer = false; 
     }
 
     // Update is called once per frame
@@ -29,10 +37,7 @@ public class quickTimeEvents : MonoBehaviour
             //If Key Combination QTE
             if (QuickTimeEventType == 1)
             {
-                int NumKeys = 5;
-                char[NumKeys] KeyCombination;
-                int RandomNum;
-                string Characters;
+
 
                 Characters = "abcdefghijklmnopqrstuvwxyz";
 
@@ -46,12 +51,12 @@ public class quickTimeEvents : MonoBehaviour
             
             //Stop Generation
             Generate = false;
-            StartCoroutine(TimerCoroutine());
+            //StartCoroutine(TimerCoroutine());
             Debug.Log("Generation Stopped");
         }
 
         //Test Input
-        if (QuickTimeEventType == 1 && Timer == true)
+        /*if (QuickTimeEventType == 1 && Timer == true)
         {
             //Check if Key Pressed Matches KeyCombination
             if (Input.GetKeyDown(KeyCode.KeyCombination[CurrentTestedKey]) == true)
@@ -63,10 +68,10 @@ public class quickTimeEvents : MonoBehaviour
                 Success = true;
                 Timer = false;
             }
-        }
+        }*/
     }
 
-    IEnumerator TimerCoroutine()
+ /*   IEnumerator TimerCoroutine()
     {
         Timer = true;
 
@@ -82,5 +87,5 @@ public class quickTimeEvents : MonoBehaviour
                 
             }
         }
-    }
+    }*/
 }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using deltaTime;
+
 /* Script made by: Coleman
         - Script that takes in the user's input and corelates it to a given transform command
         - W and S controls fowrard speed
@@ -12,50 +12,51 @@ using deltaTime;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
-    public bool isCrouching = False;
-    public bool isRunning = True;
+    public bool isCrouching = false;
+    public bool isRunning = true;
+    public float speed = 5.0f;
 
     // Ran at the start of the script being ran
-    void start(){
-        transform.Translate = new Vector3(0,0,0); // Starting orientation
+    void Start(){
+        transform.Translate(new Vector3(0,0,0)); // Starting orientation
     }
 
     // Updates per frame
-    void update(){
+    void Update(){
         /*  Per update, when the player inputs the given button (Denoted by getButtonDown("buttonName")),
             the script moves the player (with respect to isRunning)
         */
 
         // Speed controler
-        if(isRunning==False){
-            speed = 5.0;
-        } elif(isCrouching==True){
-            speed = 2.5;
+        if(isRunning==false){
+            speed = 5.0f;
+        } else if(isCrouching==true){
+            speed = 2.5f;
         } else{
-            speed = 8.0;
+            speed = 8.0f;
         }
 
         // Input statements
-        if(Input.GetButtonDown("W")){
+        if(Input.GetButtonDown("w")){
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("S")){
+        if(Input.GetButtonDown("s")){
             transform.Translate(Vector3.back * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("A")){
+        if(Input.GetButtonDown("a")){
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("D")){
+        if(Input.GetButtonDown("s")){
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("spaceBar")){
+        if(Input.GetButtonDown("space")){
             transform.Translate(Vector3.up * Time.deltaTime * (speed/2));
         }
-        while(Input.GetButtonDown("Ctrl")){
-            isCrouching = True;
+        while(Input.GetButtonDown("left ctrl")){
+            isCrouching = true;
         }
-        while(Input.GetButtonDown("Shift")){
-            isRunning = True;
+        while(Input.GetButtonDown("left shift")){
+            isRunning = true;
         }
     }
 }

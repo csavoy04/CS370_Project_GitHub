@@ -5346,6 +5346,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec6355946deabc4ab78f461309aa80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  isCrouching: 0
+  isRunning: 0
+  speed: 5
 --- !u!54 &1144929330
 Rigidbody:
   m_ObjectHideFlags: 0
