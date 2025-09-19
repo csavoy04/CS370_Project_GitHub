@@ -61,15 +61,18 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.3f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\UI\Main_Menu_Controller.cs" />
     <Compile Include="Assets\Game Scripts\playerMovement.cs" />
     <Compile Include="Assets\Game Scripts\quickTimeEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
+    <None Include="Assets\UI\Main_Menu.uxml" />
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_PASSES.cginc" />
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
+    <None Include="Assets\UI\Main_Menu.uss" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
