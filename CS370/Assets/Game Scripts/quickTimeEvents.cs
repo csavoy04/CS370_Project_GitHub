@@ -13,7 +13,7 @@ using System.Collections;
  *  
  *  
  *  Post-Condition:
- *  N/A
+ *  QTEFinished = T, Generate = F, Timer = F
  *  
  *  
  *  Output/Result:
