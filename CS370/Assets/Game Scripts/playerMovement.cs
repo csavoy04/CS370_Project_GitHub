@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
         if(Input.GetButtonDown("a")){
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("s")){
+        if(Input.GetButtonDown("d")){
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
         if(Input.GetButtonDown("space")){
