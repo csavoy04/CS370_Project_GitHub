@@ -69,7 +69,7 @@ public class quickTimeEvents : MonoBehaviour{
                 //Generate Key Combination
                 for (int i = 0; i < NumKeys; i++){
 
-                    RandomNum = UnityEngine.Random.Range(1, 27);            //Random number in set [1,27)
+                    RandomNum = UnityEngine.Random.Range(0, 26);            //Random number in set [0,26)
                     KeyCombination[i] = Characters[RandomNum];              //Assigns key sequence in slot i
                 }
 
