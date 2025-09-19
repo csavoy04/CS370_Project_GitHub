@@ -36,6 +36,7 @@ public class Movement : MonoBehaviour
             speed = 8.0f;
         }
 
+        
         // Input statements
         if(Input.GetButtonDown("w")){
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
@@ -58,5 +59,6 @@ public class Movement : MonoBehaviour
         while(Input.GetButtonDown("left shift")){
             isRunning = true;
         }
+        
     }
 }
