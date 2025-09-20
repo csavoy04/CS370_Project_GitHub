@@ -13,7 +13,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public bool isCrouching = false;
-    public bool isRunning = true;
+    public bool isRunning = false;
     public float speed = 5.0f;
 
     // Ran at the start of the script being ran
@@ -28,36 +28,54 @@ public class Movement : MonoBehaviour
         */
 
         // Speed controler
-        if(isRunning==false){
-            speed = 5.0f;
+        if(isRunning==true){
+            speed = 8.0f;
         } else if(isCrouching==true){
             speed = 2.5f;
         } else{
-            speed = 8.0f;
+            speed = 5.0f;
         }
 
         
         // Input statements
-        if(Input.GetButtonDown("w")){
+        if(Input.GetKey(KeyCode.W))
+        {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("s")){
+        if(Input.GetKey(KeyCode.S))
+        {
             transform.Translate(Vector3.back * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("a")){
+        if(Input.GetKey(KeyCode.A))
+        {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("d")){
+        if(Input.GetKey(KeyCode.D))
+        {
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
-        if(Input.GetButtonDown("space")){
-            transform.Translate(Vector3.up * Time.deltaTime * (speed/2));
+
+        if(Input.GetKey(KeyCode.Space))
+        {
+            transform.Translate(Vector3.up * Time.deltaTime * (speed));
         }
-        while(Input.GetButtonDown("left ctrl")){
+
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
             isCrouching = true;
         }
-        while(Input.GetButtonDown("left shift")){
+        else
+        {
+            isCrouching = false;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
             isRunning = true;
+        }
+        else
+        {
+            isRunning = false;
         }
         
     }
