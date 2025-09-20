@@ -9,29 +9,34 @@ using System.Collections;
  *  
  *  
  *  Pre-Condition:
- *  Generate = T, Timer = F, Success = F
+ *  QTEGenerate = F, QTEType != 0, Timer = null
  *  
  *  
  *  Post-Condition:
- *  QTEFinished = T, Generate = F, Timer = F
+ *  QTEFinished = T, QTEGenerate = F, Timer = null, QTEType = 0
  *  
  *  
  *  Output/Result:
- *  When QTEFinished = T
- *  if Success = T QTE Passed
- *  else if Success = F QTE Failed
+ *  
+ *  CASE 1: Passed QTE
+ *  QTEFinished = T
+ *  Success = T
+ *  
+ *  CASE 2: Failed QTE
+ *  QTEFinished = T
+ *  Success = F
  */
 
 public class quickTimeEvents : MonoBehaviour{
 
     //Declaring Variables
-    int QuickTimeEventType;
-    bool Generate;
-    bool Success;
-    bool Timer;     
-    int NumKeys;
-    bool QTEFinished;
+    public static int QTEType;
+    bool QTEGenerate;
+    public static bool Success;
+    Coroutine Timer;
+    public static bool QTEFinished;
 
+    int NumKeys;
     char[] KeyCombination;
     string Characters;
     int CurrentTestedKey;
@@ -42,75 +47,100 @@ public class quickTimeEvents : MonoBehaviour{
     void Start(){
 
         //Initializing Variables
-        QuickTimeEventType = 1;                         //[0]: Default, [1]: KeyCombination, ....
-        Generate = true;                                //Triggers QTE generation
+        QTEType = 1;                                    //[0]: Default, [1]: KeyCombination, ....           **CHANGE TO 0 WHEN DONE TESTING**
+        QTEGenerate = false;                             //Triggers QTE generation                          
         Success = false;                                //Boolean result of QTE
-        Timer = false;                                  //Triggers QTE timer
-        NumKeys = 5;                                    //Number of keys required for KeyCombination
-        QTEFinished = false;
+        QTEFinished = false;                            //Detects if QTE is finished
 
+        //Key Combination QTE
+        NumKeys = 5;                                    //Number of keys required for KeyCombination
         KeyCombination = new char[NumKeys];             //KeyCombination Sequence
         Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";      //Possible character values for KeyCombination
         CurrentTestedKey = 0;                           //Key input index for KeyCombination
+
+        //Button Mash QTE
+        //To be added later
     }
 
     // Update is called once per frame
     void Update(){
 
-        //Start Generation
-        if (Generate == true && Timer == false && Success == false){
+        //Generation Phase
+        if(Timer == null){
+            //Trigger Generation
+            if(QTEGenerate == false && QTEType != 0){
 
-            QTEFinished = false;
-            Success = false;
-
-            //If the Type is Key Combination QTE
-            if (QuickTimeEventType == 1){
-
-                //Generate Key Combination
-                for (int i = 0; i < NumKeys; i++){
-
-                    RandomNum = UnityEngine.Random.Range(0, 26);            //Random number in set [0,26)
-                    KeyCombination[i] = Characters[RandomNum];              //Assigns key sequence in slot i
-                }
-
-                //Show Combination in Console
-                for(int i = 0; i < NumKeys; i++){
-
-                    Debug.Log(KeyCombination[i]);
-                }
-                StartCoroutine(TimerCoroutine(5));
+                QTEGenerate = true;
             }
-            
-            //Stop Generation
-            Generate = false;
+
+            //Do the Generation
+            if(QTEGenerate == true){
+
+                QTEFinished = false;
+                Success = false;
+
+                if(QTEType == 1){                                               //If the Type is Key Combination QTE
+
+                    //Generate Key Combination
+                    for (int i = 0; i < NumKeys; i++){
+
+                        RandomNum = UnityEngine.Random.Range(0, 26);            //Random number in set [0,26)
+                        KeyCombination[i] = Characters[RandomNum];              //Assigns key sequence in slot i
+                        CurrentTestedKey = 0;
+                    }
+
+                    //Show Combination in Console
+                    for(int i = 0; i < NumKeys; i++){
+
+                        Debug.Log(KeyCombination[i]);
+                    }
+                    Timer = StartCoroutine(TimerCoroutine(5));
+                } else if(QTEType == 2){                                        //If the Type is Key Combination QTE
+                    //To be added later
+                }
+
+                //Stop Generation
+                QTEGenerate = false;
+            }
         }
 
-        //Test Input
-        if (QuickTimeEventType == 1 && Timer == true){
+        //Test Input Phase
+        if (Timer != null){
+            if (QTEType == 1){                                  //If the Type is Key Combination QTE
 
-            //If Anything is pressed
-            if (Input.anyKeyDown){
+                //If Anything is pressed
+                if (Input.anyKeyDown){
 
-                //Loop Each Key, Testing for Match
-                foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
+                    //Loop Each Key, Testing for Match
+                    foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
 
-                    //If Key Pressed is the Same as Current Key Combination, Increment Tested Letter in Sequence
-                    if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0]){
+                        //If Key Pressed is the Same as Current Key Combination, Increment Tested Letter in Sequence
+                        if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0]){
 
-                        CurrentTestedKey++; 
+                            CurrentTestedKey++;
+                        }
+                    }
+                }
+
+                //If the Whole Sequence is Complete
+                if (CurrentTestedKey >= NumKeys){
+
+                    Debug.Log("QTE Completed Successfully!");
+
+                    Success = true;                                             //Player was successful
+                    QTEFinished = true;                                         //QTE is finished
+                    QTEType = 0;                                                //Reset QTE type to Default
+
+                    //Stop Timer
+                    if(Timer != null)
+    {
+                        StopCoroutine(Timer);                                   //Stop Timer Coroutine
+                        Timer = null;
                     }
                 }
             }
-
-            //If the Whole Sequence is Complete
-            if (CurrentTestedKey >= NumKeys){
-
-                Debug.Log("QTE Completed Successfully!");
-
-                Success = true;
-                Timer = false;
-                Generate = false;
-                QTEFinished = true;
+            else if (QTEType == 2){                                             //If the Type is Button Mash QTE
+                //To be added later
             }
         }
     }
@@ -118,21 +148,16 @@ public class quickTimeEvents : MonoBehaviour{
     //QTE Timer
     IEnumerator TimerCoroutine(int Seconds){
 
-        Timer = true;
-
-        //If QTE Type is the Key Combination
-        if (QuickTimeEventType == 1){
-
-            //Start Timer
-            yield return new WaitForSeconds(Seconds);
-        }
+        //Start Timer
+        yield return new WaitForSeconds(Seconds);
 
         //If Not Completed By Then
-        if (Timer == true && Success == false){
+        if(Timer != null && Success == false){
 
-            Timer = false;
-            Generate = false;
+            Timer = null;
             QTEFinished = true;
+
+            QTEType = 0;                     //Reset QTE Type to Default
 
             Debug.Log("QTE Failed");
         }     
