@@ -3,8 +3,9 @@
     <ui:VisualElement name="Panel" class="background" style="flex-grow: 1;">
         <ui:VisualElement name="Menu" class="menu" style="flex-grow: 1; align-self: center; height: auto; min-height: auto; min-width: auto; max-width: none; max-height: 80%; width: 35%; justify-content: center; align-content: center; align-items: center; position: relative; top: auto; left: auto; bottom: auto; flex-direction: column;">
             <ui:Label text="Menu" name="Menu-Title" />
+            <ui:Button text="Play" name="PlayBtn" />
             <ui:Button text="Party" name="PartyBtn" />
-            <ui:Button text="Bag" name="BagBtn" />
+            <ui:Button text="Bag" name="BagBtn" style="cursor: initial;" />
             <ui:Button text="Quit" selectable="true" name="QuitBtn" style="cursor: initial;" />
         </ui:VisualElement>
     </ui:VisualElement>
