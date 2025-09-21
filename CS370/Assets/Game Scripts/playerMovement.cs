@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 /* Script made by: Coleman
         - Script that takes in the user's input and corelates it to a given transform command
@@ -12,55 +14,85 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
+    public Vector3 moveDirection;
+    public Vector3 jump;
+    public Vector3 dashRight;
+    public Vector3 dashLeft;
+
+    // Booleans
     public bool isCrouching = false;
     public bool isRunning = false;
-    public float speed = 5.0f;
+    public bool grounded = true;
+
+    // Floats
+    public float speed = 8.0f;
+    public float jumpHeight = 4;
+
+    // Dashing floats
+    public float dashSpeed = 2f;
+    public float dashCooldown = 0.0f;
+
+    CharacterController controller;
+    Rigidbody rb;
 
     // Ran at the start of the script being ran
-    void Start(){
-        transform.Translate(new Vector3(0,0,0)); // Starting orientation
+    void Start()
+    {
+        transform.Translate(new Vector3(0, 0, 0)); // Starting orientation
+        rb = GetComponent<Rigidbody>();
+        jump = new Vector3(0.0f, 1.0f, 0.0f);
+        dashRight = new Vector3(0.2f, 0.0f, 0.0f);
+        dashLeft = new Vector3(-0.2f, 0.0f, 0.0f);
+    }
+
+    private void OnCollisionStay()
+    {
+        grounded = true;
     }
 
     // Updates per frame
-    void Update(){
-        /*  Per update, when the player inputs the given button (Denoted by getButtonDown("buttonName")),
-            the script moves the player (with respect to isRunning)
-        */
+    void Update()
+    {
 
         // Speed controler
-        if(isRunning==true){
-            speed = 8.0f;
-        } else if(isCrouching==true){
-            speed = 2.5f;
-        } else{
-            speed = 5.0f;
+        if (isRunning)
+        {
+            speed = 13.0f;
+        }
+        else if (isCrouching)
+        {
+            speed = 3.0f;
+        }
+        else
+        {
+            speed = 10.0f;
         }
 
-        
-        // Input statements
-        if(Input.GetKey(KeyCode.W))
+        /* ----------------------------- INPUT STATEMENTS ----------------------------*/
+        if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        if(Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.back * Time.deltaTime * speed);
         }
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * Time.deltaTime * speed);
         }
-        if(Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
 
-        if(Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && grounded)
         {
-            transform.Translate(Vector3.up * Time.deltaTime * (speed));
+            rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
+            grounded = false;
         }
 
-        if(Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.C) && grounded && isRunning == false)
         {
             isCrouching = true;
         }
@@ -69,7 +101,7 @@ public class Movement : MonoBehaviour
             isCrouching = false;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && grounded)
         {
             isRunning = true;
         }
@@ -77,6 +109,26 @@ public class Movement : MonoBehaviour
         {
             isRunning = false;
         }
-        
+
+
+        /*------------------------------------ PLAYER DASHING ----------------------------*/
+        if (Input.GetKey(KeyCode.LeftControl) && grounded == false && dashCooldown <= 0)
+        {
+            if (Input.GetKey(KeyCode.D))
+            {
+                rb.AddForce(dashRight * dashSpeed, ForceMode.Impulse);
+            }
+            else
+            {
+                rb.AddForce(dashLeft * dashSpeed, ForceMode.Impulse);
+            }
+            dashCooldown = 2.0f;
+        }
+
+        // Dash cooldown
+        if (dashCooldown > 0)
+        {
+            dashCooldown -= Time.deltaTime;
+        }
     }
 }

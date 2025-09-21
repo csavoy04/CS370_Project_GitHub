@@ -5416,9 +5416,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec6355946deabc4ab78f461309aa80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  moveDirection: {x: 0, y: 0, z: 0}
+  jump: {x: 0, y: 0, z: 0}
+  dashRight: {x: 0, y: 0, z: 0}
+  dashLeft: {x: 0, y: 0, z: 0}
   isCrouching: 0
   isRunning: 0
-  speed: 5
+  grounded: 1
+  speed: 8
+  jumpHeight: 4
+  dashSpeed: 5
+  dashCooldown: 0
 --- !u!54 &1144929330
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5444,7 +5452,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1144929331
 CapsuleCollider:
