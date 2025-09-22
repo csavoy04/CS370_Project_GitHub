@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
     public bool isCrouching = false;
     public bool isRunning = false;
     public bool grounded = true;
+    public bool dashing = false;
 
     // Floats
     public float speed = 8.0f;
@@ -31,6 +32,9 @@ public class Movement : MonoBehaviour
     // Dashing floats
     public float dashSpeed = 2f;
     public float dashCooldown = 0.0f;
+    string DashDirection;
+
+    Coroutine Timer;
 
     CharacterController controller;
     Rigidbody rb;
@@ -112,17 +116,24 @@ public class Movement : MonoBehaviour
 
 
         /*------------------------------------ PLAYER DASHING ----------------------------*/
-        if (Input.GetKey(KeyCode.LeftControl) && grounded == false && dashCooldown <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && grounded == false && dashCooldown <= 0)
         {
+            dashing = true;
+        }
+
+        if (dashing == true) {
             if (Input.GetKey(KeyCode.D))
             {
+                DashDirection = "Right";
                 rb.AddForce(dashRight * dashSpeed, ForceMode.Impulse);
+                Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
             else
             {
+                DashDirection = "Left";
                 rb.AddForce(dashLeft * dashSpeed, ForceMode.Impulse);
+                Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
-            dashCooldown = 2.0f;
         }
 
         // Dash cooldown
@@ -130,5 +141,19 @@ public class Movement : MonoBehaviour
         {
             dashCooldown -= Time.deltaTime;
         }
+    }
+
+    IEnumerator TimerCoroutine(float Seconds)
+    {
+
+        //Start Timer
+        yield return new WaitForSeconds(Seconds);
+        dashCooldown = 2.0f;
+        dashing = false;
+        if(DashDirection == "Right")
+            rb.AddForce(dashRight * -dashSpeed, ForceMode.Impulse);
+        else if(DashDirection == "Left")
+            rb.AddForce(dashLeft * -dashSpeed, ForceMode.Impulse);
+        StopCoroutine(Timer);
     }
 }
