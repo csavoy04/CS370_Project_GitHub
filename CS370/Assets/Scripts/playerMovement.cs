@@ -50,15 +50,20 @@ public class Movement : MonoBehaviour
         dashLeft = new Vector3(-0.2f, 0.0f, 0.0f);
     }
 
-    private void OnCollisionStay()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("GROUND")){
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("GROUND"))
+        {
             grounded = true;
-        } else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("WALL")){
-            climable = true;
-        } else {
-            climable = false;
         }
+        else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("WALL"))
+        {
+            climable = true;
+        }
+        else
+        {
+            climable = false;
+        } 
     }
 
     // Updates per frame
@@ -81,19 +86,19 @@ public class Movement : MonoBehaviour
         /* ----------------------------- INPUT STATEMENTS ----------------------------*/
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed).normalized;
+            transform.Translate(Vector3.forward.normalized * Time.deltaTime * speed);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector3.back * Time.deltaTime * speed).normalized;
+            transform.Translate(Vector3.back.normalized * Time.deltaTime * speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed).normalized;
+            transform.Translate(Vector3.left.normalized * Time.deltaTime * speed);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * Time.deltaTime * speed).normalized;
+            transform.Translate(Vector3.right.normalized * Time.deltaTime * speed);
         }
 
         /*------------------------------ Other Movement Keys ---------------------*/
@@ -123,6 +128,7 @@ public class Movement : MonoBehaviour
             isRunning = false;
         }
 
+        /*
         if (Input.GetKey(KeyCode.space) && grounded == false && climable)
         {
             other.transform.GetComponent().useGravity = false;
@@ -130,7 +136,7 @@ public class Movement : MonoBehaviour
         else
         {
             other.transform.GetComponent().useGravity = true;
-        }
+        } */
 
 
         /*------------------------------------ PLAYER DASHING ----------------------------*/
