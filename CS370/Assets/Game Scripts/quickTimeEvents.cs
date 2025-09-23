@@ -30,18 +30,25 @@ using System.Collections;
 public class quickTimeEvents : MonoBehaviour{
 
     //Declaring Variables
+
+    //General
     public static int QTEType;
     bool QTEGenerate;
     public static bool Success;
     Coroutine Timer;
     public static bool QTEFinished;
 
+    //Key Combination
     int NumKeys;
-    char[] KeyCombination;
+    public static char[] KeyCombination;
     string Characters;
     int CurrentTestedKey;
 
     int RandomNum;
+
+    //Button Mash
+    int NumClicks;
+    int CurrentClicks;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start(){
@@ -59,7 +66,8 @@ public class quickTimeEvents : MonoBehaviour{
         CurrentTestedKey = 0;                           //Key input index for KeyCombination
 
         //Button Mash QTE
-        //To be added later
+        NumClicks = 10;
+        CurrentClicks = 0;
     }
 
     // Update is called once per frame
@@ -68,35 +76,43 @@ public class quickTimeEvents : MonoBehaviour{
         //Generation Phase
         if(Timer == null){
             //Trigger Generation
-            if(QTEGenerate == false && QTEType != 0){
+            if (QTEGenerate == false && QTEType != 0)
+            {
 
                 QTEGenerate = true;
+
+                //Reset Variables
+                QTEFinished = false;
+                Success = false;
+                CurrentTestedKey = 0;
+                CurrentClicks = 0;
             }
 
             //Do the Generation
             if(QTEGenerate == true){
 
-                QTEFinished = false;
-                Success = false;
-
-                if(QTEType == 1){                                               //If the Type is Key Combination QTE
+                if (QTEType == 1){                                               //If the Type is Key Combination QTE
 
                     //Generate Key Combination
                     for (int i = 0; i < NumKeys; i++){
 
                         RandomNum = UnityEngine.Random.Range(0, 26);            //Random number in set [0,26)
                         KeyCombination[i] = Characters[RandomNum];              //Assigns key sequence in slot i
-                        CurrentTestedKey = 0;
                     }
 
                     //Show Combination in Console
-                    for(int i = 0; i < NumKeys; i++){
+                    for (int i = 0; i < NumKeys; i++){
 
                         Debug.Log(KeyCombination[i]);
                     }
+
+                    //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(5));
-                } else if(QTEType == 2){                                        //If the Type is Key Combination QTE
-                    //To be added later
+                }
+                else if (QTEType == 2){                                        //If the Type is Key Combination QTE
+
+                    //Start Timer
+                    Timer = StartCoroutine(TimerCoroutine(5));
                 }
 
                 //Stop Generation
@@ -132,15 +148,31 @@ public class quickTimeEvents : MonoBehaviour{
                     QTEType = 0;                                                //Reset QTE type to Default
 
                     //Stop Timer
-                    if(Timer != null)
-    {
-                        StopCoroutine(Timer);                                   //Stop Timer Coroutine
-                        Timer = null;
-                    }
+                    StopCoroutine(Timer);
+                    Timer = null;
                 }
             }
             else if (QTEType == 2){                                             //If the Type is Button Mash QTE
-                //To be added later
+
+                //When Space is Pressed
+                if (Input.GetKeyDown(KeyCode.Space)){
+                    CurrentClicks++;
+                }
+                
+                //If Required Number of Clicks is Reached
+                if (CurrentClicks >= NumClicks){
+
+                    Debug.Log("QTE Completed Successfully!");
+
+                    Success = true;                                             //Player was successful
+                    QTEFinished = true;                                         //QTE is finished
+                    QTEType = 0;                                                //Reset QTE type to Default
+
+                    //Stop Timer
+                    StopCoroutine(Timer);
+                    Timer = null;
+                }
+
             }
         }
     }
