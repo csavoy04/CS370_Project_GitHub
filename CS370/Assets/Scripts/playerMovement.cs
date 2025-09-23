@@ -24,6 +24,7 @@ public class Movement : MonoBehaviour
     public bool isRunning = false;
     public bool grounded = true;
     public bool dashing = false;
+    public bool climable = false;
 
     // Floats
     public float speed = 8.0f;
@@ -51,21 +52,26 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionStay()
     {
-        grounded = true;
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("GROUND")){
+            grounded = true;
+        } else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("WALL")){
+            climable = true;
+        } else {
+            climable = false;
+        }
     }
 
     // Updates per frame
     void Update()
     {
-
-        // Speed controler
+        /*------------------------------ Speed Controller ------------------------------*/
         if (isRunning)
         {
             speed = 13.0f;
         }
         else if (isCrouching)
         {
-            speed = 3.0f;
+            speed = 4.0f;
         }
         else
         {
@@ -75,22 +81,22 @@ public class Movement : MonoBehaviour
         /* ----------------------------- INPUT STATEMENTS ----------------------------*/
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed).normalized;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector3.back * Time.deltaTime * speed);
+            transform.Translate(Vector3.back * Time.deltaTime * speed).normalized;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
+            transform.Translate(Vector3.left * Time.deltaTime * speed).normalized;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * Time.deltaTime * speed);
+            transform.Translate(Vector3.right * Time.deltaTime * speed).normalized;
         }
 
-
+        /*------------------------------ Other Movement Keys ---------------------*/
         if (Input.GetKey(KeyCode.Space) && grounded)
         {
             rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
@@ -100,10 +106,12 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.C) && grounded && isRunning == false)
         {
             isCrouching = true;
+            controller.height = 0.3f;
         }
         else
         {
             isCrouching = false;
+            controller.height = 1.0f;
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && grounded)
@@ -113,6 +121,15 @@ public class Movement : MonoBehaviour
         else
         {
             isRunning = false;
+        }
+
+        if (Input.GetKey(KeyCode.space) && grounded == false && climable)
+        {
+            other.transform.GetComponent().useGravity = false;
+        }
+        else
+        {
+            other.transform.GetComponent().useGravity = true;
         }
 
 
