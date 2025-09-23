@@ -90,6 +90,7 @@ public class Movement : MonoBehaviour
             transform.Translate(Vector3.right * Time.deltaTime * speed);
         }
 
+
         if (Input.GetKey(KeyCode.Space) && grounded)
         {
             rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
