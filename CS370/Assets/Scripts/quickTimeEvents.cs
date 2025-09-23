@@ -71,16 +71,16 @@ public class quickTimeEvents : MonoBehaviour{
         KeyCombination = new char[NumKeys];             //KeyCombination Sequence
         Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";      //Possible character values for KeyCombination
         CurrentTestedKey = 0;                           //Key input index for KeyCombination
-        KeyCombinationMaxDuration = 5;
+        KeyCombinationMaxDuration = 5;                  //Duration of KeyCombination QTE
 
         //Button Mash QTE
-        NumClicks = 10;
-        CurrentClicks = 0;
-        ButtonMashMaxDuration = 5;
+        NumClicks = 10;                                 //Number of clicks required for Button Mash QTE to finish
+        CurrentClicks = 0;                              //Tracks the number of times space is pressed
+        ButtonMashMaxDuration = 5;                      //Duration of Button Mash QTE
 
         //DBD Timing
-        CurrentTiming = 0;
-        DBDMaxDuration = 2;
+        CurrentTiming = 0;                              //Tracks the timing of when space is pressed
+        DBDMaxDuration = 2;                             //Duration of DBD Timing QTE
     }
 
     // Update is called once per frame
@@ -96,6 +96,7 @@ public class quickTimeEvents : MonoBehaviour{
                 //Reset Variables
                 QTEFinished = false;
                 Success = false;
+
                 CurrentTestedKey = 0;
                 CurrentClicks = 0;
                 CurrentTiming = 0;
@@ -130,7 +131,10 @@ public class quickTimeEvents : MonoBehaviour{
                 else if (QTEType == 3){                                         //If the Type is DBD QTE
 
                     RandomTiming = UnityEngine.Random.Range(54.0f, 252.0f);                 //Random number in set [54,252]
-                    RandomTiming = (RandomTiming / 360) * DBDMaxDuration;               //Calculates the actual time
+                    RandomTiming = (RandomTiming / 360) * DBDMaxDuration;                   //Calculates the actual time
+
+                    Debug.Log("Timing window starts: " + RandomTiming);                     //Prints out the start of the timing window
+                    Debug.Log("Timing window ends: " + (RandomTiming + 0.5f));              //Prints out the end of the timing window
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(DBDMaxDuration));
@@ -200,9 +204,10 @@ public class quickTimeEvents : MonoBehaviour{
                 //When Space is Pressed
                 if(Input.GetKeyDown(KeyCode.Space)){
 
-                    Debug.log("Space Pressed");
-                    
-                    if(CurrentTiming >= RandomNum && CurrentTiming <= (RandomNum + 0.5)){
+                    Debug.Log("Space Pressed at time " + CurrentTiming);
+
+                    //If Pressed within the Timing Window
+                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5)){
                         
                         Debug.Log("QTE Completed Successfully!");
 
@@ -214,6 +219,7 @@ public class quickTimeEvents : MonoBehaviour{
                         StopCoroutine(Timer);
                         Timer = null;
                     } else {
+                    //Else if not pressed within the Timing Window
 
                         Debug.Log("QTE Failed");
                         
@@ -226,8 +232,8 @@ public class quickTimeEvents : MonoBehaviour{
                     }                    
                 } else {
 
-                    //Increment CurrentTiming
-                    CurrentTiming += Timer.deltaTime;
+                //Increment CurrentTiming
+                    CurrentTiming += Time.deltaTime;
                 }
             }
         }
