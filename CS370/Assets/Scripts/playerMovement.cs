@@ -16,24 +16,18 @@ public class Movement : MonoBehaviour
 {
     public Vector3 moveDirection;
     public Vector3 jump;
-    public Vector3 dashRight;
-    public Vector3 dashLeft;
 
     // Booleans
     public bool isCrouching = false;
     public bool isRunning = false;
     public bool grounded = true;
     public bool dashing = false;
-    public bool climable = false;
+    public bool moveable = true;
 
     // Floats
-    public float speed = 8.0f;
-    public float jumpHeight = 4;
+    public float speed;
+    public float jumpHeight;
 
-    // Dashing floats
-    public float dashSpeed = 2f;
-    public float dashCooldown = 0.0f;
-    string DashDirection;
 
     Coroutine Timer;
 
@@ -46,8 +40,6 @@ public class Movement : MonoBehaviour
         transform.Translate(new Vector3(0, 0, 0)); // Starting orientation
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 1.0f, 0.0f);
-        dashRight = new Vector3(0.2f, 0.0f, 0.0f);
-        dashLeft = new Vector3(-0.2f, 0.0f, 0.0f);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -56,14 +48,6 @@ public class Movement : MonoBehaviour
         {
             grounded = true;
         }
-        else if (collision.collider.gameObject.layer == LayerMask.NameToLayer("WALL"))
-        {
-            climable = true;
-        }
-        else
-        {
-            climable = false;
-        } 
     }
 
     // Updates per frame
@@ -72,7 +56,7 @@ public class Movement : MonoBehaviour
         /*------------------------------ Speed Controller ------------------------------*/
         if (isRunning)
         {
-            speed = 13.0f;
+            speed = 16.0f;
         }
         else if (isCrouching)
         {
@@ -84,100 +68,41 @@ public class Movement : MonoBehaviour
         }
 
         /* ----------------------------- INPUT STATEMENTS ----------------------------*/
-        if (Input.GetKey(KeyCode.W))
+        if (moveable)
         {
-            transform.Translate(Vector3.forward.normalized * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(Vector3.back.normalized * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left.normalized * Time.deltaTime * speed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.right.normalized * Time.deltaTime * speed);
-        }
-
-        /*------------------------------ Other Movement Keys ---------------------*/
-        if (Input.GetKey(KeyCode.Space) && grounded)
-        {
-            rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
-            grounded = false;
-        }
-
-        if (Input.GetKey(KeyCode.C) && grounded && isRunning == false)
-        {
-            isCrouching = true;
-            controller.height = 0.3f;
-        }
-        else
-        {
-            isCrouching = false;
-            controller.height = 1.0f;
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift) && grounded)
-        {
-            isRunning = true;
-        }
-        else
-        {
-            isRunning = false;
-        }
-
-        /*
-        if (Input.GetKey(KeyCode.space) && grounded == false && climable)
-        {
-            other.transform.GetComponent().useGravity = false;
-        }
-        else
-        {
-            other.transform.GetComponent().useGravity = true;
-        } */
-
-
-        /*------------------------------------ PLAYER DASHING ----------------------------*/
-        if (Input.GetKeyDown(KeyCode.LeftControl) && grounded == false && dashCooldown <= 0)
-        {
-            dashing = true;
-        }
-
-        if (dashing == true) {
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.Translate(Vector3.forward.normalized * Time.deltaTime * speed);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(Vector3.back.normalized * Time.deltaTime * speed);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(Vector3.left.normalized * Time.deltaTime * speed);
+            }
             if (Input.GetKey(KeyCode.D))
             {
-                DashDirection = "Right";
-                rb.AddForce(dashRight * dashSpeed, ForceMode.Impulse);
-                Timer = StartCoroutine(TimerCoroutine(0.1f));
+                transform.Translate(Vector3.right.normalized * Time.deltaTime * speed);
+            }
+
+            /*------------------------------ Other Movement Keys ---------------------*/
+            if (Input.GetKey(KeyCode.Space) && grounded)
+            {
+                rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
+                grounded = false;
+            }
+
+            /*------------------------------------- RUNNING ---------------------------------*/
+            if (Input.GetKey(KeyCode.LeftShift) && grounded)
+            {
+                isRunning = true;
             }
             else
             {
-                DashDirection = "Left";
-                rb.AddForce(dashLeft * dashSpeed, ForceMode.Impulse);
-                Timer = StartCoroutine(TimerCoroutine(0.1f));
+                isRunning = false;
             }
         }
-
-        // Dash cooldown
-        if (dashCooldown > 0)
-        {
-            dashCooldown -= Time.deltaTime;
-        }
-    }
-
-    IEnumerator TimerCoroutine(float Seconds)
-    {
-
-        //Start Timer
-        yield return new WaitForSeconds(Seconds);
-        dashCooldown = 2.0f;
-        dashing = false;
-        if(DashDirection == "Right")
-            rb.AddForce(dashRight * -dashSpeed, ForceMode.Impulse);
-        else if(DashDirection == "Left")
-            rb.AddForce(dashLeft * -dashSpeed, ForceMode.Impulse);
-        StopCoroutine(Timer);
     }
 }
