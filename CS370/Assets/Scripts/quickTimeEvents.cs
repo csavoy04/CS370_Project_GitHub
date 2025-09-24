@@ -32,7 +32,7 @@ public class quickTimeEvents : MonoBehaviour{
     //Declaring Variables
 
     //General
-    public static int QTEType;
+    public int QTEType = 0;          //              ***Change back to "public static int QTEType;" when done testing***
     bool QTEGenerate;
     public static bool Success;
     Coroutine Timer;
@@ -61,7 +61,7 @@ public class quickTimeEvents : MonoBehaviour{
     void Start() {
 
         //Initializing Variables
-        QTEType = 3;                                    //[0]: Default, [1]: KeyCombination, [2] Button Mash, [3] DBD Timing ....           **CHANGE TO 0 WHEN DONE TESTING**
+        //QTEType = 0;                                    //[0]: Default, [1]: KeyCombination, [2] Button Mash, [3] DBD Timing ....   **CHANGE TO 0 AND UNCOMMENT WHEN DONE TESTING**
         QTEGenerate = false;                             //Triggers QTE generation                          
         Success = false;                                //Boolean result of QTE
         QTEFinished = false;                            //Detects if QTE is finished
@@ -124,6 +124,8 @@ public class quickTimeEvents : MonoBehaviour{
                     Timer = StartCoroutine(TimerCoroutine(KeyCombinationMaxDuration));
                 }
                 else if (QTEType == 2){                                        //If the Type is Button Mash QTE
+
+                    Debug.Log("Mash Space " + NumClicks + " times!");          //Instructs player to mash space
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(ButtonMashMaxDuration));
