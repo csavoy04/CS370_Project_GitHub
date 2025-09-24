@@ -1,9 +1,9 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
 Built from '6000.2/staging' branch; Version is '6000.2.3f1 (c7638eb16d91) revision 13067150'; Using compiler version '194234433'; Build Type 'Release'
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh" at "2025-09-24T15:03:28.9813196Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh" at "2025-09-24T17:32:06.409623Z"
 OS: 'Windows 11  (10.0.26100) 64bit Core' Language: 'en' Physical Memory: 16002 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
-Date: 2025-09-24T15:03:28Z
+Date: 2025-09-24T17:32:06Z
 
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.2.3f1\Editor\Unity.exe
@@ -17,7 +17,7 @@ C:/Users/boodh/OneDrive/Documents/GitHub/CS370_Project_GitHub/CS370
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-56247
+58893
 -licensingIpc
 LicenseClient-boodh
 -job-worker-count
@@ -65,12 +65,12 @@ C:/Users/boodh/OneDrive/Documents/GitHub/CS370_Project_GitHub/CS370
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [15592]  Target information:
+Player connection [22748]  Target information:
 
-Player connection [15592]  * "[IP] 192.168.225.76 [Port] 0 [Flags] 2 [Guid] 662564071 [EditorId] 662564071 [Version] 1048832 [Id] WindowsEditor(7,Adel) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [22748]  * "[IP] 192.168.225.76 [Port] 0 [Flags] 2 [Guid] 4255899074 [EditorId] 4255899074 [Version] 1048832 [Id] WindowsEditor(7,Adel) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [15592] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [15592] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [22748] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [22748] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 9
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -82,18 +82,18 @@ Input System module state changed to: Initialized.
 	ResponseStatus: Unsupported protocol version '1.17.2'.
 [Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-boodh"
 [Licensing::IpcConnector] LicenseClient-boodh channel disconnected successfully.
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh-6000.2.3" at "2025-09-24T15:03:29.1022558Z"
-[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 7816, path: "C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh-6000.2.3" at "2025-09-24T17:32:06.5199402Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 17096, path: "C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
 [Licensing::Module] LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.2+ff71f16
-  Session Id:              958e2cb2056447678f70422ab0c32c41
-  Correlation Id:          02c46ceb306d9cefdf20d955a20b2ada
-  External correlation Id: 2377219288162349936
+  Session Id:              d4425fcc0b744e85a7ea704d8d3b7263
+  Correlation Id:          61e06c358e005e8c56d0da89e4e6797a
+  External correlation Id: 3688087246320486565
   Machine Id:              aWiZ+5ck5R6ccxyn9XDzBJPGM/w=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-boodh-6000.2.3" (connect: 0.00s, validation: 0.00s, handshake: 0.02s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh-6000.2.3-notifications" at "2025-09-24T15:03:29.1301238Z"
-[Licensing::Module] Licensing Background thread has ended after 0.15s
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-boodh-6000.2.3" (connect: 0.00s, validation: 0.00s, handshake: 0.03s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-boodh-6000.2.3-notifications" at "2025-09-24T17:32:06.5537551Z"
+[Licensing::Module] Licensing Background thread has ended after 0.14s
 Library Redirect Path: Library/
 [Physics::Module] Selected backend.
 [Physics::Module] Name: PhysX
@@ -101,7 +101,7 @@ Library Redirect Path: Library/
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-Refreshing native plugins compatible for Editor in 5.06 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 2.66 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.2.3f1 (c7638eb16d91)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/Resources/UnitySubsystems
@@ -117,47 +117,47 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56672
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56184
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.007033 seconds.
-- Loaded All Assemblies, in  0.980 seconds
+Registered in 0.005383 seconds.
+- Loaded All Assemblies, in  1.034 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.896 seconds
-Domain Reload Profiling: 1870ms
-	BeginReloadAssembly (329ms)
+- Finished resetting the current domain, in  0.877 seconds
+Domain Reload Profiling: 1905ms
+	BeginReloadAssembly (345ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (2ms)
-	RebuildCommonClasses (91ms)
-	RebuildNativeTypeToScriptingClass (33ms)
-	initialDomainReloadingComplete (132ms)
-	LoadAllAssembliesAndSetupDomain (388ms)
-		LoadAssemblies (321ms)
+	RebuildCommonClasses (98ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (123ms)
+	LoadAllAssembliesAndSetupDomain (431ms)
+		LoadAssemblies (338ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (380ms)
-			TypeCache.Refresh (377ms)
-				TypeCache.ScanAssembly (348ms)
+		AnalyzeDomain (423ms)
+			TypeCache.Refresh (420ms)
+				TypeCache.ScanAssembly (391ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (897ms)
+	FinalizeReload (879ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (814ms)
+		SetupLoadedEditorAssemblies (787ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (151ms)
+			InitializePlatformSupportModulesInManaged (156ms)
 			SetLoadedEditorAssemblies (10ms)
-			BeforeProcessingInitializeOnLoad (177ms)
-			ProcessInitializeOnLoadAttributes (349ms)
-			ProcessInitializeOnLoadMethodAttributes (126ms)
+			BeforeProcessingInitializeOnLoad (156ms)
+			ProcessInitializeOnLoadAttributes (341ms)
+			ProcessInitializeOnLoadMethodAttributes (123ms)
 			AfterProcessingInitializeOnLoad (0ms)
-			EditorAssembliesLoaded (1ms)
+			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 ========================================================================
@@ -175,8 +175,8 @@ Begin MonoManager ReloadAssembly
   Product: Unity Personal
   Type: Assigned
   Expiration: Unlimited
-- Loaded All Assemblies, in  1.535 seconds
-Refreshing native plugins compatible for Editor in 4.64 ms, found 2 plugins.
+- Loaded All Assemblies, in  1.439 seconds
+Refreshing native plugins compatible for Editor in 2.52 ms, found 2 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Package Manager log level set to [2]
@@ -184,184 +184,52 @@ Package Manager log level set to [2]
 [Package Manager] Unable to send message (not connected to server process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.601 seconds
-Domain Reload Profiling: 4124ms
-	BeginReloadAssembly (473ms)
+- Finished resetting the current domain, in  1.437 seconds
+Domain Reload Profiling: 2867ms
+	BeginReloadAssembly (453ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (15ms)
+		DisableScriptedObjects (17ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (61ms)
-	RebuildCommonClasses (89ms)
-	RebuildNativeTypeToScriptingClass (33ms)
-	initialDomainReloadingComplete (151ms)
-	LoadAllAssembliesAndSetupDomain (774ms)
-		LoadAssemblies (802ms)
+		CreateAndSetChildDomain (60ms)
+	RebuildCommonClasses (91ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (105ms)
+	LoadAllAssembliesAndSetupDomain (750ms)
+		LoadAssemblies (739ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (253ms)
-			TypeCache.Refresh (196ms)
-				TypeCache.ScanAssembly (171ms)
-			BuildScriptInfoCaches (45ms)
+		AnalyzeDomain (267ms)
+			TypeCache.Refresh (206ms)
+				TypeCache.ScanAssembly (181ms)
+			BuildScriptInfoCaches (49ms)
 			ResolveRequiredComponents (6ms)
-	FinalizeReload (2603ms)
+	FinalizeReload (1438ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2142ms)
+		SetupLoadedEditorAssemblies (1175ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (11ms)
-			SetLoadedEditorAssemblies (17ms)
-			BeforeProcessingInitializeOnLoad (463ms)
-			ProcessInitializeOnLoadAttributes (1488ms)
-			ProcessInitializeOnLoadMethodAttributes (117ms)
-			AfterProcessingInitializeOnLoad (44ms)
-			EditorAssembliesLoaded (1ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			SetLoadedEditorAssemblies (11ms)
+			BeforeProcessingInitializeOnLoad (258ms)
+			ProcessInitializeOnLoadAttributes (819ms)
+			ProcessInitializeOnLoadMethodAttributes (67ms)
+			AfterProcessingInitializeOnLoad (14ms)
+			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (32ms)
+		AwakeInstancesAfterBackupRestoration (15ms)
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 5.19 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 2.29 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 2205 unused Assets / (0.7 MB). Loaded Objects now: 2726.
-Memory consumption went from 80.9 MB to 80.2 MB.
-Total: 17.528600 ms (FindLiveObjects: 0.654000 ms CreateObjectMapping: 0.374500 ms MarkObjects: 14.040900 ms  DeleteObjects: 2.456100 ms)
+Unloading 2259 unused Assets / (0.7 MB). Loaded Objects now: 2780.
+Memory consumption went from 81.2 MB to 80.5 MB.
+Total: 11.381400 ms (FindLiveObjects: 0.692400 ms CreateObjectMapping: 0.312100 ms MarkObjects: 9.107400 ms  DeleteObjects: 1.265900 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 60801.212269 seconds.
-  path: Assets/Models
-  artifactKey: Guid(93012d7b09e163b428e908c772ad47a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Models using Guid(93012d7b09e163b428e908c772ad47a6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fa9621a83ffcc0a507426dd41ff50db6') in 0.0272963 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+  Time since last request: 69717.181892 seconds.
+  path: Assets/Monsters/Slime/Slime.prefab
+  artifactKey: Guid(768b29671bad6ce4ca0553225d51b55a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Monsters/Slime/Slime.prefab using Guid(768b29671bad6ce4ca0553225d51b55a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'fc7fcbe1e28a851073f823cd44611bd4') in 0.3225078 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
 
-========================================================================
-Received Import Request.
-  Time since last request: 14.240044 seconds.
-  path: Assets/Monsters
-  artifactKey: Guid(4e9e2706571c7dd40813acc1c9c87019) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Monsters using Guid(4e9e2706571c7dd40813acc1c9c87019) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a2b7538d249a0294ffb3cdfc405ad6da') in 0.0012181 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
-========================================================================
-Received Import Request.
-  Time since last request: 20.740357 seconds.
-  path: Assets/Monsters/Slime
-  artifactKey: Guid(f1a9f7879cee2a04a931d9aa12f55a78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Monsters/Slime using Guid(f1a9f7879cee2a04a931d9aa12f55a78) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '29b1066684b8d517eb68c36d004aab9c') in 0.0011257 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
-
-========================================================================
-Received Import Request.
-  Time since last request: 24.338621 seconds.
-  path: Assets/Monsters/Slime/slime.png
-  artifactKey: Guid(b2a945f89e8e99949a501c447bc42b8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Monsters/Slime/slime.png using Guid(b2a945f89e8e99949a501c447bc42b8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '6265860ea06097817c75b74edc56376b') in 0.2140908 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
-
-========================================================================
-Received Import Request.
-  Time since last request: 249.789846 seconds.
-  path: Assets/Monsters/Slime/slime.png
-  artifactKey: Guid(b2a945f89e8e99949a501c447bc42b8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Monsters/Slime/slime.png using Guid(b2a945f89e8e99949a501c447bc42b8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'c2366665e23866a67ff8de4bccd95013') in 0.0449767 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
-
-========================================================================
-Received Import Request.
-  Time since last request: 219.581934 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/CFXR Assets/Misc/cfxr font AmazGoDaBold.png
-  artifactKey: Guid(7ab74e659e1f0a34d9cfec21c478fc12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/CFXR Assets/Misc/cfxr font AmazGoDaBold.png using Guid(7ab74e659e1f0a34d9cfec21c478fc12) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '63d85f66beca51532c1295f30e1df4af') in 0.708966 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 70
-
-========================================================================
-Received Import Request.
-  Time since last request: 74.997170 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Arrow.png
-  artifactKey: Guid(b0394665e16ef504bb922274dd606020) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Arrow.png using Guid(b0394665e16ef504bb922274dd606020) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1f149cf7ca337b8da5ad6f197d0baea9') in 0.0501545 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.016397 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Bloom.png
-  artifactKey: Guid(07caf3d1930bab14aa8f6dcdf2db871a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Bloom.png using Guid(07caf3d1930bab14aa8f6dcdf2db871a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8a011548d5fefa10b1229f4c803e631d') in 0.0538924 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000066 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Bloom H.png
-  artifactKey: Guid(32700198561e47044863cf80370fe63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Bloom H.png using Guid(32700198561e47044863cf80370fe63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ffba88850155a15cb81c6b1520697e1b') in 0.0562409 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000077 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Camera H.png
-  artifactKey: Guid(0bb8c249681ba00429319d91208c6fec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Camera H.png using Guid(0bb8c249681ba00429319d91208c6fec) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'b364f7df6f20ad053d3dbfc81e35c4e8') in 0.0493493 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn CameraShake.png
-  artifactKey: Guid(f446ceac60ed41a42bf4e1669eb8beb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn CameraShake.png using Guid(f446ceac60ed41a42bf4e1669eb8beb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '398613d548e9fcd27d7e34bf5217d525') in 0.0431816 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000137 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn CameraShake H.png
-  artifactKey: Guid(3c125755d5769934fae41fa260070229) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn CameraShake H.png using Guid(3c125755d5769934fae41fa260070229) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5f9f54443fe5c2d0fc31db4c16b436c0') in 0.0463199 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000077 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Camera.png
-  artifactKey: Guid(41bf8b79c5dc7d64aafcc3c68e923096) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Camera.png using Guid(41bf8b79c5dc7d64aafcc3c68e923096) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'ad949ef5159d82d1b627dcdb1063cd23') in 0.0495553 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000044 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn SlowMo.png
-  artifactKey: Guid(6957d0e9e59addf438d0f5d67d81eab4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn SlowMo.png using Guid(6957d0e9e59addf438d0f5d67d81eab4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '5d4cbf9855ad4ec520ab8471fc70ba76') in 0.0481463 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000068 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Ground H.png
-  artifactKey: Guid(338685d7a91449f45a6a95b3756c4750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Ground H.png using Guid(338685d7a91449f45a6a95b3756c4750) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '53fd50b4c984b5a5429a037ed300eeba') in 0.0480178 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000057 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Ground.png
-  artifactKey: Guid(32b639b461ed6424eaacb0b92b1e8dc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXR Demo Btn Ground.png using Guid(32b639b461ed6424eaacb0b92b1e8dc1) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'a6790413845642681061696312913bc9') in 0.0485978 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.170595 seconds.
-  path: Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXRF Demo Logo.png
-  artifactKey: Guid(a665b2e53088caa4c89dd09f9c889f62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Free Particle Assets/Cartoon FX Remaster/Demo Assets/UI/CFXRF Demo Logo.png using Guid(a665b2e53088caa4c89dd09f9c889f62) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '8e61c237f4036264f02114bb694be5f0') in 0.0418878 seconds
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
-
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0
