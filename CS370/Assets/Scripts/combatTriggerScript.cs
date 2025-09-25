@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class combatTriggerScript : MonoBehaviour
 {
@@ -6,6 +9,17 @@ public class combatTriggerScript : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            //if EnemyID == 0
+            SceneManager.LoadScene("CombatArea");
+
+            Debug.Log("Going into Combat Area");
+        }
     }
 
     // Update is called once per frame
