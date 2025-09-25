@@ -1,15 +1,20 @@
 using System.Numerics;
 using UnityEngine;
 
+public enum BattleState {PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral}
 public class combatHandler : MonoBehaviour
 {
-    void Start()
-    {
 
+    public BattleState State;
+    void Start(){
+
+        State = BattleState.Neutral;
     }
-   
-    void Update()
-    {
 
+    void Update(){
+        
+        if(State == BattleState.Start){
+            
+        }
     }
 }
