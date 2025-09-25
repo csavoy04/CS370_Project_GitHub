@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class combatTriggerScript : MonoBehaviour
 {
@@ -6,6 +7,15 @@ public class combatTriggerScript : MonoBehaviour
     void Start()
     {
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            //if EnemyID == 0
+            SceneManager.LoadScene("CombatArea");
+        }
     }
 
     // Update is called once per frame
