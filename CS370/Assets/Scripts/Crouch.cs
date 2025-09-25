@@ -26,6 +26,7 @@ public class Crouch : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
 
         // Obtaining external values
         bool isCrouching = GameObject.Find("Player").GetComponent<Movement>().isCrouching;
@@ -37,7 +38,7 @@ public class Crouch : MonoBehaviour
     void Update()
     {
         /*------------------------------------- CROUCHING ---------------------------------*/
-        /*
+        
         if (Input.GetKey(KeyCode.C) && grounded && isRunning == false)
         {
             isCrouching = true;
@@ -48,6 +49,5 @@ public class Crouch : MonoBehaviour
             isCrouching = false;
             controller.height = 1.0f;
         }
-        */
     }
 }

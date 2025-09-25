@@ -10,6 +10,7 @@ public class Dash : MonoBehaviour
     // Floats
     float dashSpeed = 30f;
     float dashCooldown = 0;
+    float dashDistance = 30f;
 
     string dashDirection;
 
@@ -24,6 +25,8 @@ public class Dash : MonoBehaviour
 
     CharacterController controller;
     Rigidbody rb;
+    RayCastHit hit;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,18 +47,23 @@ public class Dash : MonoBehaviour
 
         if (dashing == true)
         {
-            if (Input.GetKey(KeyCode.D))
+            /* Obtains current direction and store it as fwd, if there is nothing
+            detected in front of the player then the player will dash in it's
+            current direction 30 units. If the raycast detects an object then the 
+            dash distance is change to that of collision distance - 0.5.
+            */
+            Vector3 fwd = transfor.TransformDirection(Vector3.transform.TransformDirection);
+            if (Physics.Raycast(transform.position, fwd, 30.5))
             {
-                dashDirection = "Right";
-                rb.AddForce(dashRight * dashSpeed, ForceMode.Impulse);
+                dashDistance = 30.0f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
-            else if (Input.GetKey(KeyCode.A))
+            else
             {
-                dashDirection = "Left";
-                rb.AddForce(dashLeft * dashSpeed, ForceMode.Impulse);
+                dashDistance = hit.distance - 0.5f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
+            player.transform.position(Vector3.fwd.normalized + dashDistance);
         }
 
         // Dash cooldown
@@ -65,6 +73,7 @@ public class Dash : MonoBehaviour
         }
     }
 
+/*----------------------------------------- TIMER ------------------------------------*/
     IEnumerator TimerCoroutine(float Seconds)
     {
 

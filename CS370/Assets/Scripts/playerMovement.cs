@@ -28,9 +28,6 @@ public class Movement : MonoBehaviour
     public float speed;
     public float jumpHeight;
 
-
-    Coroutine Timer;
-
     CharacterController controller;
     Rigidbody rb;
 
@@ -42,18 +39,31 @@ public class Movement : MonoBehaviour
         jump = new Vector3(0.0f, 1.0f, 0.0f);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*--------------------------- RAYCAST DETECTION FOR FLOOR --------------------------*/
+
+    // Using FixedUpdate() as to not mess stuff up
+    void FixedUpdate()
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("GROUND"))
+        // Vector alias for down direction
+        Vector3 down = transfor.TransformDirection(Vector3.down);
+
+        // Raycast that looks down 0.2 units, if interupt, grounded = true
+        if (Physics.Raycast(transform.position, down, 0.2))
         {
             grounded = true;
         }
+        else
+        {
+            grounded = false;
+        }
     }
+
+    /*--------------------------------- MOVEMENT CONTROLS -----------------------------*/
 
     // Updates per frame
     void Update()
     {
-        /*------------------------------ Speed Controller ------------------------------*/
+    /*---------------------------------- SPEED CONTROLER ------------------------------*/
         if (isRunning)
         {
             speed = 16.0f;
@@ -67,34 +77,33 @@ public class Movement : MonoBehaviour
             speed = 10.0f;
         }
 
-        /* ----------------------------- INPUT STATEMENTS ----------------------------*/
+    /*---------------------------------- INPUT STATEMENTS ----------------------------*/
         if (moveable)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                transform.Translate(Vector3.forward.normalized * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(forward, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                transform.Translate(Vector3.back.normalized * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(back, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.Translate(Vector3.left.normalized * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(left, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.Translate(Vector3.right.normalized * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(right, 1) * Time.deltaTime * speed);
             }
 
-            /*------------------------------ Other Movement Keys ---------------------*/
+    /*------------------------------------- OTHER MOVEMENT KEYS ------------------------*/
             if (Input.GetKey(KeyCode.Space) && grounded)
             {
                 rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
-                grounded = false;
             }
 
-            /*------------------------------------- RUNNING ---------------------------------*/
+    /*-------------------------------------- RUNNING -----------------------------------*/
             if (Input.GetKey(KeyCode.LeftShift) && grounded)
             {
                 isRunning = true;
