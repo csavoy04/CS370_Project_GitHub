@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class combatTriggerScript : MonoBehaviour
 {
@@ -9,12 +11,14 @@ public class combatTriggerScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.name == "Player")
         {
             //if EnemyID == 0
             SceneManager.LoadScene("CombatArea");
+
+            Debug.Log("Going into Combat Area");
         }
     }
 
