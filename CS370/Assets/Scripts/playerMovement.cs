@@ -45,10 +45,10 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         // Vector alias for down direction
-        Vector3 down = transfor.TransformDirection(Vector3.down);
+        Vector3 down = transform.TransformDirection(Vector3.down);
 
         // Raycast that looks down 0.2 units, if interupt, grounded = true
-        if (Physics.Raycast(transform.position, down, 0.2))
+        if (Physics.Raycast(transform.position, down, 0.2f))
         {
             grounded = true;
         }
@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour
     // Updates per frame
     void Update()
     {
-    /*---------------------------------- SPEED CONTROLER ------------------------------*/
+        /*---------------------------------- SPEED CONTROLER ------------------------------*/
         if (isRunning)
         {
             speed = 16.0f;
@@ -77,33 +77,33 @@ public class Movement : MonoBehaviour
             speed = 10.0f;
         }
 
-    /*---------------------------------- INPUT STATEMENTS ----------------------------*/
+        /*---------------------------------- INPUT STATEMENTS ----------------------------*/
         if (moveable)
         {
             if (Input.GetKey(KeyCode.W))
             {
-                transform.Translate(Vector3.ClampMagnitude(forward, 1) * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(Vector3.forward, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                transform.Translate(Vector3.ClampMagnitude(back, 1) * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(Vector3.back, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.Translate(Vector3.ClampMagnitude(left, 1) * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(Vector3.left, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.Translate(Vector3.ClampMagnitude(right, 1) * Time.deltaTime * speed);
+                transform.Translate(Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
             }
 
-    /*------------------------------------- OTHER MOVEMENT KEYS ------------------------*/
+            /*------------------------------------- OTHER MOVEMENT KEYS ------------------------*/
             if (Input.GetKey(KeyCode.Space) && grounded)
             {
                 rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
             }
 
-    /*-------------------------------------- RUNNING -----------------------------------*/
+            /*-------------------------------------- RUNNING -----------------------------------*/
             if (Input.GetKey(KeyCode.LeftShift) && grounded)
             {
                 isRunning = true;
@@ -112,6 +112,15 @@ public class Movement : MonoBehaviour
             {
                 isRunning = false;
             }
+        }
+    }
+    /*---------------------------------- Player Trigger ----------------------------*/
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("CombatTrigger"))
+        {
+            Debug.Log("Entering Combat Area");
+            moveable = false;
         }
     }
 }

@@ -25,7 +25,7 @@ public class Dash : MonoBehaviour
 
     CharacterController controller;
     Rigidbody rb;
-    RayCastHit hit;
+    RaycastHit hit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -52,8 +52,8 @@ public class Dash : MonoBehaviour
             current direction 30 units. If the raycast detects an object then the 
             dash distance is change to that of collision distance - 0.5.
             */
-            Vector3 fwd = transfor.TransformDirection(Vector3.transform.TransformDirection);
-            if (Physics.Raycast(transform.position, fwd, 30.5))
+            Vector3 fwd = transform.TransformDirection(Vector3.forward);
+            if (Physics.Raycast(transform.position, fwd, 30.5f))
             {
                 dashDistance = 30.0f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
@@ -63,7 +63,7 @@ public class Dash : MonoBehaviour
                 dashDistance = hit.distance - 0.5f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
-            player.transform.position(Vector3.fwd.normalized + dashDistance);
+            transform.position += Vector3.forward.normalized * dashDistance;
         }
 
         // Dash cooldown
@@ -92,3 +92,4 @@ public class Dash : MonoBehaviour
         StopCoroutine(Timer);
     }
 }
+
