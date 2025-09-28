@@ -21,16 +21,19 @@ public class Movement : MonoBehaviour
     // Booleans
     public bool isCrouching = false;
     public bool isRunning = false;
-    public bool grounded = true;
     public bool dashing = false;
     public bool moveable = true;
+    public bool grounded = true;
 
     // Floats
     public float speed;
-    public float jumpHeight;
+    public float jumpForce;
 
     CharacterController controller;
     Rigidbody rb;
+
+    // Raycast
+    public LayerMask layerMask;
 
     // Ran at the start of the script being ran
     void Start()
@@ -40,18 +43,17 @@ public class Movement : MonoBehaviour
         jump = new Vector3(0.0f, 1.0f, 0.0f);
     }
 
-    /*--------------------------- RAYCAST DETECTION FOR FLOOR --------------------------*/
-
-    // Using FixedUpdate() as to not mess stuff up
-    void FixedUpdate()
+    /*--------------------------------------- RAYCAST ---------------------------------*/
+    private void FixedUpdate()
     {
-        // Vector alias for down direction
-        Vector3 down = transform.TransformDirection(Vector3.down);
+        // This is used for gravity
+        GetComponent<Rigidbody>().AddForce(Physics.gravity*1.5f, ForceMode.Acceleration);
 
-        // Raycast that looks down 0.2 units, if interupt, grounded = true
-        if (Physics.Raycast(transform.position, down, 0.2f))
+        // Raycast
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 1f))
         {
             grounded = true;
+            Debug.Log("Did Hit");
         }
         else
         {
@@ -101,7 +103,7 @@ public class Movement : MonoBehaviour
             /*------------------------------------- OTHER MOVEMENT KEYS ------------------------*/
             if (Input.GetKey(KeyCode.Space) && grounded)
             {
-                rb.AddForce(jump * jumpHeight, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
 
             /*-------------------------------------- RUNNING -----------------------------------*/

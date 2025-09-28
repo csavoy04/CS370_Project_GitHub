@@ -8,15 +8,13 @@ public class Dash : MonoBehaviour
     Movement Movement;
 
     // Floats
-    float dashSpeed = 30f;
     float dashCooldown = 0;
-    float dashDistance = 10f;
+    float dashDistance = 5;
 
     string dashDirection;
 
     // Vectors
-    public Vector3 dashRight;
-    public Vector3 dashLeft;
+    public Vector3 direction;
 
     // Bools
     bool dashing = false;
@@ -31,9 +29,6 @@ public class Dash : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        dashRight = new Vector3(0.2f, 0.0f, 0.0f);
-        dashLeft = new Vector3(-0.2f, 0.0f, 0.0f);
     }
 
     // Update is called once per frame
@@ -52,10 +47,10 @@ public class Dash : MonoBehaviour
             current direction 30 units. If the raycast detects an object then the 
             dash distance is change to that of collision distance - 0.5.
             */
-            Vector3 fwd = transform.TransformDirection(Vector3.forward);
-            if (Physics.Raycast(transform.position, fwd, 30.5f))
+            direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+            if (Physics.Raycast(transform.position, direction, 5.5f))
             {
-                dashDistance = 30.0f;
+                dashDistance = 5.0f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
             else
@@ -63,7 +58,7 @@ public class Dash : MonoBehaviour
                 dashDistance = hit.distance - 0.5f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
-            transform.position += Vector3.forward.normalized * dashDistance;
+            transform.position += direction * dashDistance;
         }
 
         // Dash cooldown
@@ -81,14 +76,6 @@ public class Dash : MonoBehaviour
         yield return new WaitForSeconds(Seconds);
         dashCooldown = 2.0f;
         dashing = false;
-        if (dashDirection == "Right")
-        {
-            rb.AddForce(dashRight * -dashSpeed, ForceMode.Impulse);
-        }
-        else if (dashDirection == "Left")
-        {
-            rb.AddForce(dashLeft * -dashSpeed, ForceMode.Impulse);
-        }
         StopCoroutine(Timer);
     }
 }
