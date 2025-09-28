@@ -10,7 +10,7 @@ public class Dash : MonoBehaviour
     // Floats
     float dashSpeed = 30f;
     float dashCooldown = 0;
-    float dashDistance = 30f;
+    float dashDistance = 10f;
 
     string dashDirection;
 

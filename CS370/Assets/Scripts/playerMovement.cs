@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -120,7 +121,8 @@ public class Movement : MonoBehaviour
         if (other.gameObject.CompareTag("CombatTrigger"))
         {
             Debug.Log("Entering Combat Area");
-            moveable = false;
+            SceneManager.LoadScene("CombatArea");
+            //moveable = false;
         }
     }
 }

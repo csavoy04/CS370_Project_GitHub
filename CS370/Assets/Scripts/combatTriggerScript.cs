@@ -13,7 +13,7 @@ public class combatTriggerScript : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "player")
+        if (collision.gameObject.name == "Player")
         {
             //if EnemyID == 0
             SceneManager.LoadScene("CombatArea");
