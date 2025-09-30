@@ -80,7 +80,7 @@ public class Dash : MonoBehaviour
             // Stopping normal player movement, disables gravity, resets player velocity
             moveable = false;
             climbing = true;
-            rb.velocity = Vector.zero;
+            rb.linearVelocity = Vector.zero;
             rb.useGravity = false;
 
             /*-------------------------------- CLIMBING ACTION ------------------------------- */
