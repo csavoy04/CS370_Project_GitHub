@@ -18,6 +18,7 @@ public class Crouch : MonoBehaviour
     bool isCrouching;
     bool grounded;
     bool isRunning;
+    bool moveable;
 
     CharacterController controller;
     Rigidbody rb;
@@ -32,6 +33,7 @@ public class Crouch : MonoBehaviour
         bool isCrouching = GameObject.Find("Player").GetComponent<Movement>().isCrouching;
         bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
         bool isRunning = GameObject.Find("Player").GetComponent<Movement>().isRunning;
+        bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class Crouch : MonoBehaviour
     {
         /*------------------------------------- CROUCHING ---------------------------------*/
         
-        if (Input.GetKey(KeyCode.C) && grounded && isRunning == false)
+        if (Input.GetKey(KeyCode.C) && grounded && !isRunning && moveable)
         {
             isCrouching = true;
             controller.height = 0.3f;

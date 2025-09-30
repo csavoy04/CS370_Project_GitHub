@@ -41,6 +41,10 @@ public class Movement : MonoBehaviour
         transform.Translate(new Vector3(0, 0, 0)); // Starting orientation
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 1.0f, 0.0f);
+
+        // Obtaining external values
+        bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
+        bool isCrouching = GameObject.Find("Player").GetComponent < isCrouching > ().isCrouching;
     }
 
     /*--------------------------------------- RAYCAST ---------------------------------*/
@@ -67,11 +71,11 @@ public class Movement : MonoBehaviour
     void Update()
     {
         /*---------------------------------- SPEED CONTROLER ------------------------------*/
-        if (isRunning)
+        if (isRunning && moveable)
         {
             speed = 16.0f;
         }
-        else if (isCrouching)
+        else if (isCrouching && moveable)
         {
             speed = 4.0f;
         }
@@ -100,7 +104,6 @@ public class Movement : MonoBehaviour
                 transform.Translate(Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
             }
 
-            /*------------------------------------- OTHER MOVEMENT KEYS ------------------------*/
             if (Input.GetKey(KeyCode.Space) && grounded)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
