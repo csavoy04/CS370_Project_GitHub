@@ -1,12 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Main_Menu.uss?fileID=7433441132597879392&amp;guid=3fffa7c0180e10d41b313bbe0291fd5e&amp;type=3#Main_Menu" />
-    <ui:VisualElement name="Panel" class="background" style="flex-grow: 1;">
-        <ui:VisualElement name="Menu" class="menu" style="flex-grow: 1; align-self: center; height: auto; min-height: auto; min-width: auto; max-width: none; max-height: 80%; width: 35%; justify-content: center; align-content: center; align-items: center; position: relative; top: auto; left: auto; bottom: auto; flex-direction: column;">
+    <ui:VisualElement name="Main-Menu" class="background" style="flex-grow: 1;">
+        <ui:VisualElement name="Player-Menu" class="menu" style="flex-grow: 1; align-self: center; height: auto; min-height: auto; min-width: auto; max-width: none; max-height: 80%; width: 35%; justify-content: center; align-content: center; align-items: center; position: relative; top: auto; left: auto; bottom: auto; flex-direction: column;">
             <ui:Label text="Menu" name="Menu-Title" />
             <ui:Button text="Play" name="PlayBtn" />
             <ui:Button text="Party" name="PartyBtn" />
             <ui:Button text="Bag" name="BagBtn" style="cursor: initial;" />
             <ui:Button text="Quit" selectable="true" name="QuitBtn" style="cursor: initial;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Party-Menu" class="menu" style="flex-grow: 1;">
+            <ui:Label text="Party" name="Party-Title" />
+            <ui:Button text="Back" name="PartyBackBtn" style="align-content: auto; justify-content: flex-start;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

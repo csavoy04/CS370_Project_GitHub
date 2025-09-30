@@ -5,6 +5,7 @@ public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
 public class combatHandler : MonoBehaviour
 {
+    /*
     public GameObject playerprefab;
     public GameObject enemyprefab;
     public BattleState State;
@@ -48,5 +49,6 @@ public class combatHandler : MonoBehaviour
         {
             Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies , NoOfAllies*2), UnityEngine.Quaternion.identity);
         }
-    }
+    } 
+    */
 }
