@@ -3,13 +3,10 @@ using UnityEngine;
 
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
-<<<<<<< Updated upstream
 public class combatHandler : MonoBehaviour
 {
     /*
-=======
 public class combatHandler : MonoBehaviour {
->>>>>>> Stashed changes
     public GameObject playerprefab;
     public GameObject enemyprefab;
     public BattleState State;
