@@ -18,6 +18,9 @@ public class Dash : MonoBehaviour
 
     // Bools
     bool dashing = false;
+    bool grounded;
+    bool moveable;
+    bool climbing = false;
 
     Coroutine Timer;
 
@@ -29,25 +32,29 @@ public class Dash : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // Obtaining external values
+        bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
+        bool moveable = GameObject.Find("Player").GetComponent<Movement>().moveable;
     }
 
     // Update is called once per frame
     void Update()
     {
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         /*------------------------------------ PLAYER DASHING ----------------------------*/
-        if (Input.GetKeyDown(KeyCode.LeftControl) && dashCooldown <= 0)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && dashCooldown <= 0 && moveable)
         {
             dashing = true;
         }
 
         if (dashing == true)
         {
-            /* Obtains current direction and store it as fwd, if there is nothing
+            /* Obtains current direction and store it as direction, if there is nothing
             detected in front of the player then the player will dash in it's
-            current direction 30 units. If the raycast detects an object then the 
-            dash distance is change to that of collision distance - 0.5.
-            */
-            direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+            current direction 5 units. If the raycast detects an object then the 
+            dash distance is change to that of collision distance - 0.5 */
+
             if (Physics.Raycast(transform.position, direction, 5.5f))
             {
                 dashDistance = 5.0f;
@@ -66,12 +73,49 @@ public class Dash : MonoBehaviour
         {
             dashCooldown -= Time.deltaTime;
         }
+
+        /*---------------------------------------- CLIMBING ----------------------------------*/
+        if (Physics.Raycast(transform.position, direction, 0.5f, CLIMABLE) && !grounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            // Stopping normal player movement, disables gravity, resets player velocity
+            moveable = false;
+            climbing = true;
+            rb.velocity = Vector.zero;
+            rb.useGravity = false;
+
+            /*-------------------------------- CLIMBING ACTION ------------------------------- */
+            if (Input.GetKeyDOwn(KeyCode.A) && climbing)
+            {
+                transform.Translate((direction * Quaternion.Euler(0, 90, 0)) * Time.deltaTime * (speed / 2));
+            }
+
+            if (Input.GetKeyDOwn(KeyCode.D) && climbing)
+            {
+                transform.Translate((direction * Quaternion.Euler(0, -90, 0)) * Time.deltaTime * (speed / 2));
+            }
+
+            if (Input.GetKeyDOwn(KeyCode.W) && climbing)
+            {
+                transform.Translate(Vector3.up * Time.deltaTime * (speed / 2));
+            }
+
+            if (Input.GetKeyDOwn(KeyCode.S) && climbing)
+            {
+                transform.Translate(Vector3.down * Time.deltaTime * (speed / 2));
+            }
+        }
+        // Resets boolean statements
+        else
+        {
+            moveable = true;
+            climbing = false;
+            rb.useGravity = true;
+        }
     }
 
 /*----------------------------------------- TIMER ------------------------------------*/
     IEnumerator TimerCoroutine(float Seconds)
     {
-
         //Start Timer
         yield return new WaitForSeconds(Seconds);
         dashCooldown = 2.0f;
@@ -79,4 +123,3 @@ public class Dash : MonoBehaviour
         StopCoroutine(Timer);
     }
 }
-
