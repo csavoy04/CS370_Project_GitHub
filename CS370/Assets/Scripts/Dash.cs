@@ -2,6 +2,16 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+/*  Script made by:
+        Script that:
+            - obtains the current direction of the player as a Vector3
+            - allows the player to dash 5 units ahead, or obj detection -0.5
+                in the event of the raycast colliding with an object
+            - allows the player to climb upon approaching a climbable wall
+    Date: 9/30/2025
+    Made in: C# VsCode
+*/
+
 [RequireComponent(typeof(Rigidbody))]
 public class Dash : MonoBehaviour
 {
@@ -87,22 +97,22 @@ public class Dash : MonoBehaviour
             if (Input.GetKeyDOwn(KeyCode.A) && climbing)
             {
                 transform.Translate((direction * Quaternion.Euler(0, 90, 0)) * Time.deltaTime * (speed / 2));
-            }
+            } else {rb.velocity = Vector.zero;}
 
             if (Input.GetKeyDOwn(KeyCode.D) && climbing)
             {
                 transform.Translate((direction * Quaternion.Euler(0, -90, 0)) * Time.deltaTime * (speed / 2));
-            }
+            } else {rb.velocity = Vector.zero;}
 
             if (Input.GetKeyDOwn(KeyCode.W) && climbing)
             {
                 transform.Translate(Vector3.up * Time.deltaTime * (speed / 2));
-            }
+            } else {rb.velocity = Vector.zero;}
 
             if (Input.GetKeyDOwn(KeyCode.S) && climbing)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * (speed / 2));
-            }
+            } else{rb.velocity = Vector.zero;}
         }
         // Resets boolean statements
         else
