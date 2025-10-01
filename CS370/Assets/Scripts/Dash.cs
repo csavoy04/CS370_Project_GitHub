@@ -74,7 +74,7 @@ public class Dash : MonoBehaviour
             dashCooldown -= Time.deltaTime;
         }
 
-        /*---------------------------------------- CLIMBING ----------------------------------*/
+        /*---------------------------------------- CLIMBING ----------------------------------
         if (Physics.Raycast(transform.position, direction, 0.5f, CLIMABLE) && !grounded && Input.GetKeyDown(KeyCode.Space))
         {
             // Stopping normal player movement, disables gravity, resets player velocity
@@ -83,7 +83,7 @@ public class Dash : MonoBehaviour
             rb.linearVelocity = Vector.zero;
             rb.useGravity = false;
 
-            /*-------------------------------- CLIMBING ACTION ------------------------------- */
+            /*-------------------------------- CLIMBING ACTION ------------------------------- 
             if (Input.GetKeyDOwn(KeyCode.A) && climbing)
             {
                 transform.Translate((direction * Quaternion.Euler(0, 90, 0)) * Time.deltaTime * (speed / 2));
@@ -111,6 +111,7 @@ public class Dash : MonoBehaviour
             climbing = false;
             rb.useGravity = true;
         }
+        */
     }
 
 /*----------------------------------------- TIMER ------------------------------------*/
