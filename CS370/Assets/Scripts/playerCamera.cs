@@ -5,9 +5,23 @@ public class BasicFollow : MonoBehaviour {
 
     public Transform player;
     public Vector3 locationOffset;
+    bool isRunning;
+
+    void start()
+    {
+        bool isRunning = GameObject.Find("Player").GetComponent<Movement>().isRunning;
+    }
 
     // Update is called once per frame
     void Update () {
-        transform.position = player.transform.position + locationOffset;
+        if (isRunning)
+        {
+            transform.position = player.transform.position + locationOffset;
+        }
+        else
+        {
+            // This should make the camera lag behind the player while the player is running
+            transform.position = Vector3.moveTowards(transform.position, player.position, 0.5 * time.deltaTime);
+        }
     }
 }

@@ -30,13 +30,13 @@ public class Dash : MonoBehaviour
     bool dashing = false;
     bool grounded;
     bool moveable;
-    bool climbing = false;
 
     Coroutine Timer;
 
     CharacterController controller;
     Rigidbody rb;
     RaycastHit hit;
+    int layerMask = LayerMask.GetMask("CLIMBABLE");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +46,7 @@ public class Dash : MonoBehaviour
         // Obtaining external values
         bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
         bool moveable = GameObject.Find("Player").GetComponent<Movement>().moveable;
+        bool speed = GameObject.Find("Player").GetComponent<Movement>().speed;
     }
 
     // Update is called once per frame
@@ -84,7 +85,7 @@ public class Dash : MonoBehaviour
             dashCooldown -= Time.deltaTime;
         }
 
-        /*---------------------------------------- CLIMBING ----------------------------------
+        /*---------------------------------------- CLIMBING ----------------------------------*/
         if (Physics.Raycast(transform.position, direction, 0.5f, CLIMABLE) && !grounded && Input.GetKeyDown(KeyCode.Space))
         {
             // Stopping normal player movement, disables gravity, resets player velocity
@@ -93,7 +94,7 @@ public class Dash : MonoBehaviour
             rb.linearVelocity = Vector.zero;
             rb.useGravity = false;
 
-            /*-------------------------------- CLIMBING ACTION ------------------------------- 
+            /*-------------------------------- CLIMBING ACTION ------------------------------- */
             if (Input.GetKeyDOwn(KeyCode.A) && climbing)
             {
                 transform.Translate((direction * Quaternion.Euler(0, 90, 0)) * Time.deltaTime * (speed / 2));
@@ -121,10 +122,14 @@ public class Dash : MonoBehaviour
             climbing = false;
             rb.useGravity = true;
         }
-        */
     }
 
-/*----------------------------------------- TIMER ------------------------------------*/
+/* Timer function made by: Jaden
+        - Timer to tell the script when the player can dash
+    Date: ?
+    Made in: C# VsCode
+*/
+    /*----------------------------------------- TIMER ------------------------------------*/
     IEnumerator TimerCoroutine(float Seconds)
     {
         //Start Timer
