@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.Numerics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
@@ -9,11 +12,10 @@ public class combatHandler : MonoBehaviour
     public GameObject enemyprefab;
     public BattleState State;
 
-    //Player Party List
-    //public List<Character> PlayerParty;
+    public List<Character> PlayerParty;
 
-    //Enemy Party List
-    //public List<Enemy> EnemyParty;
+    public List<Enemy> EnemyParty;
+
 
     void Start()
     {
@@ -23,22 +25,22 @@ public class combatHandler : MonoBehaviour
         Debug.Log("Combat State Start");
 
         //Create Player Party (for testing)
-        //PlayerParty = new List<Character>();
+        PlayerParty = new List<Character>();
 
-        //PlayerParty.Add(new Character("Timmy", 999, 999, 999, 999));
-        //PlayerParty.Add(new Character("Steve", 10, 100, 100, 10));
-        //PlayerParty.Add(new Character("Bob", 5, 5, 5, 5));
+        PlayerParty.Add(new Character("Timmy", 999, 999, 999, 999));
+        PlayerParty.Add(new Character("Steve", 10, 100, 100, 10));
+        PlayerParty.Add(new Character("Bob", 5, 5, 5, 5));
 
-        //Debug.Log("Party Member 2 Name: " + PlayerParty[1].Name + " || Party Member 2 Lvl: " + PlayerParty[1].Level);
+        Debug.Log("Party Member 2 Name: " + PlayerParty[1].Name + " || Party Member 2 Lvl: " + PlayerParty[1].Level);
 
         //Create Enemy Party (for testing)
-        //EnemyParty = new List<Enemy>();
+        EnemyParty = new List<Enemy>();
 
-        //EnemyParty.Add(new Enemy("Slimmy", 1, 20, 20, 5));
-        //EnemyParty.Add(new Enemy("Slimey", 1, 20, 20, 5));
-        //EnemyParty.Add(new Enemy("Slim", 1, 20, 20, 5));
+        EnemyParty.Add(new Enemy("Slimmy", 1, 20, 20, 5));
+        EnemyParty.Add(new Enemy("Slimey", 1, 20, 20, 5));
+        EnemyParty.Add(new Enemy("Slim", 1, 20, 20, 5));
     }
-    /*
+    
     void Update(){
         if (State == BattleState.Start){
             SpawnEnemy();
@@ -47,8 +49,12 @@ public class combatHandler : MonoBehaviour
         }
     }
     public void PlayerTurn(){
-        Input.GetKeyDown(KeyCode.V);
-        Debug.Log("Pressed V");
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("Pressed V");
+        }
+            
         State = BattleState.EnemyTurn;
         Debug.Log("Combat State Enemy Turn");
     }
@@ -65,10 +71,10 @@ public class combatHandler : MonoBehaviour
             Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
         }
     } 
-    */
 }
 
-/*
+
+
 //Party System
 public struct Character
 {
@@ -82,6 +88,7 @@ public struct Character
     //Contructor
     public Character(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
     {
+        Level = GivenLevel;
         Name = GivenName;
         Health = GivenHealth;
         Mana = GivenMana;
@@ -100,10 +107,11 @@ public struct Enemy
 
     public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
     {
+        Level = GivenLevel;
         Name = GivenName;
         Health = GivenHealth;
         Mana = GivenMana;
         Attack = GivenAttack;
     }
 }
-*/
+
