@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Numerics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
+using static CharacterBase;
+using static EnemyBase;
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
 public class combatHandler : MonoBehaviour
@@ -11,9 +9,7 @@ public class combatHandler : MonoBehaviour
     public GameObject playerprefab;
     public GameObject enemyprefab;
     public BattleState State;
-
     public List<Character> PlayerParty;
-
     public List<Enemy> EnemyParty;
 
 
@@ -75,43 +71,4 @@ public class combatHandler : MonoBehaviour
 
 
 
-//Party System
-public struct Character
-{
-    //Stats
-    public string Name { get; set; }
-    public int Level { get; set; }
-    public int Health { get; set; }
-    public int Mana { get; set; }
-    public int Attack { get; set; }
-
-    //Contructor
-    public Character(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
-    {
-        Level = GivenLevel;
-        Name = GivenName;
-        Health = GivenHealth;
-        Mana = GivenMana;
-        Attack = GivenAttack;
-    }
-}
-
-public struct Enemy
-{
-    //Stats
-    public string Name { get; set; }
-    public int Level { get; set; }
-    public int Health { get; set; }
-    public int Mana { get; set; }
-    public int Attack { get; set; }
-
-    public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
-    {
-        Level = GivenLevel;
-        Name = GivenName;
-        Health = GivenHealth;
-        Mana = GivenMana;
-        Attack = GivenAttack;
-    }
-}
 
