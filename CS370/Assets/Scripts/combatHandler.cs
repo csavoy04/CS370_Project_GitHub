@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using System.Numerics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
 public class combatHandler : MonoBehaviour
 {
-
     public GameObject playerprefab;
     public GameObject enemyprefab;
     public BattleState State;
 
-    //Player Party List
     public List<Character> PlayerParty;
 
-    //Enemy Party List
     public List<Enemy> EnemyParty;
+
 
     void Start()
     {
@@ -42,17 +42,19 @@ public class combatHandler : MonoBehaviour
     }
     
     void Update(){
-        /*
         if (State == BattleState.Start){
             SpawnEnemy();
             SpawnPlayerTeam();
             PlayerTurn();
         }
-        */
     }
     public void PlayerTurn(){
-        Input.GetKeyDown(KeyCode.V);
-        Debug.Log("Pressed V");
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("Pressed V");
+        }
+            
         State = BattleState.EnemyTurn;
         Debug.Log("Combat State Enemy Turn");
     }
@@ -68,42 +70,48 @@ public class combatHandler : MonoBehaviour
         for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++){
             Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
         }
+    } 
+}
+
+
+
+//Party System
+public struct Character
+{
+    //Stats
+    public string Name { get; set; }
+    public int Level { get; set; }
+    public int Health { get; set; }
+    public int Mana { get; set; }
+    public int Attack { get; set; }
+
+    //Contructor
+    public Character(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
+    {
+        Level = GivenLevel;
+        Name = GivenName;
+        Health = GivenHealth;
+        Mana = GivenMana;
+        Attack = GivenAttack;
     }
+}
 
-    //Party System
-    public struct Character {
-        //Stats
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public int Health { get; set; }
-        public int Mana { get; set; }
-        public int Attack { get; set; }
+public struct Enemy
+{
+    //Stats
+    public string Name { get; set; }
+    public int Level { get; set; }
+    public int Health { get; set; }
+    public int Mana { get; set; }
+    public int Attack { get; set; }
 
-        //Constructor
-        public Character(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack){
-            Name = GivenName;
-            Level = GivenLevel;
-            Health = GivenHealth;
-            Mana = GivenMana;
-            Attack = GivenAttack;
-        }
-    }
-
-    public struct Enemy {
-        //Stats
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public int Health { get; set; }
-        public int Mana { get; set; }
-        public int Attack { get; set; }
-
-        public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack){
-            Name = GivenName;
-            Level = GivenLevel;
-            Health = GivenHealth;
-            Mana = GivenMana;
-            Attack = GivenAttack;
-        }
+    public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
+    {
+        Level = GivenLevel;
+        Name = GivenName;
+        Health = GivenHealth;
+        Mana = GivenMana;
+        Attack = GivenAttack;
     }
 }
 
