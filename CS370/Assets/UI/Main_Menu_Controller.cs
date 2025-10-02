@@ -13,6 +13,13 @@ public class Main_Menu_Controller : MonoBehaviour
 
         root = uiDocument.rootVisualElement;
 
+        //Closes Party Menu at start
+        var menuParty = root.Q<VisualElement>("Party-Menu");
+        menuParty.style.display = DisplayStyle.None;
+
+        //Closes Menu at start and when opened will only show main menu
+        root.style.display = DisplayStyle.None;
+
         //Main Menu Buttons
         var playBtn = root.Q<VisualElement>("PlayBtn");
         playBtn.RegisterCallback<ClickEvent>(PlayEvent);
