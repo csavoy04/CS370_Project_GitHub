@@ -25,7 +25,6 @@ public class Dash : MonoBehaviour
     float speed;
 
     string dashDirection;
-    float speed;
 
     // Vectors
     public Vector3 direction;
@@ -95,19 +94,19 @@ public class Dash : MonoBehaviour
         {
             // Stopping normal player movement, disables gravity, resets player velocity
             moveable = false;
-            rb.linearVelocity = Vector.zero;
+            // rb.linearVelocity = Vector.zero;
             rb.useGravity = false;
 
             /*-------------------------------- CLIMBING ACTION ------------------------------- */
             if (Input.GetKeyDown(KeyCode.A) && climbing)
             {
-                transform.Translate((direction*Quaternion.AngleAxis(90, Vector3.left))*Time.deltaTime*(speed/2));
-            } else {rb.velocity = Vector.zero;}
+                transform.Translate((Quaternion.AngleAxis(90, Vector3.left)*direction)*Time.deltaTime*(speed/2));
+            }
 
             if (Input.GetKeyDown(KeyCode.D) && climbing)
             {
-                transform.Translate((direction*Quaternion.AngleAxis(90, Vector3.right))*Time.deltaTime*(speed/2));
-            } else {rb.velocity = Vector.zero;}
+                transform.Translate((Quaternion.AngleAxis(90, Vector3.right)*direction)*Time.deltaTime*(speed/2));
+            }
 
             if (Input.GetKeyDown(KeyCode.W) && climbing)
             {

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static CharacterBase;
-using static EnemyBase;
+//using static CharacterBase;
+//using static EnemyBase;
+
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Neutral }
 
 public class combatHandler : MonoBehaviour
