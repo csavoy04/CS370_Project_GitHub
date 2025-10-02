@@ -1,16 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.LowLevelPhysics;
 
-/*  Script made by:
-        Script that:
-            - obtains the current direction of the player as a Vector3
-            - allows the player to dash 5 units ahead, or obj detection -0.5
-                in the event of the raycast colliding with an object
-            - allows the player to climb upon approaching a climbable wall
-    Date: 9/30/2025
-    Made in: C# VsCode
-*/
+
 
 [RequireComponent(typeof(Rigidbody))]
 public class Dash : MonoBehaviour
@@ -22,6 +16,7 @@ public class Dash : MonoBehaviour
     float dashDistance = 5;
 
     string dashDirection;
+    float speed;
 
     // Vectors
     public Vector3 direction;
@@ -30,13 +25,14 @@ public class Dash : MonoBehaviour
     bool dashing = false;
     bool grounded;
     bool moveable;
+    bool climbing = false;
 
     Coroutine Timer;
 
     CharacterController controller;
     Rigidbody rb;
     RaycastHit hit;
-    int layerMask = LayerMask.GetMask("CLIMBABLE");
+    int CLIMABLE = LayerMask.GetMask("CLIMABLE");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,7 +42,7 @@ public class Dash : MonoBehaviour
         // Obtaining external values
         bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
         bool moveable = GameObject.Find("Player").GetComponent<Movement>().moveable;
-        bool speed = GameObject.Find("Player").GetComponent<Movement>().speed;
+        float speed = GameObject.Find("Player").GetComponent<Movement>().speed;
     }
 
     // Update is called once per frame
@@ -91,29 +87,29 @@ public class Dash : MonoBehaviour
             // Stopping normal player movement, disables gravity, resets player velocity
             moveable = false;
             climbing = true;
-            rb.linearVelocity = Vector.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.useGravity = false;
 
             /*-------------------------------- CLIMBING ACTION ------------------------------- */
-            if (Input.GetKeyDOwn(KeyCode.A) && climbing)
+            if (Input.GetKeyDown(KeyCode.A) && climbing)
             {
-                transform.Translate((direction * Quaternion.Euler(0, 90, 0)) * Time.deltaTime * (speed / 2));
-            } else {rb.velocity = Vector.zero;}
+                transform.Translate(direction * Quaternion.Euler(0, 90, 0) * Time.deltaTime * (speed / 2));
+            }
 
-            if (Input.GetKeyDOwn(KeyCode.D) && climbing)
+            if (Input.GetKeyDown(KeyCode.D) && climbing)
             {
-                transform.Translate((direction * Quaternion.Euler(0, -90, 0)) * Time.deltaTime * (speed / 2));
-            } else {rb.velocity = Vector.zero;}
+                transform.Translate(direction * Quaternion.Euler(0, -90, 0) * Time.deltaTime * (speed / 2));
+            }
 
-            if (Input.GetKeyDOwn(KeyCode.W) && climbing)
+            if (Input.GetKeyDown(KeyCode.W) && climbing)
             {
                 transform.Translate(Vector3.up * Time.deltaTime * (speed / 2));
-            } else {rb.velocity = Vector.zero;}
+            }
 
-            if (Input.GetKeyDOwn(KeyCode.S) && climbing)
+            if (Input.GetKeyDown(KeyCode.S) && climbing)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * (speed / 2));
-            } else{rb.velocity = Vector.zero;}
+            }
         }
         // Resets boolean statements
         else
@@ -124,12 +120,7 @@ public class Dash : MonoBehaviour
         }
     }
 
-/* Timer function made by: Jaden
-        - Timer to tell the script when the player can dash
-    Date: ?
-    Made in: C# VsCode
-*/
-    /*----------------------------------------- TIMER ------------------------------------*/
+/*----------------------------------------- TIMER ------------------------------------*/
     IEnumerator TimerCoroutine(float Seconds)
     {
         //Start Timer
