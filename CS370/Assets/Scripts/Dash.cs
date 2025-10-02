@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.LowLevelPhysics;
 
 /*  Script made by:
         Script that:
@@ -23,6 +25,7 @@ public class Dash : MonoBehaviour
     float speed;
 
     string dashDirection;
+    float speed;
 
     // Vectors
     public Vector3 direction;
@@ -31,13 +34,14 @@ public class Dash : MonoBehaviour
     bool dashing = false;
     bool grounded;
     bool moveable;
+    bool climbing = false;
 
     Coroutine Timer;
 
     CharacterController controller;
     Rigidbody rb;
     RaycastHit hit;
-    int layerMask = LayerMask.GetMask("CLIMBABLE");
+    int CLIMABLE = LayerMask.GetMask("CLIMABLE");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,7 +51,7 @@ public class Dash : MonoBehaviour
         // Obtaining external values
         bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
         bool moveable = GameObject.Find("Player").GetComponent<Movement>().moveable;
-        bool speed = GameObject.Find("Player").GetComponent<Movement>().speed;
+        float speed = GameObject.Find("Player").GetComponent<Movement>().speed;
     }
 
     // Update is called once per frame
@@ -95,25 +99,25 @@ public class Dash : MonoBehaviour
             rb.useGravity = false;
 
             /*-------------------------------- CLIMBING ACTION ------------------------------- */
-            if (Input.GetKeyDOwn(KeyCode.A) && climbing)
+            if (Input.GetKeyDown(KeyCode.A) && climbing)
             {
                 transform.Translate((direction*Quaternion.AngleAxis(90, Vector3.left))*Time.deltaTime*(speed/2));
             } else {rb.velocity = Vector.zero;}
 
-            if (Input.GetKeyDOwn(KeyCode.D) && climbing)
+            if (Input.GetKeyDown(KeyCode.D) && climbing)
             {
                 transform.Translate((direction*Quaternion.AngleAxis(90, Vector3.right))*Time.deltaTime*(speed/2));
             } else {rb.velocity = Vector.zero;}
 
-            if (Input.GetKeyDOwn(KeyCode.W) && climbing)
+            if (Input.GetKeyDown(KeyCode.W) && climbing)
             {
                 transform.Translate(Vector3.up * Time.deltaTime * (speed / 2));
-            } else {rb.velocity = Vector.zero;}
+            }
 
-            if (Input.GetKeyDOwn(KeyCode.S) && climbing)
+            if (Input.GetKeyDown(KeyCode.S) && climbing)
             {
                 transform.Translate(Vector3.down * Time.deltaTime * (speed / 2));
-            } else{rb.velocity = Vector.zero;}
+            }
         }
         // Resets boolean statements
         else
@@ -123,12 +127,7 @@ public class Dash : MonoBehaviour
         }
     }
 
-/* Timer function made by: Jaden
-        - Timer to tell the script when the player can dash
-    Date: ?
-    Made in: C# VsCode
-*/
-    /*----------------------------------------- TIMER ------------------------------------*/
+/*----------------------------------------- TIMER ------------------------------------*/
     IEnumerator TimerCoroutine(float Seconds)
     {
         //Start Timer
