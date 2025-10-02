@@ -9,6 +9,7 @@ using System.Collections.Generic;
     Made in: C# VScode
 */
 
+
 [RequireComponent(typeof(Rigidbody))]
 public class Crouch : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class Crouch : MonoBehaviour
         bool isCrouching = GameObject.Find("Player").GetComponent<Movement>().isCrouching;
         bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
         bool isRunning = GameObject.Find("Player").GetComponent<Movement>().isRunning;
-        bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
+        //bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
     }
 
     // Update is called once per frame

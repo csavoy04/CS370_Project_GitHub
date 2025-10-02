@@ -15,11 +15,18 @@
 .menu {
     -unity-background-image-tint-color: rgb(255, 255, 255);
     align-items: center;
-    width: 20%;
-    height: 20%;
-    align-self: auto;
+    width: 35%;
+    height: auto;
+    align-self: center;
     display: flex;
     background-color: rgba(127, 255, 212, 0.75);
+    justify-content: center;
+    align-content: center;
+    max-height: 80%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .unity-button {
@@ -53,4 +60,8 @@
 .unity-button:hover {
     background-color: rgba(48, 178, 170, 0.86);
     scale: 1.1 1.1;
+}
+
+.hide {
+    display: none;
 }
