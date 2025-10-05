@@ -541,6 +541,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BasicFollow
   player: {fileID: 1144929334}
   locationOffset: {x: 0, y: 10, z: -10}
+--- !u!1 &1132451329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132451331}
+  - component: {fileID: 1132451330}
+  m_Layer: 0
+  m_Name: PartySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1132451330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132451329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f91de4dd3fed20469c517f4d06bda3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartySystem
+  PlayerParty: []
+  EnemyParty: []
+--- !u!4 &1132451331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132451329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.73658, y: 0.5, z: 3.89065}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1144929328
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,3 +1021,4 @@ SceneRoots:
   - {fileID: 839825413}
   - {fileID: 1777938532}
   - {fileID: 2065209402}
+  - {fileID: 1132451331}

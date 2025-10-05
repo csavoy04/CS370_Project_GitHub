@@ -82,11 +82,11 @@ public class HeroKnight : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
         }
-
+        /*
         // Move
         if (!m_rolling )
             m_body2d.linearVelocity = new Vector2(inputX * m_speed, m_body2d.linearVelocity.y);
-
+        */
         //Set AirSpeed in animator
         m_animator.SetFloat("AirSpeedY", m_body2d.linearVelocity.y);
 
