@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,12 +29,14 @@ public class combatHandler : MonoBehaviour{
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start(){
+    void Start()
+    {
 
         State = BattleState.Neutral;
         Debug.Log("Combat State Neutral");
 
-        if (PlayerParty == null || PlayerParty.Count == 0){
+        if (PlayerParty == null || PlayerParty.Count == 0)
+        {
 
             //Create Player Party (for testing)
             PlayerParty = new List<Character>();
@@ -48,7 +48,8 @@ public class combatHandler : MonoBehaviour{
             Debug.Log("Party Member 2 Name: " + PlayerParty[1].Name + " || Party Member 2 Lvl: " + PlayerParty[1].Level);
         }
 
-        if (EnemyParty == null || EnemyParty.Count == 0){
+        if (EnemyParty == null || EnemyParty.Count == 0)
+        {
 
             //Create Enemy Party (for testing)
             EnemyParty = new List<Enemy>();
@@ -61,26 +62,24 @@ public class combatHandler : MonoBehaviour{
 
     void Update() {
 
-        if (SceneManager.GetActiveScene().name == "CombatArea") {
+        if (SceneManager.GetActiveScene().name == "CombatArea" && State == BattleState.Neutral)
+        {
             State = BattleState.Start;
             Debug.Log("Combat State Start");
-        }
-
-        if (State == BattleState.Start){
-            SpawnEnemy();
-            SpawnPlayerTeam();
-            PlayerTurn();
-        }
-    }
-    public void PlayerTurn(){
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("Pressed V");
+            battleStart();
         }
             
-        State = BattleState.EnemyTurn;
-        Debug.Log("Combat State Enemy Turn");
+    }
+
+    public void battleStart()
+    {
+        SpawnEnemy();
+        SpawnPlayerTeam();
+        PlayerTurn();
+    }
+    public void PlayerTurn()
+    {
+        State = BattleState.PlayerTurn;
     }
     public void SpawnEnemy(){
         int NoOfEnemies = 3;
