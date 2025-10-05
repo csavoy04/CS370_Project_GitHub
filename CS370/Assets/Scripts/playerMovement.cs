@@ -43,8 +43,8 @@ public class Movement : MonoBehaviour
         jump = new Vector3(0.0f, 1.0f, 0.0f);
 
         // Obtaining external values
-        bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
-        bool isCrouching = GameObject.Find("Player").GetComponent<isCrouching>().isCrouching;
+        //bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
+        //bool isCrouching = GameObject.Find("Player").GetComponent<isCrouching>().isCrouching;
     }
 
     /*--------------------------------------- RAYCAST ---------------------------------*/

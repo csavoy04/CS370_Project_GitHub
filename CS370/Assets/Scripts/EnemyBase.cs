@@ -1,15 +1,14 @@
 using UnityEngine;
-using System.Collections.Generic;
 
-
-    public struct Enemy
+[System.Serializable]
+public struct Enemy
 {
     //Stats
-    public string Name { get; set; }
-    public int Level { get; set; }
-    public int Health { get; set; }
-    public int Mana { get; set; }
-    public int Attack { get; set; }
+    public string Name;
+    public int Level;
+    public int Health;
+    public int Mana;
+    public int Attack;
 
     public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
     {

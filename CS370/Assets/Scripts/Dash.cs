@@ -40,7 +40,7 @@ public class Dash : MonoBehaviour
     CharacterController controller;
     Rigidbody rb;
     RaycastHit hit;
-    int CLIMABLE = LayerMask.GetMask("CLIMABLE");
+    //int CLIMABLE = LayerMask.GetMask("CLIMABLE");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -89,7 +89,7 @@ public class Dash : MonoBehaviour
             dashCooldown -= Time.deltaTime;
         }
 
-        /*---------------------------------------- CLIMBING ----------------------------------*/
+        /*---------------------------------------- CLIMBING ----------------------------------
         if (Physics.Raycast(transform.position, direction, 0.5f, CLIMABLE) && !grounded && Input.GetKeyDown(KeyCode.Space))
         {
             // Stopping normal player movement, disables gravity, resets player velocity
@@ -97,7 +97,7 @@ public class Dash : MonoBehaviour
             // rb.linearVelocity = Vector.zero;
             rb.useGravity = false;
 
-            /*-------------------------------- CLIMBING ACTION ------------------------------- */
+            /*-------------------------------- CLIMBING ACTION ------------------------------- 
             if (Input.GetKeyDown(KeyCode.A) && climbing)
             {
                 transform.Translate((Quaternion.AngleAxis(90, Vector3.left)*direction)*Time.deltaTime*(speed/2));
@@ -124,6 +124,7 @@ public class Dash : MonoBehaviour
             moveable = true;
             rb.useGravity = true;
         }
+        */
     }
 
 /*----------------------------------------- TIMER ------------------------------------*/

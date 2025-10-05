@@ -21,7 +21,7 @@ public class BasicFollow : MonoBehaviour {
         else
         {
             // This should make the camera lag behind the player while the player is running
-            transform.position = Vector3.moveTowards(transform.position, player.position, 0.5 * time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, player.position, 0.5f * Time.deltaTime);
         }
     }
 }
