@@ -602,7 +602,6 @@ GameObject:
   - component: {fileID: 1144929330}
   - component: {fileID: 1144929329}
   - component: {fileID: 1144929335}
-  - component: {fileID: 1144929336}
   - component: {fileID: 1144929337}
   - component: {fileID: 1144929338}
   m_Layer: 6
@@ -626,6 +625,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   moveDirection: {x: 0, y: 0, z: 0}
   jump: {x: 0, y: 0, z: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   isCrouching: 0
   isRunning: 0
   dashing: 0
@@ -633,9 +635,6 @@ MonoBehaviour:
   grounded: 1
   speed: 10
   jumpForce: 2
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!54 &1144929330
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -771,18 +770,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::quickTimeEvents
   QTEType: 0
---- !u!114 &1144929336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144929328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d1424d8b95d8c44596b706265214412, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &1144929337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   direction: {x: 0, y: 0, z: 0}
+  pm: {fileID: 0}
 --- !u!143 &1144929338
 CharacterController:
   m_ObjectHideFlags: 0

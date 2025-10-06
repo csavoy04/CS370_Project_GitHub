@@ -15,25 +15,21 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
+    [Header("References")]
     public Vector3 moveDirection;
     public Vector3 jump;
+    CharacterController controller;
+    Rigidbody rb;
+    public LayerMask layerMask;
 
-    // Booleans
+    [Header("Variables")]
     public bool isCrouching = false;
     public bool isRunning = false;
     public bool dashing = false;
     public bool moveable = true;
     public bool grounded = true;
-
-    // Floats
     public float speed;
     public float jumpForce;
-
-    CharacterController controller;
-    Rigidbody rb;
-
-    // Raycast
-    public LayerMask layerMask;
 
     // Ran at the start of the script being ran
     void Start()
@@ -41,6 +37,8 @@ public class Movement : MonoBehaviour
         transform.Translate(new Vector3(0, 0, 0)); // Starting orientation
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 1.0f, 0.0f);
+        controller = GetComponent<CharacterController>();
+        controller.height = 1.0f;
 
         // Obtaining external values
         //bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
@@ -116,6 +114,17 @@ public class Movement : MonoBehaviour
             else
             {
                 isRunning = false;
+            }
+
+            if (Input.GetKey(KeyCode.C) && grounded && !isRunning)
+            {
+                isCrouching = true;
+                controller.height = 0.3f;
+            }
+            else
+            {
+                isCrouching = false;
+                controller.height = 1.0f;
             }
         }
     }

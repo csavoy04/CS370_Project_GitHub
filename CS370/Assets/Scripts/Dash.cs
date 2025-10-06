@@ -17,48 +17,26 @@ using UnityEngine.LowLevelPhysics;
 [RequireComponent(typeof(Rigidbody))]
 public class Dash : MonoBehaviour
 {
+    [Header("References")]
     Movement Movement;
+    Coroutine Timer;
+    RaycastHit hit;
+    string dashDirection;
+    public Vector3 direction;
+    public Movement pm;
 
-    // Floats
+    [Header("Variables")]
     float dashCooldown = 0;
     float dashDistance = 5;
     float speed;
-
-    string dashDirection;
-
-    // Vectors
-    public Vector3 direction;
-
-    // Bools
     bool dashing = false;
-    bool grounded;
-    bool moveable;
-    bool climbing = false;
-
-    Coroutine Timer;
-
-    CharacterController controller;
-    Rigidbody rb;
-    RaycastHit hit;
-    //int CLIMABLE = LayerMask.GetMask("CLIMABLE");
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-
-        // Obtaining external values
-        bool grounded = GameObject.Find("Player").GetComponent<Movement>().grounded;
-        bool moveable = GameObject.Find("Player").GetComponent<Movement>().moveable;
-        float speed = GameObject.Find("Player").GetComponent<Movement>().speed;
-    }
 
     // Update is called once per frame
     void Update()
     {
         direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         /*------------------------------------ PLAYER DASHING ----------------------------*/
-        if (Input.GetKeyDown(KeyCode.LeftControl) && dashCooldown <= 0 && moveable)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && dashCooldown <= 0)
         {
             dashing = true;
         }
@@ -88,43 +66,6 @@ public class Dash : MonoBehaviour
         {
             dashCooldown -= Time.deltaTime;
         }
-
-        /*---------------------------------------- CLIMBING ----------------------------------
-        if (Physics.Raycast(transform.position, direction, 0.5f, CLIMABLE) && !grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            // Stopping normal player movement, disables gravity, resets player velocity
-            moveable = false;
-            // rb.linearVelocity = Vector.zero;
-            rb.useGravity = false;
-
-            /*-------------------------------- CLIMBING ACTION ------------------------------- 
-            if (Input.GetKeyDown(KeyCode.A) && climbing)
-            {
-                transform.Translate((Quaternion.AngleAxis(90, Vector3.left)*direction)*Time.deltaTime*(speed/2));
-            }
-
-            if (Input.GetKeyDown(KeyCode.D) && climbing)
-            {
-                transform.Translate((Quaternion.AngleAxis(90, Vector3.right)*direction)*Time.deltaTime*(speed/2));
-            }
-
-            if (Input.GetKeyDown(KeyCode.W) && climbing)
-            {
-                transform.Translate(Vector3.up * Time.deltaTime * (speed / 2));
-            }
-
-            if (Input.GetKeyDown(KeyCode.S) && climbing)
-            {
-                transform.Translate(Vector3.down * Time.deltaTime * (speed / 2));
-            }
-        }
-        // Resets boolean statements
-        else
-        {
-            moveable = true;
-            rb.useGravity = true;
-        }
-        */
     }
 
 /*----------------------------------------- TIMER ------------------------------------*/
