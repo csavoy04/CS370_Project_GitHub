@@ -18,7 +18,8 @@ public class combatHandler : MonoBehaviour{
 
     }
 
-    void Update() {
+    void Update()
+    {
 
         if (SceneManager.GetActiveScene().name == "CombatArea" && State == BattleState.Neutral)
         {
@@ -26,7 +27,17 @@ public class combatHandler : MonoBehaviour{
             Debug.Log("Combat State Start");
             battleStart();
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            State = BattleState.Won;
+            BattleEnd();
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            State = BattleState.Lost;
+            BattleEnd();
+        }
     }
 
     public void battleStart()
@@ -34,6 +45,20 @@ public class combatHandler : MonoBehaviour{
         SpawnEnemy();
         SpawnPlayerTeam();
         PlayerTurn();
+    }
+
+    public void BattleEnd()
+    {
+        if (State == BattleState.Won)
+        {
+            Debug.Log("You won the battle!");
+            SceneManager.LoadScene("TestArea");
+        }
+        else if (State == BattleState.Lost)
+        {
+            Debug.Log("You lost the battle...");
+            SceneManager.LoadScene("TestArea");
+        }
     }
     public void PlayerTurn()
     {
