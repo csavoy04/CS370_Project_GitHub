@@ -9,14 +9,20 @@ public struct Enemy
     public int Health;
     public int Mana;
     public int Attack;
+    public int Defense;
+    public int Speed;
 
-    public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack)
+
+    public Enemy(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed)
     {
         Level = GivenLevel;
         Name = GivenName;
         Health = GivenHealth;
         Mana = GivenMana;
         Attack = GivenAttack;
+        Defense = GivenDefense;
+        Speed = GivenSpeed;
     }
+
 }
 

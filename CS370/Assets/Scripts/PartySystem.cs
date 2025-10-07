@@ -30,9 +30,9 @@ public class PartySystem : MonoBehaviour{
             //Create Player Party
             PlayerParty = new List<Character>();
 
-            PlayerParty.Add(new Character("Timmy", 999, 999, 999, 999));
-            PlayerParty.Add(new Character("Steve", 10, 100, 100, 10));
-            PlayerParty.Add(new Character("Bob", 5, 5, 5, 5));
+            PlayerParty.Add(new Character("Timmy", 999, 999, 999, 999,999,999));
+            PlayerParty.Add(new Character("Steve", 10, 100, 100, 10,10,10));
+            PlayerParty.Add(new Character("Bob", 5, 5, 5, 5,5, 5));
 
         }
 
@@ -41,9 +41,9 @@ public class PartySystem : MonoBehaviour{
             //Create Enemy Party
             EnemyParty = new List<Enemy>();
 
-            EnemyParty.Add(new Enemy("Slimmy", 1, 20, 20, 5));
-            EnemyParty.Add(new Enemy("Slimey", 1, 20, 20, 5));
-            EnemyParty.Add(new Enemy("Slim", 1, 20, 20, 5));
+            EnemyParty.Add(new Enemy("Slimmy", 1, 20, 20, 5,5,5));
+            EnemyParty.Add(new Enemy("Slimey", 1, 20, 20, 5,5,5));
+            EnemyParty.Add(new Enemy("Slim", 1, 20, 20, 5,5,5));
         }
     }
 

@@ -131,7 +131,7 @@ public class Movement : MonoBehaviour
     /*---------------------------------- Player Trigger ----------------------------*/
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CombatTrigger"))
+        if (other.gameObject.CompareTag("CombatTrigger") || other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Entering Combat Area");
             SceneManager.LoadScene("CombatArea");
