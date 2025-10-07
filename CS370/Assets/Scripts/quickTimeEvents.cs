@@ -9,62 +9,59 @@ using System.Collections;
  *  
  *  
  *  Pre-Condition:
- *  QTEGenerate = F, QTEType != 0, Timer = null
+ *  State == QTEState.Start, QTEType = [0,1,2]
  *  
  *  
  *  Post-Condition:
- *  QTEFinished = T, QTEGenerate = F, Timer = null, QTEType = 0
+ *  State == QTEState.Success || State == QTEState.Fail
  *  
  *  
  *  Output/Result:
  *  
  *  CASE 1: Passed QTE
- *  QTEFinished = T
- *  Success = T
+ *  State == QTEState.Success
  *  
  *  CASE 2: Failed QTE
- *  QTEFinished = T
- *  Success = F
+ *  State == QTEState.Fail
  */
+
+[System.Serializable]
 
 public class quickTimeEvents : MonoBehaviour{
 
     //Declaring Variables
 
     //General
-    public int QTEType = 0;          //              ***Change back to "public static int QTEType;" when done testing***
-    bool QTEGenerate;
-    public static bool Success;
+    public int QTEType;
     Coroutine Timer;
-    public static bool QTEFinished;
+    public enum QTEState { Start, Generate, CheckUser, Success, Fail }
+    public QTEState State;
 
     //Key Combination
     int NumKeys;
     public static char[] KeyCombination;
     string Characters;
     int CurrentTestedKey;
-    int KeyCombinationMaxDuration;
+    public int KeyCombinationMaxDuration;
 
     int RandomNum;
 
     //Button Mash
     public static int NumClicks;
     public static int CurrentClicks;
-    int ButtonMashMaxDuration;
+    public int ButtonMashMaxDuration;
 
     //DBD Timing
     float RandomTiming;
-    int DBDMaxDuration;
     double CurrentTiming;
+    public int DBDMaxDuration;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
 
         //Initializing Variables
-        //QTEType = 0;                                    //[0]: Default, [1]: KeyCombination, [2] Button Mash, [3] DBD Timing ....   **CHANGE TO 0 AND UNCOMMENT WHEN DONE TESTING**
-        QTEGenerate = false;                             //Triggers QTE generation                          
-        Success = false;                                //Boolean result of QTE
-        QTEFinished = false;                            //Detects if QTE is finished
+        QTEType = 0;                                    //[0]: KeyCombination, [1]: Button Mash, [2] DBD Timing, ....
+        State = QTEState.Fail;
 
         //Key Combination QTE
         NumKeys = 5;                                    //Number of keys required for KeyCombination
@@ -89,13 +86,9 @@ public class quickTimeEvents : MonoBehaviour{
         //Generation Phase
         if(Timer == null){
             //Trigger Generation
-            if (QTEGenerate == false && QTEType != 0){
+            if (State == QTEState.Start){
 
-                QTEGenerate = true;
-
-                //Reset Variables
-                QTEFinished = false;
-                Success = false;
+                State = QTEState.Generate;        //Change State to Generation Phase
 
                 CurrentTestedKey = 0;
                 CurrentClicks = 0;
@@ -103,9 +96,9 @@ public class quickTimeEvents : MonoBehaviour{
             }
 
             //Do the Generation
-            if(QTEGenerate == true){
+            if(State == QTEState.Generate){
 
-                if (QTEType == 1){                                               //If the Type is Key Combination QTE
+                if (QTEType == 0){                                               //If the Type is Key Combination QTE
 
                     //Generate Key Combination
                     for (int i = 0; i < NumKeys; i++){
@@ -123,14 +116,14 @@ public class quickTimeEvents : MonoBehaviour{
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(KeyCombinationMaxDuration));
                 }
-                else if (QTEType == 2){                                        //If the Type is Button Mash QTE
+                else if (QTEType == 1){                                        //If the Type is Button Mash QTE
 
                     Debug.Log("Mash Space " + NumClicks + " times!");          //Instructs player to mash space
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(ButtonMashMaxDuration));
                 }
-                else if (QTEType == 3){                                         //If the Type is DBD QTE
+                else if (QTEType == 2){                                         //If the Type is DBD QTE
 
                     RandomTiming = UnityEngine.Random.Range(54.0f, 252.0f);                 //Random number in set [54,252]
                     RandomTiming = (RandomTiming / 360) * DBDMaxDuration;                   //Calculates the actual time
@@ -143,13 +136,13 @@ public class quickTimeEvents : MonoBehaviour{
                 }
 
                 //Stop Generation
-                QTEGenerate = false;
+                State = QTEState.CheckUser;                                    //Change State to Input Phase
             }
         }
 
         //Test Input Phase
-        if (Timer != null){
-            if (QTEType == 1){                                  //If the Type is Key Combination QTE
+        if (State == QTEState.CheckUser && Timer != null){
+            if (QTEType == 0){                                  //If the Type is Key Combination QTE
 
                 //If Anything is pressed
                 if (Input.anyKeyDown){
@@ -170,16 +163,14 @@ public class quickTimeEvents : MonoBehaviour{
 
                     Debug.Log("QTE Completed Successfully!");
 
-                    Success = true;                                             //Player was successful
-                    QTEFinished = true;                                         //QTE is finished
-                    QTEType = 0;                                                //Reset QTE type to Default
+                    State = QTEState.Success;                                   //Player was successful
 
                     //Stop Timer
                     StopCoroutine(Timer);
                     Timer = null;
                 }
             }
-            else if (QTEType == 2){                                             //If the Type is Button Mash QTE
+            else if (QTEType == 1){                                             //If the Type is Button Mash QTE
 
                 //When Space is Pressed
                 if (Input.GetKeyDown(KeyCode.Space)){
@@ -192,16 +183,14 @@ public class quickTimeEvents : MonoBehaviour{
 
                     Debug.Log("QTE Completed Successfully!");
 
-                    Success = true;                                             //Player was successful
-                    QTEFinished = true;                                         //QTE is finished
-                    QTEType = 0;                                                //Reset QTE type to Default
+                    State = QTEState.Success;                                   //Player was successful
 
                     //Stop Timer
                     StopCoroutine(Timer);
                     Timer = null;
                 }
 
-            } else if (QTEType == 3){
+            } else if (QTEType == 2){
                 
                 //When Space is Pressed
                 if(Input.GetKeyDown(KeyCode.Space)){
@@ -209,13 +198,11 @@ public class quickTimeEvents : MonoBehaviour{
                     Debug.Log("Space Pressed at time " + CurrentTiming);
 
                     //If Pressed within the Timing Window
-                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5)){
+                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5f)){
                         
                         Debug.Log("QTE Completed Successfully!");
 
-                        Success = true;                                             //Player was successful
-                        QTEFinished = true;                                         //QTE is finished
-                        QTEType = 0;                                                //Reset QTE type to Default
+                        State = QTEState.Success;                                   //Player was successful
 
                         //Stop Timer
                         StopCoroutine(Timer);
@@ -229,8 +216,7 @@ public class quickTimeEvents : MonoBehaviour{
                         StopCoroutine(Timer);
                         Timer = null;
 
-                        QTEFinished = true;
-                        QTEType = 0;
+                        State = QTEState.Fail;                                   //Player failed
                     }                    
                 } else {
 
@@ -248,12 +234,10 @@ public class quickTimeEvents : MonoBehaviour{
         yield return new WaitForSeconds(Seconds);
 
         //If Not Completed By Then
-        if(Timer != null && Success == false){
+        if(Timer != null){
 
             Timer = null;
-            QTEFinished = true;
-
-            QTEType = 0;                     //Reset QTE Type to Default
+            State = QTEState.Fail;                   //Player failed
 
             Debug.Log("QTE Failed");
         }     
