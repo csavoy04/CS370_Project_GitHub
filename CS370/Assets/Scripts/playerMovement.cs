@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
     public Vector3 moveDirection;
     public Vector3 jump;
     CharacterController controller;
+    CapsuleCollider capsuleCollider;
     Rigidbody rb;
     public LayerMask layerMask;
 
@@ -38,11 +39,9 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 1.0f, 0.0f);
         controller = GetComponent<CharacterController>();
-        controller.height = 1.0f;
-
-        // Obtaining external values
-        //bool moveable = GameObject.Find("Player").GetComponent<Dash>().moveable;
-        //bool isCrouching = GameObject.Find("Player").GetComponent<isCrouching>().isCrouching;
+        controller.height = 2.0f;
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        capsuleCollider.height = 2.0f;
     }
 
     /*--------------------------------------- RAYCAST ---------------------------------*/
@@ -103,7 +102,7 @@ public class Movement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Space) && grounded)
             {
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
             }
 
             /*-------------------------------------- RUNNING -----------------------------------*/
@@ -119,12 +118,14 @@ public class Movement : MonoBehaviour
             if (Input.GetKey(KeyCode.C) && grounded && !isRunning)
             {
                 isCrouching = true;
-                controller.height = 0.3f;
+                controller.height = 0.8f;
+                capsuleCollider.height = 0.8f;
             }
             else
             {
                 isCrouching = false;
-                controller.height = 1.0f;
+                controller.height = 2.0f;
+                capsuleCollider.height = 2.0f;
             }
         }
     }
