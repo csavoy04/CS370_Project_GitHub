@@ -11,16 +11,22 @@ public class PartySystem : MonoBehaviour{
 
     public static PartySystem Instance;
 
-    //Prevents duplicates and keeps between scenes
-    void Awake(){
+    
 
-        if (Instance != null && Instance != this){
+    //Prevents duplicates and keeps between scenes
+    void Awake()
+    {
+
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject); // kill duplicate
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
+        Debug.Log(Character.CharacterClass.Mage);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,9 +36,9 @@ public class PartySystem : MonoBehaviour{
             //Create Player Party
             PlayerParty = new List<Character>();
 
-            PlayerParty.Add(new Character("Timmy", 999, 999, 999, 999,999,999));
-            PlayerParty.Add(new Character("Steve", 10, 100, 100, 10,10,10));
-            PlayerParty.Add(new Character("Bob", 5, 5, 5, 5,5, 5));
+            PlayerParty.Add(new Character("Timmy",Character.CharacterClass.Warrior, 999, 999, 999, 999,999,999));
+            PlayerParty.Add(new Character("Steve",Character.CharacterClass.Mage, 10, 100, 100, 10,10,10));
+            PlayerParty.Add(new Character("Bob",Character.CharacterClass.Rogue, 5, 5, 5, 5,5, 5));
 
         }
 

@@ -6,6 +6,7 @@ public struct Character
 {
     //Stats
     public string Name;
+    public CharacterClass ClassType;
     public int Level;
     public int Health;
     public int Mana;
@@ -14,8 +15,16 @@ public struct Character
     public int Speed;
     public string[] MoveSet;
 
-    public Character(string GivenName, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed)
+    public enum CharacterClass
     {
+        Warrior,
+        Mage,
+        Rogue
+    }
+
+    public Character(string GivenName, CharacterClass GivenClassType,int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed)
+    {
+        ClassType = GivenClassType;
         Level = GivenLevel;
         Name = GivenName;
         Health = GivenHealth;
@@ -50,6 +59,22 @@ public struct Character
             MoveSet[placement] = null;
         }
     }
-    
-    
+
+    public void ClearMoveSet()
+    {
+        for (int i = 0; i < MoveSet.Length; i++)
+        {
+            MoveSet[i] = null;
+        }
+    }
+
+    public void PrintMoveSet()
+    {
+        Debug.Log($"MoveSet for {Name}: {string.Join(", ", MoveSet)}");
+    }
+
+    public void PrintStats()
+    {
+        Debug.Log($"Name: {Name}, ClassType: {ClassType} Level: {Level}, Health: {Health}, Mana: {Mana}, Attack: {Attack}, Defense: {Defense}, Speed: {Speed}");
+    }
 }
