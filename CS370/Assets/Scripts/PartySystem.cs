@@ -47,9 +47,9 @@ public class PartySystem : MonoBehaviour{
             //Create Enemy Party
             EnemyParty = new List<Enemy>();
 
-            EnemyParty.Add(new Enemy("Slimmy", 1, 20, 20, 5,5,5));
-            EnemyParty.Add(new Enemy("Slimey", 1, 20, 20, 5,5,5));
-            EnemyParty.Add(new Enemy("Slim", 1, 20, 20, 5,5,5));
+            EnemyParty.Add(new Enemy("Slimmy",Enemy.EnemyType.Slime, 1, 20, 20, 5,5,5));
+            EnemyParty.Add(new Enemy("Slimey",Enemy.EnemyType.Slime, 1, 20, 20, 5,5,5));
+            EnemyParty.Add(new Enemy("Slim",Enemy.EnemyType.Slime, 1, 20, 20, 5,5,5));
         }
     }
 
