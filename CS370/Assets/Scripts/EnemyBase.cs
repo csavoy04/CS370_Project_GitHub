@@ -35,12 +35,6 @@ public struct Enemy
         Speed = GivenSpeed;
         EnemyMoveSet = new string[] { "Tackle", "Bite", "Stomp" };
     }
-
-    public void SetMoveSet
-    {
-        
-    }
-
     public void PrintStats()
     {
         Debug.Log("Enemy Name: " + Name + " || Enemy Type: " + Type + " || Enemy Lvl: " + Level + " || Enemy HP: " + Health + " || Enemy MP: " + Mana + " || Enemy ATK: " + Attack + " || Enemy DEF: " + Defense + " || Enemy SPD: " + Speed);
