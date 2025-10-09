@@ -27,7 +27,8 @@ using System.Collections;
 
 [System.Serializable]
 
-public class quickTimeEvents : MonoBehaviour{
+public class quickTimeEvents : MonoBehaviour
+{
 
     //Declaring Variables
 
@@ -54,10 +55,12 @@ public class quickTimeEvents : MonoBehaviour{
     //DBD Timing
     float RandomTiming;
     double CurrentTiming;
+    bool DBDTimerStarted;
     public int DBDMaxDuration;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void Start()
+    {
 
         //Initializing Variables
         QTEType = 0;                                    //[0]: KeyCombination, [1]: Button Mash, [2] DBD Timing, ....
@@ -77,38 +80,47 @@ public class quickTimeEvents : MonoBehaviour{
 
         //DBD Timing
         CurrentTiming = 0;                              //Tracks the timing of when space is pressed
+        DBDTimerStarted = false;                        //Tracks if the DBD Timer has started   
         DBDMaxDuration = 2;                             //Duration of DBD Timing QTE
     }
 
     // Update is called once per frame
-    void Update(){
+    void Update()
+    {
 
         //Generation Phase
-        if(Timer == null){
+        if (Timer == null)
+        {
             //Trigger Generation
-            if (State == QTEState.Start){
+            if (State == QTEState.Start)
+            {
 
                 State = QTEState.Generate;        //Change State to Generation Phase
 
+                DBDTimerStarted = false;
                 CurrentTestedKey = 0;
                 CurrentClicks = 0;
                 CurrentTiming = 0;
             }
 
             //Do the Generation
-            if(State == QTEState.Generate){
+            if (State == QTEState.Generate)
+            {
 
-                if (QTEType == 0){                                               //If the Type is Key Combination QTE
+                if (QTEType == 0)
+                {                                               //If the Type is Key Combination QTE
 
                     //Generate Key Combination
-                    for (int i = 0; i < NumKeys; i++){
+                    for (int i = 0; i < NumKeys; i++)
+                    {
 
                         RandomNum = UnityEngine.Random.Range(0, 26);            //Random number in set [0,26)
                         KeyCombination[i] = Characters[RandomNum];              //Assigns key sequence in slot i
                     }
 
                     //Show Combination in Console
-                    for (int i = 0; i < NumKeys; i++){
+                    for (int i = 0; i < NumKeys; i++)
+                    {
 
                         Debug.Log(KeyCombination[i]);
                     }
@@ -116,14 +128,16 @@ public class quickTimeEvents : MonoBehaviour{
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(KeyCombinationMaxDuration));
                 }
-                else if (QTEType == 1){                                        //If the Type is Button Mash QTE
+                else if (QTEType == 1)
+                {                                        //If the Type is Button Mash QTE
 
                     Debug.Log("Mash Space " + NumClicks + " times!");          //Instructs player to mash space
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(ButtonMashMaxDuration));
                 }
-                else if (QTEType == 2){                                         //If the Type is DBD QTE
+                else if (QTEType == 2)
+                {                                         //If the Type is DBD QTE
 
                     RandomTiming = UnityEngine.Random.Range(54.0f, 252.0f);                 //Random number in set [54,252]
                     RandomTiming = (RandomTiming / 360) * DBDMaxDuration;                   //Calculates the actual time
@@ -141,17 +155,22 @@ public class quickTimeEvents : MonoBehaviour{
         }
 
         //Test Input Phase
-        if (State == QTEState.CheckUser && Timer != null){
-            if (QTEType == 0){                                  //If the Type is Key Combination QTE
+        if (State == QTEState.CheckUser && Timer != null)
+        {
+            if (QTEType == 0)
+            {                                  //If the Type is Key Combination QTE
 
                 //If Anything is pressed
-                if (Input.anyKeyDown){
+                if (Input.anyKeyDown)
+                {
 
                     //Loop Each Key, Testing for Match
-                    foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
+                    foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
+                    {
 
                         //If Key Pressed is the Same as Current Key Combination, Increment Tested Letter in Sequence
-                        if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0]){
+                        if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0])
+                        {
 
                             CurrentTestedKey++;
                         }
@@ -159,7 +178,8 @@ public class quickTimeEvents : MonoBehaviour{
                 }
 
                 //If the Whole Sequence is Complete
-                if (CurrentTestedKey >= NumKeys){
+                if (CurrentTestedKey >= NumKeys)
+                {
 
                     Debug.Log("QTE Completed Successfully!");
 
@@ -170,16 +190,19 @@ public class quickTimeEvents : MonoBehaviour{
                     Timer = null;
                 }
             }
-            else if (QTEType == 1){                                             //If the Type is Button Mash QTE
+            else if (QTEType == 1)
+            {                                             //If the Type is Button Mash QTE
 
                 //When Space is Pressed
-                if (Input.GetKeyDown(KeyCode.Space)){
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
                     CurrentClicks++;
                     Debug.Log("Space Pressed");
                 }
-                
+
                 //If Required Number of Clicks is Reached
-                if (CurrentClicks >= NumClicks){
+                if (CurrentClicks >= NumClicks)
+                {
 
                     Debug.Log("QTE Completed Successfully!");
 
@@ -190,16 +213,20 @@ public class quickTimeEvents : MonoBehaviour{
                     Timer = null;
                 }
 
-            } else if (QTEType == 2){
-                
+            }
+            else if (QTEType == 2)
+            {
+
                 //When Space is Pressed
-                if(Input.GetKeyDown(KeyCode.Space)){
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
 
                     Debug.Log("Space Pressed at time " + CurrentTiming);
 
                     //If Pressed within the Timing Window
-                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5f)){
-                        
+                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5f))
+                    {
+
                         Debug.Log("QTE Completed Successfully!");
 
                         State = QTEState.Success;                                   //Player was successful
@@ -207,39 +234,53 @@ public class quickTimeEvents : MonoBehaviour{
                         //Stop Timer
                         StopCoroutine(Timer);
                         Timer = null;
-                    } else {
-                    //Else if not pressed within the Timing Window
+                    }
+                    else
+                    {
+                        //Else If Not Pressed Within The Timing Window
 
                         Debug.Log("QTE Failed");
-                        
+
                         //Stop Timer
                         StopCoroutine(Timer);
                         Timer = null;
 
                         State = QTEState.Fail;                                   //Player failed
-                    }                    
-                } else {
-
-                //Increment CurrentTiming
-                    CurrentTiming += Time.deltaTime;
+                    }
+                } 
+                else
+                {
+                    //When Space NOT Pressed, Increment Timer
+                    if (DBDTimerStarted)
+                    {
+                        //Increment CurrentTiming
+                        CurrentTiming += Time.deltaTime;
+                    }
+                    else
+                    {
+                        //Skip The First Frame To Avoid The Jump In Timing
+                        DBDTimerStarted = true;
+                    }
                 }
             }
         }
-    }
 
-    //QTE Timer
-    IEnumerator TimerCoroutine(int Seconds){
+        //QTE Timer
+        IEnumerator TimerCoroutine(int Seconds)
+        {
 
-        //Start Timer
-        yield return new WaitForSeconds(Seconds);
+            //Start Timer
+            yield return new WaitForSeconds(Seconds);
 
-        //If Not Completed By Then
-        if(Timer != null){
+            //If Not Completed By Then
+            if (Timer != null)
+            {
 
-            Timer = null;
-            State = QTEState.Fail;                   //Player failed
+                Timer = null;
+                State = QTEState.Fail;                   //Player failed
 
-            Debug.Log("QTE Failed");
-        }     
+                Debug.Log("QTE Failed");
+            }
+        }
     }
 }
