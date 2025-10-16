@@ -2,28 +2,28 @@ using UnityEngine;
 using System.Collections;
 
 /*  Script written by Jaden Cheung
- *  ----------------------------------------------------------------------
- *  
- *  Purpose:
- *  This is a script that handles QTEs (Quick Time Events)
- *  
- *  
- *  Pre-Condition:
- *  State == QTEState.Start, QTEType = [0,1,2]
- *  
- *  
- *  Post-Condition:
- *  State == QTEState.Success || State == QTEState.Fail
- *  
- *  
- *  Output/Result:
- *  
- *  CASE 1: Passed QTE
- *  State == QTEState.Success
- *  
- *  CASE 2: Failed QTE
- *  State == QTEState.Fail
- */
+    *  ----------------------------------------------------------------------
+    *  
+    *  Purpose:
+    *  This is a script that handles QTEs (Quick Time Events)
+    *  
+    *  
+    *  Pre-Condition:
+    *  State == QTEState.Start, QTEType = [0,1,2]
+    *  
+    *  
+    *  Post-Condition:
+    *  State == QTEState.Success || State == QTEState.Fail
+    *  
+    *  
+    *  Output/Result:
+    *  
+    *  CASE 1: Passed QTE
+    *  State == QTEState.Success
+    *  
+    *  CASE 2: Failed QTE
+    *  State == QTEState.Fail
+    */
 
 [System.Serializable]
 
@@ -167,12 +167,27 @@ public class quickTimeEvents : MonoBehaviour
                     //Loop Each Key, Testing for Match
                     foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
                     {
+                        //If Key is A-Z
+                        if (key >= KeyCode.A && key <= KeyCode.Z) {
 
-                        //If Key Pressed is the Same as Current Key Combination, Increment Tested Letter in Sequence
-                        if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0])
-                        {
+                            //If Key Pressed is the Same as Current Key Combination, Increment Tested Letter in Sequence
+                            if (Input.GetKeyDown(key) && KeyCombination[CurrentTestedKey] == key.ToString()[0])
+                            {
 
-                            CurrentTestedKey++;
+                                CurrentTestedKey++;
+                            }
+                            else if (Input.GetKeyDown(key))
+                            {
+                                //Else If Key Pressed is NOT the Same as Current Key Combination
+                                Debug.Log("QTE Failed");
+
+                                //Stop Timer
+                                StopCoroutine(Timer);
+                                Timer = null;
+
+                                State = QTEState.Fail;                                   //Player failed
+
+                            }
                         }
                     }
                 }
