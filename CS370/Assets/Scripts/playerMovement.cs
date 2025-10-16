@@ -21,7 +21,6 @@ public class Movement : MonoBehaviour
     CharacterController controller;
     CapsuleCollider capsuleCollider;
     Rigidbody rb;
-    public LayerMask layerMask;
 
     [Header("Variables")]
     public bool isCrouching = false;
@@ -30,7 +29,7 @@ public class Movement : MonoBehaviour
     public bool moveable = true;
     public bool grounded = true;
     public float speed;
-    public float jumpForce;
+    public float jumpForce = 300.0f;
 
     // Ran at the start of the script being ran
     void Start()
@@ -104,6 +103,10 @@ public class Movement : MonoBehaviour
             {
                 rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
             }
+            if (Input.GetKeyUp(KeyCode.Space) && rb.linearVelocity.y > 0)
+            {
+                rb.AddForce(Vector3.up * 0.5f * Time.deltaTime);
+            }
 
             /*-------------------------------------- RUNNING -----------------------------------*/
             if (Input.GetKey(KeyCode.LeftShift) && grounded)
@@ -136,7 +139,6 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("Entering Combat Area");
             SceneManager.LoadScene("CombatArea");
-            //moveable = false;
         }
     }
 }
