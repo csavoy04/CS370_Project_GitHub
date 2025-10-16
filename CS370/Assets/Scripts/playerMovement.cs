@@ -29,14 +29,20 @@ public class Movement : MonoBehaviour
     public bool moveable = true;
     public bool grounded = true;
     public float speed;
-    public float jumpForce = 300.0f;
+
+    // Function for jumping
+    void Jump()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(jump, ForceMode.Impulse);
+    }
 
     // Ran at the start of the script being ran
     void Start()
     {
         transform.Translate(new Vector3(0, 0, 0)); // Starting orientation
         rb = GetComponent<Rigidbody>();
-        jump = new Vector3(0.0f, 1.0f, 0.0f);
+        jump = new Vector3(0.0f, 15.0f, 0.0f);
         controller = GetComponent<CharacterController>();
         controller.height = 2.0f;
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -53,6 +59,7 @@ public class Movement : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 1f))
         {
             grounded = true;
+            rb.linearVelocity = Vector3.zero;
         }
         else
         {
@@ -99,13 +106,9 @@ public class Movement : MonoBehaviour
                 transform.Translate(Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
             }
 
-            if (Input.GetKey(KeyCode.Space) && grounded)
+            if (Input.GetKeyDown(KeyCode.Space) && grounded)
             {
-                rb.AddForce(Vector3.up * jumpForce * Time.deltaTime, ForceMode.Impulse);
-            }
-            if (Input.GetKeyUp(KeyCode.Space) && rb.linearVelocity.y > 0)
-            {
-                rb.AddForce(Vector3.up * 0.5f * Time.deltaTime);
+                Jump();
             }
 
             /*-------------------------------------- RUNNING -----------------------------------*/
