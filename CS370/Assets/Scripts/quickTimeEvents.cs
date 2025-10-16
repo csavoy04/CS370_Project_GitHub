@@ -2,28 +2,28 @@ using UnityEngine;
 using System.Collections;
 
 /*  Script written by Jaden Cheung
-    *  ----------------------------------------------------------------------
-    *  
-    *  Purpose:
-    *  This is a script that handles QTEs (Quick Time Events)
-    *  
-    *  
-    *  Pre-Condition:
-    *  State == QTEState.Start, QTEType = [0,1,2]
-    *  
-    *  
-    *  Post-Condition:
-    *  State == QTEState.Success || State == QTEState.Fail
-    *  
-    *  
-    *  Output/Result:
-    *  
-    *  CASE 1: Passed QTE
-    *  State == QTEState.Success
-    *  
-    *  CASE 2: Failed QTE
-    *  State == QTEState.Fail
-    */
+    ----------------------------------------------------------------------
+
+    Purpose:
+    This is a script that handles QTEs (Quick Time Events)
+
+
+    Pre-Condition:
+    State == QTEState.Start, QTEType = [0,1,2]
+
+ 
+    Post-Condition:
+    State == QTEState.Success || State == QTEState.Fail
+
+
+    Output/Result:
+  
+    CASE 1: Passed QTE
+    State == QTEState.Success
+
+    CASE 2: Failed QTE
+    State == QTEState.Fail
+*/
 
 [System.Serializable]
 
