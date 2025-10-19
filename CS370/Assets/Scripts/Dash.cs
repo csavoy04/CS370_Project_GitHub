@@ -21,14 +21,12 @@ public class Dash : MonoBehaviour
     Movement Movement;
     Coroutine Timer;
     RaycastHit hit;
-    string dashDirection;
     public Vector3 direction;
     public Movement pm;
 
     [Header("Variables")]
     float dashCooldown = 0;
     float dashDistance = 5;
-    float speed;
     bool dashing = false;
 
     // Update is called once per frame
@@ -48,17 +46,17 @@ public class Dash : MonoBehaviour
             current direction 5 units. If the raycast detects an object then the 
             dash distance is change to that of collision distance - 0.5 */
 
-            if (Physics.Raycast(transform.position, direction, 5.5f))
-            {
-                dashDistance = 5.0f;
+            if (Physics.Raycast(transform.position, direction, 5.25f))
+            { 
+                dashDistance = hit.distance - 0.25f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
             else
             {
-                dashDistance = hit.distance - 0.5f;
+                dashDistance = 5.0f;
                 Timer = StartCoroutine(TimerCoroutine(0.1f));
             }
-            transform.position += direction * dashDistance;
+            transform.Translate(direction * dashDistance);
         }
 
         // Dash cooldown
