@@ -88,4 +88,9 @@ public struct Unit
     {
         Debug.Log($"Name: {Name}, ClassType: {ClassType} Level: {Level}, Health: {Health}, Mana: {Mana}, Attack: {Attack}, Defense: {Defense}, Speed: {Speed}");
     }
+
+    public string GetPartyClass()
+    {
+        return PartyType.ToString();
+    }
 }
