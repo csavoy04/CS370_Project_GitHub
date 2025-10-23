@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, DetermineTurn, CheckEnd }
+public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd }
 public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
 
 public class combatHandler : MonoBehaviour
@@ -23,9 +23,6 @@ public class combatHandler : MonoBehaviour
     public Unit CurrentUnit;
     public int CurrentUnitIndex = 0;
 
-    //Target Unit
-    public Unit TargetUnit;
-
     //Move Selected
     public string SelectedMove;
 
@@ -35,7 +32,7 @@ public class combatHandler : MonoBehaviour
         BState = BattleState.Start;
         Debug.Log("Combat BState Start");
 
-        //Determine Initial Turn Order (If Player Speed == Enemy Speed, Player goes first)
+        //Determine Initial Turn Order (Higher Speed First, If Player Speed == Enemy Speed, Player goes first)
         UnitBattleList.AddRange(PartySystem.Instance.PlayerParty);
         UnitBattleList.AddRange(PartySystem.Instance.EnemyParty);
         UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.Speed));
@@ -70,15 +67,14 @@ public class combatHandler : MonoBehaviour
             {
                 CurrentUnit = UnitBattleList[CurrentUnitIndex];
 
-                if(CurrentUnit.Health > 0)
+                if(CurrentUnit.CurrentHealth > 0)
                 {
                     //Change BState Based on Current Unit's Party Class
                     if (CurrentUnit.GetPartyClass() == "Player")
                     {
                         BState = BattleState.PlayerTurn;
                         Debug.Log("Player Turn: " + CurrentUnit.Name);
-                        Debug.Log("Player Menu Opened. Press 1 to Attack, 2 to Defend, and 3 to Flee.");
-                        MState = MenuState.Main;
+                        OpenMainMenu();
 
                     }
                     else if (CurrentUnit.GetPartyClass() == "Enemy")
@@ -87,9 +83,11 @@ public class combatHandler : MonoBehaviour
                         Debug.Log("Enemy Turn: " + CurrentUnit.Name);
 
                     }
-                } else
+                }
+                else
                 {
                     Debug.Log(CurrentUnit.Name + " is defeated and cannot take a turn.");
+
                     CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                     BState = BattleState.DetermineTurn;
                 }
@@ -118,7 +116,7 @@ public class combatHandler : MonoBehaviour
                 foreach (Unit unit in UnitBattleList)
                 {
                     //If both conditions are met, increment temp
-                    if (unit.Health <= 0 && unit.GetPartyClass() == "Enemy")
+                    if (unit.CurrentHealth <= 0 && unit.GetPartyClass() == "Enemy")
                     {
                         temp++;
                     }
@@ -138,7 +136,7 @@ public class combatHandler : MonoBehaviour
                     foreach (Unit unit in UnitBattleList)
                     {
                         //If both conditions are met, increment temp
-                        if (unit.Health <= 0 && unit.GetPartyClass() == "Player")
+                        if (unit.CurrentHealth <= 0 && unit.GetPartyClass() == "Player")
                         {
                             temp++;
                         }
@@ -156,8 +154,8 @@ public class combatHandler : MonoBehaviour
                 }
             }
 
-            //If Battle is Won or Lost, End Battle
-            if (BState == BattleState.Won || BState == BattleState.Lost)
+            //If Battle is Won or Lost or Fled, End Battle
+            if (BState == BattleState.Won || BState == BattleState.Lost || BState == BattleState.Fled)
             {
                 BattleEnd();
             }
@@ -180,8 +178,7 @@ public class combatHandler : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
-                MState = MenuState.MoveSelect;
-                Debug.Log("Move Select Menu Opened. Press 1 for " + CurrentUnit.MoveSet[0] + ", 2 for " + CurrentUnit.MoveSet[1] + ", 3 for " + CurrentUnit.MoveSet[2]);
+                OpenMoveSelectMenu();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
@@ -191,55 +188,48 @@ public class combatHandler : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
-                Debug.Log("You fled the battle!");
-                BState = BattleState.Lost;
+                BState = BattleState.Fled;
             }
         }
         else if (MState == MenuState.MoveSelect)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
-                SelectedMove = CurrentUnit.MoveSet[0];
-                MState = MenuState.TargetSelect;
-                Debug.Log("Target Select Menu Opened. Press 1 to target " + PartySystem.Instance.EnemyParty[0].Name + ", 2 for " + PartySystem.Instance.EnemyParty[1].Name + ", 3 for " + PartySystem.Instance.EnemyParty[2].Name + ", 4 to return to previous Menu");
+                OpenTargetSelectMenu(0);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
-                SelectedMove = CurrentUnit.MoveSet[1];
-                MState = MenuState.TargetSelect;
-                Debug.Log("Target Select Menu Opened. Press 1 to target " + PartySystem.Instance.EnemyParty[0].Name + ", 2 for " + PartySystem.Instance.EnemyParty[1].Name + ", 3 for " + PartySystem.Instance.EnemyParty[2].Name + ", 4 to return to previous Menu");
+                OpenTargetSelectMenu(1);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
-                SelectedMove = CurrentUnit.MoveSet[2];
-                MState = MenuState.TargetSelect;
-                Debug.Log("Target Select Menu Opened. Press 1 to target " + PartySystem.Instance.EnemyParty[0].Name + ", 2 for " + PartySystem.Instance.EnemyParty[1].Name + ", 3 for " + PartySystem.Instance.EnemyParty[2].Name + ", 4 to return to previous Menu");
+                OpenTargetSelectMenu(2);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
-                MState = MenuState.Main;
+                OpenMainMenu();
             }
         }
         else if (MState == MenuState.TargetSelect)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+            if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) && PartySystem.Instance.EnemyParty[0].IsAlive())
             {
                 ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]);
                 MState = MenuState.Hide;
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+            else if (PartySystem.Instance.EnemyParty.Count >= 2 && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) && PartySystem.Instance.EnemyParty[1].IsAlive())
             {
                 ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[1]);
                 MState = MenuState.Hide;
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+            else if (PartySystem.Instance.EnemyParty.Count >= 3 && (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) && PartySystem.Instance.EnemyParty[2].IsAlive())
             {
                 ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[2]);
                 MState = MenuState.Hide;
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
-                MState = MenuState.MoveSelect;
+                OpenMoveSelectMenu();
             }
         }
     }
@@ -247,15 +237,19 @@ public class combatHandler : MonoBehaviour
     //Enemy Turn Function
     public void EnemyTurn()
     {
-        Debug.Log(CurrentUnit.Name + " Did Something!");
-
-        CurrentUnitIndex++;
-        if (CurrentUnitIndex >= UnitBattleList.Count)
-        {
-            CurrentUnitIndex = 0;
+        //EnemyTargetOptions
+        string Targets = "";
+        for (int i = 0; i < PartySystem.Instance.PlayerParty.Count; i++) {
+            if (PartySystem.Instance.PlayerParty[i].IsAlive())
+            {
+                Targets += i;
+            }
         }
-        BState = BattleState.CheckEnd;
 
+        int RandomTargetIndex = Random.Range(0, Targets.Length);
+        int RandomMoveIndex = Random.Range(0, CurrentUnit.MoveSet.Length);
+
+        ExecuteMove(CurrentUnit.MoveSet[RandomMoveIndex], CurrentUnit, PartySystem.Instance.PlayerParty[RandomTargetIndex]);
     }
 
     //Battle End Function
@@ -269,6 +263,11 @@ public class combatHandler : MonoBehaviour
         else if (BState == BattleState.Lost)
         {
             Debug.Log("You lost the battle...");
+            SceneManager.LoadScene("TestArea");
+        }
+        else if (BState == BattleState.Fled)
+        {
+            Debug.Log("You fled the battle.");
             SceneManager.LoadScene("TestArea");
         }
     }
@@ -317,7 +316,11 @@ public class combatHandler : MonoBehaviour
         
         Debug.Log(Attacker.Name + " used " + MoveName + " on " + Defender.Name + "!");
 
-        //End Player Turn
+        Debug.Log($"Before: {Defender.Name} HP = {Defender.CurrentHealth}");
+        Attacker.DealDamage(Defender, MoveName);
+        Debug.Log($"After: {Defender.Name} HP = {Defender.CurrentHealth}");
+
+        //End Turn
         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
         BState = BattleState.CheckEnd;
             
@@ -328,6 +331,58 @@ public class combatHandler : MonoBehaviour
     {
         //Placeholder for running animations
     }
+
+    //Open Main Menu
+    public void OpenMainMenu()
+    {
+        MState = MenuState.Main;
+        Debug.Log("Player Menu Opened. Press 1 to Attack, 2 to Defend, and 3 to Flee.");
+    }
+
+    //Open Move Select Menu
+    public void OpenMoveSelectMenu()
+    {
+        MState = MenuState.MoveSelect;
+        Debug.Log("Move Select Menu Opened. Press 1 for " + CurrentUnit.MoveSet[0] + ", 2 for " + CurrentUnit.MoveSet[1] + ", 3 for " + CurrentUnit.MoveSet[2] + ", 4 to return to previous Menu");
+    }
+
+    //Open Target Select Menu
+    public void OpenTargetSelectMenu(int MoveNumber)
+    {
+
+        //TargetDisplay String
+        string TargetDisplay = "Target Select Menu Opened. Press ";
+
+        SelectedMove = CurrentUnit.MoveSet[MoveNumber];
+        MState = MenuState.TargetSelect;
+
+        for (int i = 0; i < PartySystem.Instance.EnemyParty.Count; i++)
+        {
+            if (PartySystem.Instance.EnemyParty[i].IsAlive())
+            {
+                if (i == 0)
+                {
+                    TargetDisplay += "1 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                }
+                else if (i == 1 && PartySystem.Instance.EnemyParty[0].IsDead())
+                {
+                    TargetDisplay += "2 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                }
+                else if (i == 2 && PartySystem.Instance.EnemyParty[0].IsDead() && PartySystem.Instance.EnemyParty[1].IsDead())
+                {
+                    TargetDisplay += "3 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                }
+                else
+                {
+                    TargetDisplay += ", " + (i + 1) + " to target " + PartySystem.Instance.EnemyParty[i].Name;
+                }
+            }
+        }  
+        Debug.Log(TargetDisplay + ", 4 to return to previous Menu");
+    }
 }
 
-//Solidify Execute Move function
+//Add exp after battle
+//Add money after battle
+//Add delay between turns
+//Add mana cost for moves
