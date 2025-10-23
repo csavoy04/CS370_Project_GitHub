@@ -33,8 +33,6 @@ public class Main_Menu_Controller : MonoBehaviour
         //Party Buttons
         var partyBack = root.Q<VisualElement>("PartyBackBtn");
         partyBack.RegisterCallback<ClickEvent>(PartyBackEvent);
-
-
     }
 
     // Updates per frame
@@ -46,15 +44,17 @@ public class Main_Menu_Controller : MonoBehaviour
 
             if (root.style.display == DisplayStyle.None)
             {
-                // Hide the menu
+                // Show the menu
                 root.style.display = DisplayStyle.Flex;
                 Debug.Log("Menu opened");
             }
             else
             {
-                // Show the menu
+                // Hides and Updates the menu
                 root.style.display = DisplayStyle.None;
                 Debug.Log("Menu closed");
+
+                Debug.Log(PartySystem.Instance.PlayerParty[0].CurrentHealth);
             }
         }
     }
@@ -71,6 +71,17 @@ public class Main_Menu_Controller : MonoBehaviour
 
         var menuParty = root.Q<VisualElement>("Party-Menu");
         menuParty.style.display = DisplayStyle.Flex;
+
+        //Updates the Party Menu Stats to the current instance
+        var unit1HealthBar = root.Q<ProgressBar>("Unit1-Health-Bar");
+        unit1HealthBar.value = PartySystem.Instance.PlayerParty[0].CurrentHealth;
+        unit1HealthBar.highValue = PartySystem.Instance.PlayerParty[0].MaxHealth;
+
+        var unit1Name = root.Q<Label>("Unit1-Name");
+        unit1Name.text = PartySystem.Instance.PlayerParty[0].Name;
+
+        var unit1HpNum = root.Q<Label>("Unit1-Health-Num");
+        unit1HpNum.text = "HP:" + PartySystem.Instance.PlayerParty[0].CurrentHealth + "/" + PartySystem.Instance.PlayerParty[0].MaxHealth;
     }
 
     private void QuitEvent(ClickEvent evt)
@@ -89,5 +100,6 @@ public class Main_Menu_Controller : MonoBehaviour
 
         var menuMain = root.Q<VisualElement>("Player-Menu");
         menuMain.style.display = DisplayStyle.Flex;
+
     }
 }
