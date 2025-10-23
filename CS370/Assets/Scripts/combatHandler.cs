@@ -35,7 +35,7 @@ public class combatHandler : MonoBehaviour
         //Determine Initial Turn Order (Higher Speed First, If Player Speed == Enemy Speed, Player goes first)
         UnitBattleList.AddRange(PartySystem.Instance.PlayerParty);
         UnitBattleList.AddRange(PartySystem.Instance.EnemyParty);
-        UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.Speed));
+        UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.CurrentSpeed));
 
         battleStart();
 
@@ -81,6 +81,7 @@ public class combatHandler : MonoBehaviour
                     {
                         BState = BattleState.EnemyTurn;
                         Debug.Log("Enemy Turn: " + CurrentUnit.Name);
+                        MState = MenuState.Hide;
 
                     }
                 }
@@ -101,7 +102,6 @@ public class combatHandler : MonoBehaviour
             }
             else if (BState == BattleState.EnemyTurn)
             {
-                MState = MenuState.Hide;
                 EnemyTurn();
                 
             }
@@ -214,18 +214,27 @@ public class combatHandler : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) && PartySystem.Instance.EnemyParty[0].IsAlive())
             {
-                ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]);
-                MState = MenuState.Hide;
+                if(ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]) == false)
+                {
+                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
+                    OpenMainMenu();
+                }
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 2 && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) && PartySystem.Instance.EnemyParty[1].IsAlive())
             {
-                ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[1]);
-                MState = MenuState.Hide;
+                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[1]) == false)
+                {                   
+                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
+                    OpenMainMenu();
+                }
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 3 && (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) && PartySystem.Instance.EnemyParty[2].IsAlive())
             {
-                ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[2]);
-                MState = MenuState.Hide;
+                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[2]) == false)
+                {
+                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
+                    OpenMainMenu();
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
@@ -305,25 +314,42 @@ public class combatHandler : MonoBehaviour
         TempCurrentUnitIndex++;
         if (TempCurrentUnitIndex >= UnitBattleList.Count)
         {
+            //Update Turn Order Based on Current Speed Stats
+            UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.CurrentSpeed));
+
+            //Reset to First Unit
             TempCurrentUnitIndex = 0;
         }
         return TempCurrentUnitIndex;
     }
 
     //Execute Move Function Placeholder
-    public void ExecuteMove(string MoveName, Unit Attacker, Unit Defender)
+    public bool ExecuteMove(string MoveName, Unit Attacker, Unit Defender)
     {
-        
-        Debug.Log(Attacker.Name + " used " + MoveName + " on " + Defender.Name + "!");
 
-        Debug.Log($"Before: {Defender.Name} HP = {Defender.CurrentHealth}");
-        Attacker.DealDamage(Defender, MoveName);
-        Debug.Log($"After: {Defender.Name} HP = {Defender.CurrentHealth}");
+        if (Attacker.UseMana(MoveName))
+        {
+            Debug.Log(Attacker.Name + " used " + MoveName + " on " + Defender.Name + "!");
 
-        //End Turn
-        CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-        BState = BattleState.CheckEnd;
-            
+            Debug.Log($"Before: {Defender.Name} HP = {Defender.CurrentHealth}");
+            Attacker.DealDamage(Defender, MoveName);
+            Debug.Log($"After: {Defender.Name} HP = {Defender.CurrentHealth}");
+
+            //End Turn
+            CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+            BState = BattleState.CheckEnd;
+
+            return true;
+        }
+        else
+        {
+            Debug.Log(Attacker.Name + " does not have enough mana to use " + MoveName + "!");
+
+            return false;
+        }
+
+
+
     }
 
     //Run Animation Function Placeholder
