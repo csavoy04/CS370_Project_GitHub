@@ -213,11 +213,44 @@ public class Unit
     }
 
     // Uses mana for an action if enough mana is available
-    public void UseMana(int Amount)
+    public bool UseMana(string MoveName)
     {
+        int Amount = 0;
+
+        switch (MoveName)
+        {
+            case "Slash":
+            case "Shield Bash":
+            case "War Cry":
+                Amount = 5;         //Mana cost
+                break;
+            case "Tackle":
+            case "Bite":
+            case "Stomp":
+                Amount = 5;         //Mana cost
+                break;
+            case "Fireball":
+            case "Ice Spike":
+                Amount = 5;         //Mana cost
+                break;
+            case "Backstab":
+            case "Poison Dart":
+            case "Vanish":
+                Amount = 5;         //Mana cost
+                break;
+            default:
+                Amount = 5;         //Mana cost
+                break;
+        }
+
         if (HasEnoughMana(Amount))
         {
             CurrentMana -= Amount;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
