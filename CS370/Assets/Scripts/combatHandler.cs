@@ -1,15 +1,22 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems; 
 using UnityEngine.SceneManagement;
 
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd }
 public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
 
+
 public class combatHandler : MonoBehaviour
 {
+
+    public event EventHandler OnHealthChanged;
     public GameObject playerprefab;
     public GameObject enemyprefab;
 
+    public HealthBar healthBar;
+    public Transform pfHealthBar;
     //Battle State
     public BattleState BState;
 
@@ -25,6 +32,10 @@ public class combatHandler : MonoBehaviour
 
     //Move Selected
     public string SelectedMove;
+
+    void Awake()
+    {
+    }
 
     void Start()
     {
@@ -67,7 +78,7 @@ public class combatHandler : MonoBehaviour
             {
                 CurrentUnit = UnitBattleList[CurrentUnitIndex];
 
-                if(CurrentUnit.CurrentHealth > 0)
+                if (CurrentUnit.CurrentHealth > 0)
                 {
                     //Change BState Based on Current Unit's Party Class
                     if (CurrentUnit.GetPartyClass() == "Player")
@@ -98,16 +109,16 @@ public class combatHandler : MonoBehaviour
             if (BState == BattleState.PlayerTurn)
             {
                 PlayerTurn();
-                
+
             }
             else if (BState == BattleState.EnemyTurn)
             {
                 EnemyTurn();
-                
+
             }
 
             //Check for Win/Loss Condition After Each Turn
-            if(BState == BattleState.CheckEnd)
+            if (BState == BattleState.CheckEnd)
             {
                 //Tracks Defeated Units
                 int temp = 0;
@@ -214,7 +225,7 @@ public class combatHandler : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) && PartySystem.Instance.EnemyParty[0].IsAlive())
             {
-                if(ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]) == false)
+                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]) == false)
                 {
                     Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
@@ -223,7 +234,7 @@ public class combatHandler : MonoBehaviour
             else if (PartySystem.Instance.EnemyParty.Count >= 2 && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) && PartySystem.Instance.EnemyParty[1].IsAlive())
             {
                 if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[1]) == false)
-                {                   
+                {
                     Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
                 }
@@ -248,15 +259,16 @@ public class combatHandler : MonoBehaviour
     {
         //EnemyTargetOptions
         string Targets = "";
-        for (int i = 0; i < PartySystem.Instance.PlayerParty.Count; i++) {
+        for (int i = 0; i < PartySystem.Instance.PlayerParty.Count; i++)
+        {
             if (PartySystem.Instance.PlayerParty[i].IsAlive())
             {
                 Targets += i;
             }
         }
 
-        int RandomTargetIndex = Random.Range(0, Targets.Length);
-        int RandomMoveIndex = Random.Range(0, CurrentUnit.MoveSet.Length);
+        int RandomTargetIndex = UnityEngine.Random.Range(0, Targets.Length);
+        int RandomMoveIndex = UnityEngine.Random.Range(0, CurrentUnit.MoveSet.Length);
 
         ExecuteMove(CurrentUnit.MoveSet[RandomMoveIndex], CurrentUnit, PartySystem.Instance.PlayerParty[RandomTargetIndex]);
     }
@@ -281,6 +293,7 @@ public class combatHandler : MonoBehaviour
         }
     }
 
+
     //Spawn Enemies Function
     public void SpawnEnemy()
     {
@@ -291,20 +304,25 @@ public class combatHandler : MonoBehaviour
         {
 
             Instantiate(enemyprefab, new UnityEngine.Vector3(3, NoOfEnemies + 1, NoOfEnemies * 2), UnityEngine.Quaternion.identity);
+            Transform HeathlBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(3, NoOfEnemies, NoOfEnemies), UnityEngine.Quaternion.identity);
+            HealthBar healthBar = HeathlBarTransform.GetComponent<HealthBar>();
 
         }
 
     }
 
     //Spawn Player Team Function
-    public void SpawnPlayerTeam(){
+    public void SpawnPlayerTeam()
+    {
 
         int NoOfAllies = 3;
 
-        for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++){
+        for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++)
+        {
 
             Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
-
+            Transform HeathBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies), UnityEngine.Quaternion.identity);
+            HealthBar healthBar = HeathBarTransform.GetComponent<HealthBar>();
         }
     }
 
@@ -334,6 +352,14 @@ public class combatHandler : MonoBehaviour
             Debug.Log($"Before: {Defender.Name} HP = {Defender.CurrentHealth}");
             Attacker.DealDamage(Defender, MoveName);
             Debug.Log($"After: {Defender.Name} HP = {Defender.CurrentHealth}");
+
+            Debug.Log($"ExecuteMove called with MoveName={MoveName}");
+            Debug.Log($"Attacker={Attacker}, Defender={Defender}");
+            if (Attacker != null) Debug.Log($"Attacker name: {Attacker.Name}");
+            if (Defender != null) Debug.Log($"Defender name: {Defender.Name}");
+
+            //Update Health Bars Here
+
 
             //End Turn
             CurrentUnitIndex = NextTurn(CurrentUnitIndex);
@@ -403,12 +429,15 @@ public class combatHandler : MonoBehaviour
                     TargetDisplay += ", " + (i + 1) + " to target " + PartySystem.Instance.EnemyParty[i].Name;
                 }
             }
-        }  
+        }
         Debug.Log(TargetDisplay + ", 4 to return to previous Menu");
     }
-}
+
+    
 
 //Add exp after battle
 //Add money after battle
 //Add delay between turns
 //Add mana cost for moves
+}
+

@@ -8,7 +8,7 @@ public class GameHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        healthBar.SetUp(healthSystem);
+        
     }
 
     // Update is called once per frame

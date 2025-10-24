@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class Unit
 {
+    public EventHandler OnHealthChanged;
+    private HealthSystem healthSystem;
     //Stats
     public PartyClass PartyType;        // Party Type (Player or Enemy)
     public string Name;                 // Unit Name
@@ -134,6 +136,69 @@ public class Unit
         return CurrentAttack;
     }
 
+    public int GetDefenseStat()
+    {
+        return CurrentDefense;
+    }
+
+    public int GetSpeedStat()
+    {
+        return CurrentSpeed;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return CurrentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+
+    public float GetHealthPercent()
+    {
+        return (float)CurrentHealth / MaxHealth;
+    }
+
+    public int GetCurrentMana()
+    {
+        return CurrentMana;
+    }
+    public int GetMaxMana()
+    {
+        return MaxMana;
+    }
+    public string GetName()
+    {
+        return Name;
+    }
+
+    public UnitClass GetUnitClass()
+    {
+        return ClassType;
+    }
+
+    public int GetLevel()
+    {
+        return Level;
+    }
+
+    public int GetExperience()
+    {
+        return Experience;
+    }
+
+    public int GetMaxExperience()
+    {
+        return MaxExperience;
+    }
+
+    public string[] GetMoveSet()
+    {
+        return MoveSet;
+    }
+
     // Returns the party class as a string
     public string GetPartyClass()
     {
@@ -186,6 +251,7 @@ public class Unit
         {
             CurrentHealth = 0;
         }
+        if (OnHealthChanged != null) OnHealthChanged(this, EventArgs.Empty);
     }
 
     //Checks if the unit is still alive
