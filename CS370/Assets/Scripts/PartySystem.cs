@@ -26,8 +26,6 @@ public class PartySystem : MonoBehaviour{
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        Debug.Log(Unit.UnitClass.Mage);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,11 +62,12 @@ public class PartySystem : MonoBehaviour{
     }
 
     // Update is called once per frame
-    void Update(){
-
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             PlayerParty[1].DisplayStats();
         }
     }
+
 }
