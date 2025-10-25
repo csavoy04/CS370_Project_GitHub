@@ -9,10 +9,9 @@ public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, Determi
 public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
 
 
-public class combatHandler : MonoBehaviour
+public class CombatHandler : MonoBehaviour
 {
 
-    //public event EventHandler OnHealthChanged;
     public GameObject playerprefab;
     public GameObject enemyprefab;
 
@@ -39,12 +38,10 @@ public class combatHandler : MonoBehaviour
     //Move Selected
     public string SelectedMove;
 
-    void Awake()
-    {
-    }
-
     void Start()
     {
+        DetermineEnemyUnits();
+
         //Start Battle
         BState = BattleState.Start;
         Debug.Log("Combat BState Start");
@@ -528,6 +525,39 @@ public class combatHandler : MonoBehaviour
         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
         BState = BattleState.CheckEnd;
 
+    }
+
+    public void DetermineEnemyUnits()
+    {
+        int NoOfEnemies = UnityEngine.Random.Range(1, 4);       //(1 to 3 enemies)
+
+        //Reset Enemy Party
+        PartySystem.Instance.EnemyParty.Clear();
+
+        //Determine Enemy Units Based on Area
+        switch (GameHandler.Instance.CurrentCombatArea)
+        {
+            case GameHandler.CombatAreaName.SlimeField:
+                for (int i = 0; i < NoOfEnemies; i++)
+                {
+                    string EnemyName;
+                    int EnemyLevel = UnityEngine.Random.Range(1, 4);        //(Level 1 to 3 enemies)
+                    int EnemyHealth = 20 + (EnemyLevel - 1) * 5;            //Health Scaling
+                    int EnemyMana = 20 + (EnemyLevel - 1) * 5;              //Mana Scaling
+                    int EnemyAttack = 10 + (EnemyLevel - 1) * 2;            //Attack Scaling
+                    int EnemyDefense = 5 + (EnemyLevel - 1) * 2;            //Defense Scaling
+                    int EnemySpeed = 5 + (EnemyLevel - 1) * 1;              //Speed Scaling
+
+                    EnemyName = "Slime" + (i + 1);
+
+                    //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, MoveSet
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, new string[] { "Tackle", "Bite", "Stomp" }));
+                    //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 }

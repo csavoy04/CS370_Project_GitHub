@@ -140,6 +140,12 @@ public class Movement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CombatTrigger") || other.gameObject.CompareTag("Enemy"))
         {
+
+            if(other.gameObject.name == "Slime")
+            {
+                GameHandler.Instance.CurrentCombatArea = GameHandler.CombatAreaName.SlimeField;
+            }
+
             Debug.Log("Entering Combat Area");
             SceneManager.LoadScene("CombatArea");
         }
