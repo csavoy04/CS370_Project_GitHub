@@ -136,15 +136,12 @@ public class Movement : MonoBehaviour
         }
     }
     /*---------------------------------- Player Trigger ----------------------------*/
-    /* private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("CombatTrigger") || other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("Entering Combat Area");
             SceneManager.LoadScene("CombatArea");
         }
-        if (other.gameObject.CompareTag("w2Trigger")){
-            SceneManager.LoadScene("World2");
-        }
-    } */
+    } 
 }

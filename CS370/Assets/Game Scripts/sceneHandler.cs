@@ -20,9 +20,12 @@ public class sceneHandler : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         tarScene = collision.gameObject.name;
-        prevScene = curScene;
-        PlayerPrefs.SetString("tarScene", tarScene);
-        PlayerPrefs.SetString("prevScene", prevScene);
-        SceneManager.LoadScene(tarScene);
+        if (Application.CanStreamedLevelBeLoaded(tarScene))
+        {
+            prevScene = curScene;
+            PlayerPrefs.SetString("tarScene", tarScene);
+            PlayerPrefs.SetString("prevScene", prevScene);
+            SceneManager.LoadScene(tarScene);
+        }
     }
 }
