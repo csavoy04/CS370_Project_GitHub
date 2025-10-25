@@ -27,7 +27,7 @@ using System.Collections;
 
 [System.Serializable]
 
-public class quickTimeEvents : MonoBehaviour
+public class QuickTimeEvents : MonoBehaviour
 {
 
     //Declaring Variables

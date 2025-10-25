@@ -95,6 +95,7 @@ public class Unit
         Speed += 1;
         MaxExperience = Level * 100;
     }
+
     public void AddCharacterAttacks(string newMove, int placement)
     {
         if (placement >= 0 && placement < MoveSet.Length)
@@ -131,19 +132,34 @@ public class Unit
     }
 
     //Gets the attack stat
-    public int GetAttackStat()
+    public int GetAttack()
     {
         return CurrentAttack;
     }
 
-    public int GetDefenseStat()
+    public int GetBaseAttack()
+    {
+        return Attack;
+    }
+
+    public int GetDefense()
     {
         return CurrentDefense;
     }
 
-    public int GetSpeedStat()
+    public int GetBaseDefense()
+    {
+        return Defense;
+    }
+
+    public int GetSpeed()
     {
         return CurrentSpeed;
+    }
+
+    public int GetBaseSpeed()
+    {
+        return Speed;
     }
 
     public int GetCurrentHealth()
@@ -165,18 +181,20 @@ public class Unit
     {
         return CurrentMana;
     }
+
     public int GetMaxMana()
     {
         return MaxMana;
     }
+
     public string GetName()
     {
         return Name;
     }
 
-    public UnitClass GetUnitClass()
+    public string GetUnitClass()
     {
-        return ClassType;
+        return ClassType.ToString();
     }
 
     public int GetLevel()
@@ -254,6 +272,27 @@ public class Unit
         if (OnHealthChanged != null) OnHealthChanged(this, EventArgs.Empty);
     }
 
+    public int QuickTimeEventType(string MoveName)
+    {
+        switch (MoveName)
+        {
+            case "Slash":
+            case "Fireball":
+            case "Backstab":
+                return 0;         //Type 0
+            case "Shield Bash":
+            case "Ice Spike":
+            case "Poison Dart":
+                return 1;         //Type 1
+            case "War Cry":
+            case "Lightning Bolt":
+            case "Vanish":
+                return 2;         //Type 2
+            default:
+                return 0;         //Type 0
+        }
+    }
+
     //Checks if the unit is still alive
     public bool IsAlive()
     {
@@ -297,6 +336,7 @@ public class Unit
                 break;
             case "Fireball":
             case "Ice Spike":
+            case "Lightning Bolt":
                 Amount = 5;         //Mana cost
                 break;
             case "Backstab":

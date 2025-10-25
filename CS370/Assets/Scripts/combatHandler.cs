@@ -1,19 +1,22 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems; 
 using UnityEngine.SceneManagement;
 
-public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd }
+public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd, AnimationWait, QTEWait}
 public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
 
 
 public class combatHandler : MonoBehaviour
 {
 
-    public event EventHandler OnHealthChanged;
+    //public event EventHandler OnHealthChanged;
     public GameObject playerprefab;
     public GameObject enemyprefab;
+
+    public QuickTimeEvents QTE;
 
     public HealthBar healthBar;
     public Transform pfHealthBar;
@@ -29,6 +32,9 @@ public class combatHandler : MonoBehaviour
     //Current Unit
     public Unit CurrentUnit;
     public int CurrentUnitIndex = 0;
+
+    //Attacked Unit
+    public Unit Defender;
 
     //Move Selected
     public string SelectedMove;
@@ -46,7 +52,7 @@ public class combatHandler : MonoBehaviour
         //Determine Initial Turn Order (Higher Speed First, If Player Speed == Enemy Speed, Player goes first)
         UnitBattleList.AddRange(PartySystem.Instance.PlayerParty);
         UnitBattleList.AddRange(PartySystem.Instance.EnemyParty);
-        UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.CurrentSpeed));
+        UnitBattleList.Sort((x, y) => y.GetSpeed().CompareTo(x.GetSpeed()));
 
         battleStart();
 
@@ -57,7 +63,7 @@ public class combatHandler : MonoBehaviour
     {
 
         //Testing Battle End
-
+        /*
         if (Input.GetKeyDown(KeyCode.V))
         {
             BState = BattleState.Won;
@@ -68,6 +74,7 @@ public class combatHandler : MonoBehaviour
             BState = BattleState.Lost;
             BattleEnd();
         }
+        */
 
 
         //Do Corresponding Turn Based on Order
@@ -78,27 +85,27 @@ public class combatHandler : MonoBehaviour
             {
                 CurrentUnit = UnitBattleList[CurrentUnitIndex];
 
-                if (CurrentUnit.CurrentHealth > 0)
+                if (CurrentUnit.GetCurrentHealth() > 0)
                 {
                     //Change BState Based on Current Unit's Party Class
                     if (CurrentUnit.GetPartyClass() == "Player")
                     {
                         BState = BattleState.PlayerTurn;
-                        Debug.Log("Player Turn: " + CurrentUnit.Name);
+                        Debug.Log("Player Turn: " + CurrentUnit.GetName());
                         OpenMainMenu();
 
                     }
                     else if (CurrentUnit.GetPartyClass() == "Enemy")
                     {
                         BState = BattleState.EnemyTurn;
-                        Debug.Log("Enemy Turn: " + CurrentUnit.Name);
+                        Debug.Log("Enemy Turn: " + CurrentUnit.GetName());
                         MState = MenuState.Hide;
 
                     }
                 }
                 else
                 {
-                    Debug.Log(CurrentUnit.Name + " is defeated and cannot take a turn.");
+                    Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
 
                     CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                     BState = BattleState.DetermineTurn;
@@ -106,7 +113,7 @@ public class combatHandler : MonoBehaviour
             }
 
             //Execute Turn
-            if (BState == BattleState.PlayerTurn)
+            if (BState == BattleState.PlayerTurn || BState == BattleState.QTEWait)
             {
                 PlayerTurn();
 
@@ -127,7 +134,7 @@ public class combatHandler : MonoBehaviour
                 foreach (Unit unit in UnitBattleList)
                 {
                     //If both conditions are met, increment temp
-                    if (unit.CurrentHealth <= 0 && unit.GetPartyClass() == "Enemy")
+                    if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Enemy")
                     {
                         temp++;
                     }
@@ -147,7 +154,7 @@ public class combatHandler : MonoBehaviour
                     foreach (Unit unit in UnitBattleList)
                     {
                         //If both conditions are met, increment temp
-                        if (unit.CurrentHealth <= 0 && unit.GetPartyClass() == "Player")
+                        if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Player")
                         {
                             temp++;
                         }
@@ -193,7 +200,7 @@ public class combatHandler : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
-                Debug.Log(CurrentUnit.Name + " Defended!");
+                Debug.Log(CurrentUnit.GetName() + " Defended!");
                 CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                 BState = BattleState.CheckEnd;
             }
@@ -225,26 +232,41 @@ public class combatHandler : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) && PartySystem.Instance.EnemyParty[0].IsAlive())
             {
-                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[0]) == false)
+                Defender = PartySystem.Instance.EnemyParty[0];
+                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
                     Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
+                } 
+                else
+                {
+                    MState = MenuState.Hide;
                 }
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 2 && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) && PartySystem.Instance.EnemyParty[1].IsAlive())
             {
-                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[1]) == false)
+                Defender = PartySystem.Instance.EnemyParty[1];
+                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
                     Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
                 }
+                else
+                {
+                    MState = MenuState.Hide;
+                }
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 3 && (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) && PartySystem.Instance.EnemyParty[2].IsAlive())
             {
-                if (ExecuteMove(SelectedMove, CurrentUnit, PartySystem.Instance.EnemyParty[2]) == false)
+                Defender = PartySystem.Instance.EnemyParty[2];
+                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
                     Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
+                }
+                else
+                {
+                    MState = MenuState.Hide;
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
@@ -252,6 +274,27 @@ public class combatHandler : MonoBehaviour
                 OpenMoveSelectMenu();
             }
         }
+        else if (MState == MenuState.Hide && BState == BattleState.QTEWait)
+        {
+            if (QTE.State == QuickTimeEvents.QTEState.Success)
+            {
+                Debug.Log(CurrentUnit.GetName() + " used " + SelectedMove + " on " + Defender.GetName() + "!");
+
+                CurrentUnit.DealDamage(Defender, SelectedMove);
+
+                //Update Health Bars Here
+
+                RunAnimation(SelectedMove);
+                
+            }
+            else if (QTE.State == QuickTimeEvents.QTEState.Fail)
+            {
+                Debug.Log(CurrentUnit.GetName() + "'s " + SelectedMove + " missed!");
+
+                RunAnimation(SelectedMove);
+
+            }
+        }   
     }
 
     //Enemy Turn Function
@@ -333,7 +376,7 @@ public class combatHandler : MonoBehaviour
         if (TempCurrentUnitIndex >= UnitBattleList.Count)
         {
             //Update Turn Order Based on Current Speed Stats
-            UnitBattleList.Sort((x, y) => y.Speed.CompareTo(x.CurrentSpeed));
+            UnitBattleList.Sort((x, y) => y.GetSpeed().CompareTo(x.GetSpeed()));
 
             //Reset to First Unit
             TempCurrentUnitIndex = 0;
@@ -347,29 +390,43 @@ public class combatHandler : MonoBehaviour
 
         if (Attacker.UseMana(MoveName))
         {
-            Debug.Log(Attacker.Name + " used " + MoveName + " on " + Defender.Name + "!");
+            //If Attacker is Enemy, skip QTE else start QTE
+            if (Attacker.GetPartyClass() == "Enemy")
+            {
+                Debug.Log(Attacker.GetName() + " used " + MoveName + " on " + Defender.GetName() + "!");
+                Attacker.DealDamage(Defender, MoveName);
 
-            Debug.Log($"Before: {Defender.Name} HP = {Defender.CurrentHealth}");
-            Attacker.DealDamage(Defender, MoveName);
-            Debug.Log($"After: {Defender.Name} HP = {Defender.CurrentHealth}");
+                //End Turn for Enemy
+                CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+                BState = BattleState.CheckEnd;
+                return true;
+            }
+            else
+            {
+                QTE.QTEType = Attacker.QuickTimeEventType(MoveName);
+                QTE.State = QuickTimeEvents.QTEState.Start;
 
-            Debug.Log($"ExecuteMove called with MoveName={MoveName}");
-            Debug.Log($"Attacker={Attacker}, Defender={Defender}");
-            if (Attacker != null) Debug.Log($"Attacker name: {Attacker.Name}");
-            if (Defender != null) Debug.Log($"Defender name: {Defender.Name}");
+                MState = MenuState.Hide;
+                BState = BattleState.QTEWait;
 
-            //Update Health Bars Here
-
-
-            //End Turn
-            CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-            BState = BattleState.CheckEnd;
-
-            return true;
+                return true;
+            }
         }
         else
         {
-            Debug.Log(Attacker.Name + " does not have enough mana to use " + MoveName + "!");
+            Debug.Log(Attacker.GetName() + " does not have enough mana to use " + MoveName + "!");
+
+            if(Attacker.GetPartyClass() == "Enemy")
+            {
+
+                Attacker.RestoreMana(5);  //Restore some mana to enemy for next turn
+
+                Debug.Log(Attacker.GetName() + " restored some mana!");
+
+                //End Turn for Enemy if not enough mana
+                CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+                BState = BattleState.CheckEnd;
+            }
 
             return false;
         }
@@ -381,7 +438,34 @@ public class combatHandler : MonoBehaviour
     //Run Animation Function Placeholder
     public void RunAnimation(string AnimationName)
     {
-        //Placeholder for running animations
+        int duration;
+
+        switch(AnimationName)
+        {
+            case "Slash":
+            case "Fireball":
+            case "Backstab":
+                duration = 2;
+                break;
+            case "Shield Bash":
+            case "Ice Spike":
+            case "Poison Dart":
+                duration = 5;
+                break;
+            case "War Cry":
+            case "Lightning Bolt":
+            case "Vanish":
+                duration = 3;
+                break;
+            default:
+                duration = 1;
+                break;
+        }
+
+        StartCoroutine(TimerCoroutine(duration));
+
+        BState = BattleState.AnimationWait;
+
     }
 
     //Open Main Menu
@@ -414,30 +498,40 @@ public class combatHandler : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    TargetDisplay += "1 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                    TargetDisplay += "1 to target " + PartySystem.Instance.EnemyParty[i].GetName();
                 }
                 else if (i == 1 && PartySystem.Instance.EnemyParty[0].IsDead())
                 {
-                    TargetDisplay += "2 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                    TargetDisplay += "2 to target " + PartySystem.Instance.EnemyParty[i].GetName();
                 }
                 else if (i == 2 && PartySystem.Instance.EnemyParty[0].IsDead() && PartySystem.Instance.EnemyParty[1].IsDead())
                 {
-                    TargetDisplay += "3 to target " + PartySystem.Instance.EnemyParty[i].Name;
+                    TargetDisplay += "3 to target " + PartySystem.Instance.EnemyParty[i].GetName();
                 }
                 else
                 {
-                    TargetDisplay += ", " + (i + 1) + " to target " + PartySystem.Instance.EnemyParty[i].Name;
+                    TargetDisplay += ", " + (i + 1) + " to target " + PartySystem.Instance.EnemyParty[i].GetName();
                 }
             }
         }
         Debug.Log(TargetDisplay + ", 4 to return to previous Menu");
     }
 
-    
+    //QTE Timer
+    IEnumerator TimerCoroutine(int Seconds)
+    {
+
+        //Start Timer
+        yield return new WaitForSeconds(Seconds);
+
+        //End Turn
+        CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+        BState = BattleState.CheckEnd;
+
+    }
+
+}
 
 //Add exp after battle
 //Add money after battle
-//Add delay between turns
-//Add mana cost for moves
-}
 
