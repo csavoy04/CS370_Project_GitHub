@@ -51,7 +51,7 @@ public class CombatHandler : MonoBehaviour
         UnitBattleList.AddRange(PartySystem.Instance.EnemyParty);
         UnitBattleList.Sort((x, y) => y.GetSpeed().CompareTo(x.GetSpeed()));
 
-        battleStart();
+        BattleStart();
 
         MState = MenuState.Hide;
     }
@@ -178,7 +178,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //Battle Start Function
-    public void battleStart()
+    public void BattleStart()
     {
         SpawnEnemy();
         SpawnPlayerTeam();
@@ -316,8 +316,33 @@ public class CombatHandler : MonoBehaviour
     //Battle End Function
     public void BattleEnd()
     {
+
         if (BState == BattleState.Won)
         {
+            //Tracks Exp Gain
+            int TempExpGain = 0;
+            int MoneyGain = 0;
+
+            //For each unit in battle list, check if health <= 0 and party class is enemy
+            foreach (Unit unit in UnitBattleList)
+            {
+                //If both conditions are met, increment temp
+                if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Enemy")
+                {
+                    TempExpGain += unit.GetLevel() * 10;                    //Exp Gain Formula: Enemy Level * 10
+                    MoneyGain += unit.GetLevel() * 5;                       //Money Gain Formula: Enemy Level * 5
+                }
+            }
+
+            //Add Money to Player
+            GameHandler.Instance.Money += MoneyGain;
+
+            //Distribute Exp to Player Party
+            foreach (Unit unit in PartySystem.Instance.PlayerParty)
+            {
+                unit.ResetStats(TempExpGain);
+            }
+
             Debug.Log("You won the battle!");
             SceneManager.LoadScene("TestArea");
         }
@@ -330,39 +355,6 @@ public class CombatHandler : MonoBehaviour
         {
             Debug.Log("You fled the battle.");
             SceneManager.LoadScene("TestArea");
-        }
-    }
-
-
-    //Spawn Enemies Function
-    public void SpawnEnemy()
-    {
-
-        int NoOfEnemies = 3;
-
-        for (NoOfEnemies = 0; NoOfEnemies < 3; NoOfEnemies++)
-        {
-
-            Instantiate(enemyprefab, new UnityEngine.Vector3(3, NoOfEnemies + 1, NoOfEnemies * 2), UnityEngine.Quaternion.identity);
-            Transform HeathlBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(3, NoOfEnemies, NoOfEnemies), UnityEngine.Quaternion.identity);
-            HealthBar healthBar = HeathlBarTransform.GetComponent<HealthBar>();
-
-        }
-
-    }
-
-    //Spawn Player Team Function
-    public void SpawnPlayerTeam()
-    {
-
-        int NoOfAllies = 3;
-
-        for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++)
-        {
-
-            Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
-            Transform HeathBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies), UnityEngine.Quaternion.identity);
-            HealthBar healthBar = HeathBarTransform.GetComponent<HealthBar>();
         }
     }
 
@@ -557,6 +549,38 @@ public class CombatHandler : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    //Spawn Enemies Function
+    public void SpawnEnemy()
+    {
+
+        int NoOfEnemies = 3;
+
+        for (NoOfEnemies = 0; NoOfEnemies < 3; NoOfEnemies++)
+        {
+
+            Instantiate(enemyprefab, new UnityEngine.Vector3(3, NoOfEnemies + 1, NoOfEnemies * 2), UnityEngine.Quaternion.identity);
+            Transform HealthBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(3, NoOfEnemies, NoOfEnemies), UnityEngine.Quaternion.identity);
+            HealthBar healthBar = HealthBarTransform.GetComponent<HealthBar>();
+
+        }
+
+    }
+
+    //Spawn Player Team Function
+    public void SpawnPlayerTeam()
+    {
+
+        int NoOfAllies = 3;
+
+        for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++)
+        {
+
+            Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
+            Transform HealthBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies), UnityEngine.Quaternion.identity);
+            HealthBar healthBar = HealthBarTransform.GetComponent<HealthBar>();
         }
     }
 
