@@ -34,12 +34,13 @@ public class GameHandler : MonoBehaviour
     {
         Money = 0;
         CurrentCombatArea = CombatAreaName.NA;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
 
         /*
         if (Input.GetKeyDown(KeyCode.I))

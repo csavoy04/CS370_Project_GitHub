@@ -42,8 +42,8 @@ public class Unit
     public enum PartyClass
     {
         Player,
-        Enemy
-        //,Empty
+        Enemy,
+        Empty
     }
 
     public enum UnitClass
@@ -53,8 +53,8 @@ public class Unit
         Rogue,
         Slime,
         Goblin,
-        Orc
-        //,Empty
+        Orc,
+        Empty
     }
 
     public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, string[] GivenMoveSet)
