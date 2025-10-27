@@ -73,15 +73,18 @@ public class Main_Menu_Controller : MonoBehaviour
         menuParty.style.display = DisplayStyle.Flex;
 
         //Updates the Party Menu Stats to the current instance
+        var unit1Name = root.Q<Label>("Unit1-Name");
+        unit1Name.text = PartySystem.Instance.PlayerParty[0].Name;
+
         var unit1HealthBar = root.Q<ProgressBar>("Unit1-Health-Bar");
         unit1HealthBar.value = PartySystem.Instance.PlayerParty[0].CurrentHealth;
         unit1HealthBar.highValue = PartySystem.Instance.PlayerParty[0].MaxHealth;
 
-        var unit1Name = root.Q<Label>("Unit1-Name");
-        unit1Name.text = PartySystem.Instance.PlayerParty[0].Name;
-
         var unit1HpNum = root.Q<Label>("Unit1-Health-Num");
         unit1HpNum.text = "HP:" + PartySystem.Instance.PlayerParty[0].CurrentHealth + "/" + PartySystem.Instance.PlayerParty[0].MaxHealth;
+
+        var unit1StatsNum = root.Q<Label>("Unit1-Stats-Num");
+        unit1StatsNum.text = "ATK:" + PartySystem.Instance.PlayerParty[0].CurrentAttack + "  DEF:" + PartySystem.Instance.PlayerParty[0].CurrentDefense + "  SPD:" + PartySystem.Instance.PlayerParty[0].CurrentSpeed;
     }
 
     private void QuitEvent(ClickEvent evt)

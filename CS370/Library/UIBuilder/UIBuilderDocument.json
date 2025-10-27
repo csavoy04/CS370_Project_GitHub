@@ -14,49 +14,36 @@
         "m_CodePreviewVisible": true,
         "m_OpenUXMLFiles": [
             {
-                "m_OpenUSSFiles": [
-                    {
-                        "m_StyleSheet": {
-                            "fileID": 7433441132597879392,
-                            "guid": "3fffa7c0180e10d41b313bbe0291fd5e",
-                            "type": 3
-                        },
-                        "m_ContentHash": -2000720147,
-                        "m_UssPreview": ":root {\r\n}\r\n\r\n.background {\r\n    opacity: 1;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(127, 255, 212, 0.22);\r\n    justify-content: center;\r\n    align-items: stretch;\r\n    align-content: auto;\r\n    align-self: center;\r\n}\r\n\r\n.menu {\r\n    -unity-background-image-tint-color: rgb(255, 255, 255);\r\n    align-items: center;\r\n    width: 35%;\r\n    height: auto;\r\n    align-self: center;\r\n    display: flex;\r\n    background-color: rgba(127, 255, 212, 0.75);\r\n    justify-content: center;\r\n    align-content: center;\r\n    max-height: 80%;\r\n    border-top-left-radius: 5px;\r\n    border-top-right-radius: 5px;\r\n    border-bottom-left-radius: 5px;\r\n    border-bottom-right-radius: 5px;\r\n}\r\n\r\n.unity-button {\r\n    background-color: rgba(99, 241, 206, 0.86);\r\n    -unity-font-definition: url(\"project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime\");\r\n    -unity-font-style: normal;\r\n    font-size: 20px;\r\n    border-top-width: 5px;\r\n    border-right-width: 5px;\r\n    border-bottom-width: 5px;\r\n    border-left-width: 5px;\r\n    border-left-color: rgba(156, 255, 222, 0.28);\r\n    border-right-color: rgba(156, 255, 222, 0.28);\r\n    border-top-color: rgba(156, 255, 222, 0.28);\r\n    border-bottom-color: rgba(156, 255, 222, 0.28);\r\n    border-bottom-left-radius: 10px;\r\n    border-bottom-right-radius: 10px;\r\n    border-top-right-radius: 10px;\r\n    border-top-left-radius: 10px;\r\n    cursor: initial;\r\n    width: 35%;\r\n    height: auto;\r\n    transition-duration: 0.1s;\r\n}\r\n\r\n.unity-label {\r\n    font-size: 350%;\r\n    -unity-text-align: upper-center;\r\n}\r\n\r\n.unity-button:hover {\r\n    background-color: rgba(48, 178, 170, 0.86);\r\n    scale: 1.1 1.1;\r\n}\r\n\r\n.hide {\r\n    display: none;\r\n}\r\n",
-                        "m_OldPath": "Assets/UI/Main_Menu.uss"
-                    }
-                ],
-                "m_OpenendVisualTreeAssetOldPath": "Assets/UI/Main_Menu.uxml",
-                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <Style src=\"project://database/Assets/UI/Main_Menu.uss?fileID=7433441132597879392&amp;guid=3fffa7c0180e10d41b313bbe0291fd5e&amp;type=3#Main_Menu\" />\r\n    <ui:VisualElement name=\"Main-Menu\" class=\"background\" style=\"flex-grow: 1;\">\r\n        <ui:VisualElement name=\"Player-Menu\" class=\"menu\" style=\"flex-grow: 1; align-self: center; height: auto; min-height: auto; min-width: auto; max-width: none; max-height: 80%; width: 35%; justify-content: center; align-content: center; align-items: center; position: relative; top: auto; left: auto; bottom: auto; flex-direction: column;\">\r\n            <ui:Label text=\"Menu\" name=\"Menu-Title\" />\r\n            <ui:Button text=\"Play\" name=\"PlayBtn\" />\r\n            <ui:Button text=\"Party\" name=\"PartyBtn\" />\r\n            <ui:Button text=\"Bag\" name=\"BagBtn\" style=\"cursor: initial;\" />\r\n            <ui:Button text=\"Quit\" selectable=\"true\" name=\"QuitBtn\" style=\"cursor: initial;\" />\r\n        </ui:VisualElement>\r\n        <ui:VisualElement name=\"Party-Menu\" class=\"menu\" style=\"flex-grow: 1;\">\r\n            <ui:Label text=\"Party\" name=\"Party-Title\" />\r\n            <ui:VisualElement name=\"Unit1-Info\" style=\"flex-grow: 1; width: 80%; max-height: 30%; background-color: rgb(102, 238, 203); align-self: center; align-items: center;\">\r\n                <ui:Label text=\"Unit #1\" name=\"Unit1-Name\" style=\"font-size: 25%;\" />\r\n                <ui:VisualElement name=\"Unit1-Health\" style=\"flex-grow: 1; justify-content: space-between; align-items: auto; flex-direction: row; align-self: auto; align-content: flex-start; width: 95%; max-height: 30%; background-color: rgb(119, 223, 204);\">\r\n                    <ui:Label text=\"HP:100/100\" name=\"Unit1-Health-Num\" style=\"font-size: 30%; align-self: center;\" />\r\n                    <ui:ProgressBar value=\"22\" name=\"Unit1-Health-Bar\" focusable=\"false\" language-direction=\"Inherit\" style=\"text-overflow: clip; -unity-text-align: upper-left; white-space: normal; flex-wrap: nowrap; -unity-font-style: bold; color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); min-width: 60%; width: auto; align-self: center;\" />\r\n                </ui:VisualElement>\r\n            </ui:VisualElement>\r\n            <ui:Button text=\"Back\" name=\"PartyBackBtn\" style=\"align-content: auto; justify-content: flex-start; bottom: auto; position: relative;\" />\r\n        </ui:VisualElement>\r\n    </ui:VisualElement>\r\n</ui:UXML>\r\n",
-                "m_ContentHash": 781351694,
+                "m_OpenUSSFiles": [],
+                "m_OpenendVisualTreeAssetOldPath": "Assets/UI/HUD.uxml",
+                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <Current_Units style=\"height: 5%; width: 15%;\" />\r\n</ui:UXML>\r\n",
+                "m_ContentHash": -980724291,
                 "m_VisualTreeAssetRef": {
                     "fileID": 9197481963319205126,
-                    "guid": "062d4553fe5dee64db18391c64d742e5",
+                    "guid": "099bb5c6f9cf93f4a801bbdabf9b9d19",
                     "type": 3
                 },
                 "m_ActiveStyleSheet": {
-                    "fileID": 7433441132597879392,
-                    "guid": "3fffa7c0180e10d41b313bbe0291fd5e",
-                    "type": 3
+                    "instanceID": 0
                 },
                 "m_Settings": {
-                    "UxmlGuid": "062d4553fe5dee64db18391c64d742e5",
-                    "UxmlPath": "Assets/UI/Main_Menu.uxml",
+                    "UxmlGuid": "099bb5c6f9cf93f4a801bbdabf9b9d19",
+                    "UxmlPath": "Assets/UI/HUD.uxml",
                     "CanvasX": 0,
                     "CanvasY": 0,
                     "CanvasWidth": 1920,
                     "CanvasHeight": 1080,
-                    "MatchGameView": true,
-                    "ZoomScale": 0.25,
+                    "MatchGameView": false,
+                    "ZoomScale": 0.30000001192092898,
                     "PanOffset": {
-                        "x": 172.5765380859375,
-                        "y": 258.700927734375
+                        "x": 32.78273010253906,
+                        "y": 88.67349243164063
                     },
                     "ColorModeBackgroundOpacity": 1.0,
                     "ImageModeCanvasBackgroundOpacity": 1.0,
                     "CameraModeCanvasBackgroundOpacity": 1.0,
-                    "EnableCanvasBackground": true,
-                    "CanvasBackgroundMode": 2,
+                    "EnableCanvasBackground": false,
+                    "CanvasBackgroundMode": 0,
                     "CanvasBackgroundColor": {
                         "r": 0.0,
                         "g": 0.0,
@@ -67,7 +54,7 @@
                         "instanceID": 0
                     },
                     "CanvasBackgroundImageScaleMode": 1,
-                    "CanvasBackgroundCameraName": "Main Camera"
+                    "CanvasBackgroundCameraName": ""
                 },
                 "m_OpenSubDocumentParentIndex": -1,
                 "m_OpenSubDocumentParentSourceTemplateAssetIndex": -1
