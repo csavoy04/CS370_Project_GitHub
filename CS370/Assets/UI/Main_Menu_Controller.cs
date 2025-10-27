@@ -53,8 +53,6 @@ public class Main_Menu_Controller : MonoBehaviour
                 // Hides and Updates the menu
                 root.style.display = DisplayStyle.None;
                 Debug.Log("Menu closed");
-
-                Debug.Log(PartySystem.Instance.PlayerParty[0].CurrentHealth);
             }
         }
     }

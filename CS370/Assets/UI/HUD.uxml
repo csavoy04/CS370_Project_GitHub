@@ -1,3 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Current_Units style="height: 5%; width: 15%;" />
+    <Current_Units health="67.1" style="height: 5%; width: 15%;">
+        <Bindings>
+            <ui:DataBinding property="health" data-source-path="PlayerParty[0].CurrentHealth" data-source-type="PartySystem, Assembly-CSharp" binding-mode="ToTarget" />
+        </Bindings>
+    </Current_Units>
 </ui:UXML>

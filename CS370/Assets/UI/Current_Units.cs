@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Unity.Properties;
 
 [UxmlElement]
 public partial class Current_Units : VisualElement
 {
-    //This is a number that is a percentage of the health
+    /*
     [SerializeField, DontCreateProperty]
-    float m_Health;
+    private float m_Health;
 
-    //Value between 0 and 100
     [UxmlAttribute, CreateProperty]
     public float health
     {
-        //The progress property is exposed in C#
         get => m_Health;
         set
         {
@@ -20,6 +19,7 @@ public partial class Current_Units : VisualElement
             MarkDirtyRepaint();
         }
     }
+
 
     public Current_Units()
     {
@@ -47,17 +47,18 @@ public partial class Current_Units : VisualElement
 
         //Bar Fill
         painter.BeginPath();
-        painter.lineWidth = 10f;
+        painter.lineWidth = 8f;
 
-        float fillAmount = ((100f - health) / 100f);
+
+        float fillAmount = width * (health / 100f);
 
         painter.LineTo(new Vector2(0, 0));
-        painter.LineTo(new Vector2(width - fillAmount, 0));
-        painter.LineTo(new Vector2(width - fillAmount, height));
+        painter.LineTo(new Vector2(0 + fillAmount, 0));
+        painter.LineTo(new Vector2(0 + fillAmount, height));
         painter.LineTo(new Vector2(0, height));
         painter.ClosePath();
         painter.fillColor = Color.green;
         painter.Fill(FillRule.NonZero);
         painter.Stroke();
-    }
+    }*/
 }

@@ -1,0 +1,28 @@
+{
+  "name": "com.unity.properties",
+  "displayName": "Properties",
+  "version": "2.1.0-exp.7",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "description": "Use Unity's Properties to instrument types and create visitation algorithms.",
+  "keywords": [
+    "properties",
+    "unity"
+  ],
+  "dependencies": {
+    "com.unity.test-framework.performance": "2.8.0-preview"
+  },
+  "_upm": {
+    "changelog": "### Fixed\n* Fixed an issue where converting from an arbitrary type to a UnityEngine.Object cause a StackOverflow exception in TypeConversion."
+  },
+  "upmCi": {
+    "footprint": "4181af2baadb76e4ed1c4ba60d868ab2cd92b588"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.properties@2.1/manual/index.html",
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/com.unity.properties.git",
+    "type": "git",
+    "revision": "0d1b0062c5163570fb3cf9b36dda3bb29b5425c1"
+  },
+  "_fingerprint": "9b1ad9956a7624a4a674cfb84b7bed23c00b3a5b"
+}
