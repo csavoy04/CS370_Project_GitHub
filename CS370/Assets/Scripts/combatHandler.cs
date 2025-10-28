@@ -12,6 +12,8 @@ public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
 public class CombatHandler : MonoBehaviour
 {
 
+    public static CombatHandler Instance;
+
     public GameObject playerprefab;
     public GameObject enemyprefab;
 
@@ -584,7 +586,18 @@ public class CombatHandler : MonoBehaviour
         }
     }
 
+    public string GetMState()
+    {
+        return MState.ToString();
+    }
+
+    public string GetCurrentUnitMove(int index)
+    {
+        return CurrentUnit.MoveSet[index];
+    }
 }
+
+
 
 //Add exp after battle
 //Add money after battle

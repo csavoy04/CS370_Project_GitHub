@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Main_Menu.uss?fileID=7433441132597879392&amp;guid=3fffa7c0180e10d41b313bbe0291fd5e&amp;type=3#Main_Menu" />
+    <ui:VisualElement name="Move_Holder" style="flex-grow: 1; width: 25%; max-height: 30%; align-content: auto; background-color: rgba(127, 255, 212, 0.27); -unity-text-align: upper-left; bottom: 0; position: absolute; left: 0%; top: auto; right: auto; height: 30%; align-self: center; flex-direction: column; justify-content: flex-start; align-items: center;">
+        <ui:Label text="Actions&#10;" name="Button_List_Title" />
+        <ui:Button text="Button" name="Move_0" class="unity-button" />
+        <ui:Button text="Button" name="Move_1" />
+        <ui:Button text="Button" name="Move_2" />
+        <ui:Button text="Button" name="Move_3" />
+    </ui:VisualElement>
+</ui:UXML>
