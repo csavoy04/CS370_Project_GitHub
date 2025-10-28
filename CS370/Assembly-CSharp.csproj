@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\UI\Main_Menu_Controller.cs" />
+    <Compile Include="Assets\Scripts\QuickTimeEvents.cs" />
     <Compile Include="Assets\Prefabs\Slime\SlimeStats.cs" />
     <Compile Include="Assets\UI\Current_Units_Controller.cs" />
     <Compile Include="Assets\Scripts\HealthSystem.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Assets\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Scripts\Dash.cs" />
     <Compile Include="Assets\UI\QTE_1.cs" />
-    <Compile Include="Assets\Scripts\quickTimeEvents.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\PartySystem.cs" />
     <Compile Include="Assets\Scripts\moveNextWorld.cs" />
