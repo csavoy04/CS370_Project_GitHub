@@ -66,40 +66,40 @@ public class CombatHandler : MonoBehaviour
             {
                 CurrentUnit = UnitBattleList[CurrentUnitIndex];
 
-                    if (CurrentUnit.GetPartyClass() != "Empty")
+                if (CurrentUnit.GetPartyClass() != "Empty")
+                {
+                    if (CurrentUnit.GetCurrentHealth() > 0)
                     {
-                        if (CurrentUnit.GetCurrentHealth() > 0)
+                        //Change BState Based on Current Unit's Party Class
+                        if (CurrentUnit.GetPartyClass() == "Player")
                         {
-                            //Change BState Based on Current Unit's Party Class
-                            if (CurrentUnit.GetPartyClass() == "Player")
-                            {
-                                BState = BattleState.PlayerTurn;
-                                Debug.Log("Player Turn: " + CurrentUnit.GetName());
-                                OpenMainMenu();
+                            BState = BattleState.PlayerTurn;
+                            Debug.Log("Player Turn: " + CurrentUnit.GetName());
+                            OpenMainMenu();
 
-                            }
-                            else if (CurrentUnit.GetPartyClass() == "Enemy")
-                            {
-                                BState = BattleState.EnemyTurn;
-                                Debug.Log("Enemy Turn: " + CurrentUnit.GetName());
-                                MState = MenuState.Hide;
-
-                            }
                         }
-                        else
+                        else if (CurrentUnit.GetPartyClass() == "Enemy")
                         {
-                            Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
+                            BState = BattleState.EnemyTurn;
+                            Debug.Log("Enemy Turn: " + CurrentUnit.GetName());
+                            MState = MenuState.Hide;
 
-                            CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-                            BState = BattleState.DetermineTurn;
                         }
                     }
                     else
                     {
-                        Debug.Log("Current Unit is Empty. Skipping turn.");
+                        Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
+
                         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                         BState = BattleState.DetermineTurn;
                     }
+                }
+                else
+                {
+                    Debug.Log("Current Unit is Empty. Skipping turn.");
+                    CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+                    BState = BattleState.DetermineTurn;
+                }
             }
 
             //Execute Turn
@@ -120,8 +120,8 @@ public class CombatHandler : MonoBehaviour
                 //Tracks Defeated Units
                 int temp = 0;
 
-                    //Tracks Number of Units in Player Party
-                    int numParty = 0;
+                //Tracks Number of Units in Player Party
+                int numParty = 0;
                 foreach (Unit unit in PartySystem.Instance.PlayerParty)
                 {
                     if (unit.GetPartyClass() != "Empty")
@@ -133,11 +133,11 @@ public class CombatHandler : MonoBehaviour
                 //For each unit in enemy party, check if health <= 0
                 foreach (Unit unit in PartySystem.Instance.EnemyParty)
                 {
-                        //If conditions are met, increment temp
-                        if (unit.GetCurrentHealth() <= 0)
-                        {
-                            temp++;
-                        }
+                    //If conditions are met, increment temp
+                    if (unit.GetCurrentHealth() <= 0)
+                    {
+                        temp++;
+                    }
                 }
 
                 //If temp is equal to or greater than number of enemies, player wins. If Not, check for player defeat
@@ -154,10 +154,10 @@ public class CombatHandler : MonoBehaviour
                     foreach (Unit unit in PartySystem.Instance.PlayerParty)
                     {
                         //If both conditions are met, increment temp
-                            if (unit.GetPartyClass() != "Empty" && unit.GetCurrentHealth() <= 0)
-                            {
-                                temp++;
-                            }
+                        if (unit.GetPartyClass() != "Empty" && unit.GetCurrentHealth() <= 0)
+                        {
+                            temp++;
+                        }
                     }
 
                     //If temp is equal to or greater than number of players, player loses. If Not, continue battle
