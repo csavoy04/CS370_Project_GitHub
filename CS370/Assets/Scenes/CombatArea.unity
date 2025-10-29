@@ -4986,15 +4986,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5254dca3903f10b43bfea4be59308bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::combatHandler
-  playerprefab: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
-  enemyprefab: {fileID: 4564465858542139896, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
+  playerprefab: {fileID: 7345129318622150237, guid: 61446a2c94aec1b488c92c1315c5336f, type: 3}
+  enemyprefab: {fileID: 7340851059801259576, guid: 2f78b57c36bc6d845ab5fcdf2d2c403a, type: 3}
   QTE: {fileID: 2113566661}
-  healthBar: {fileID: 8620425939122263375, guid: 8790c530351073d4f843e230cc598240, type: 3}
-  pfHealthBar: {fileID: 1266852061346156930, guid: 8790c530351073d4f843e230cc598240, type: 3}
   BState: 0
   MState: 0
   UnitBattleList: []
   CurrentUnit:
+    HealthBar: {fileID: 0}
     PartyType: 0
     Name: 
     ClassType: 0
@@ -5014,6 +5013,7 @@ MonoBehaviour:
     MoveSet: []
   CurrentUnitIndex: 0
   Defender:
+    HealthBar: {fileID: 0}
     PartyType: 0
     Name: 
     ClassType: 0

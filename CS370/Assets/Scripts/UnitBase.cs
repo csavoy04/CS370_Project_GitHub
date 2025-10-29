@@ -4,8 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class Unit
 {
-    public EventHandler OnHealthChanged;
-    private HealthSystem healthSystem;
+    public HealthBar HealthBar;
     //Stats
     public PartyClass PartyType;        // Party Type (Player or Enemy)
     public string Name;                 // Unit Name
@@ -233,6 +232,14 @@ public class Unit
     public void DealDamage(Unit Target, string MoveName)
     {
         Target.TakeDamage(CalculateDamage(Target, MoveName));
+        if (Target.HealthBar != null)
+        {
+            Target.HealthBar.UpdateHealthBar(Target.GetHealthPercent());
+        }
+        else
+        {
+            Debug.LogWarning($"Target {Target.Name} has no HealthBar assigned.");
+        }
     }
     
     //Calculates damage to deal to another unit based on attack and defense stats, etc.
@@ -265,11 +272,14 @@ public class Unit
     public void TakeDamage(int Amount)
     {
         CurrentHealth -= Amount;
-        if (CurrentHealth < 0)
+        if (HealthBar != null)
         {
-            CurrentHealth = 0;
+            HealthBar.UpdateHealthBar(GetHealthPercent());
         }
-        if (OnHealthChanged != null) OnHealthChanged(this, EventArgs.Empty);
+        else
+        {
+            Debug.LogWarning($"Unit {Name} has no HealthBar assigned.");
+        }
     }
 
     public int QuickTimeEventType(string MoveName)

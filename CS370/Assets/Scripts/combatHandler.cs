@@ -19,8 +19,6 @@ public class CombatHandler : MonoBehaviour
 
     public QuickTimeEvents QTE;
 
-    public HealthBar healthBar;
-    public Transform pfHealthBar;
     //Battle State
     public BattleState BState;
 
@@ -60,22 +58,6 @@ public class CombatHandler : MonoBehaviour
 
     void Update()
     {
-
-        //Testing Battle End
-        /*
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            BState = BattleState.Won;
-            BattleEnd();
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            BState = BattleState.Lost;
-            BattleEnd();
-        }
-        */
-
-
         //Do Corresponding Turn Based on Order
         if (BState != BattleState.Won && BState != BattleState.Lost)
         {
@@ -557,16 +539,20 @@ public class CombatHandler : MonoBehaviour
     //Spawn Enemies Function
     public void SpawnEnemy()
     {
-
-        int NoOfEnemies = 3;
-
-        for (NoOfEnemies = 0; NoOfEnemies < 3; NoOfEnemies++)
+        int enemyCount = PartySystem.Instance.EnemyParty != null ? PartySystem.Instance.EnemyParty.Count : 0;
+        for (int NoOfEnemies = 0; NoOfEnemies < enemyCount; NoOfEnemies++)
         {
-
-            Instantiate(enemyprefab, new UnityEngine.Vector3(3, NoOfEnemies + 1, NoOfEnemies * 2), UnityEngine.Quaternion.identity);
-            Transform HealthBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(3, NoOfEnemies, NoOfEnemies), UnityEngine.Quaternion.identity);
-            HealthBar healthBar = HealthBarTransform.GetComponent<HealthBar>();
-
+            GameObject go = Instantiate(enemyprefab, new UnityEngine.Vector3(5, NoOfEnemies * 2, 0), UnityEngine.Quaternion.identity);
+            // Try to find a FloatingHealthBar component on the instantiated prefab (or its children)
+            HealthBar fhb = go.GetComponentInChildren<HealthBar>();
+            if (fhb != null)
+            {
+                PartySystem.Instance.EnemyParty[NoOfEnemies].HealthBar = fhb;
+            }
+            else
+            {
+                Debug.LogWarning($"SpawnEnemy: spawned enemy prefab at index {NoOfEnemies} has no FloatingHealthBar component.");
+            }
         }
 
     }
@@ -575,14 +561,19 @@ public class CombatHandler : MonoBehaviour
     public void SpawnPlayerTeam()
     {
 
-        int NoOfAllies = 3;
-
-        for (NoOfAllies = 0; NoOfAllies < 3; NoOfAllies++)
+        int allyCount = PartySystem.Instance.PlayerParty != null ? PartySystem.Instance.PlayerParty.Count : 0;
+        for (int NoOfAllies = 0; NoOfAllies < allyCount; NoOfAllies++)
         {
-
-            Instantiate(playerprefab, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies * 2), UnityEngine.Quaternion.identity);
-            Transform HealthBarTransform = Instantiate(pfHealthBar, new UnityEngine.Vector3(-3, NoOfAllies, NoOfAllies), UnityEngine.Quaternion.identity);
-            HealthBar healthBar = HealthBarTransform.GetComponent<HealthBar>();
+            GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, NoOfAllies * 2, 0), UnityEngine.Quaternion.identity);
+            HealthBar fhb = go.GetComponentInChildren<HealthBar>();
+            if (fhb != null)
+            {
+                PartySystem.Instance.PlayerParty[NoOfAllies].HealthBar = fhb;
+            }
+            else
+            {
+                Debug.LogWarning($"SpawnPlayerTeam: spawned player prefab at index {NoOfAllies} has no FloatingHealthBar component.");
+            }
         }
     }
 

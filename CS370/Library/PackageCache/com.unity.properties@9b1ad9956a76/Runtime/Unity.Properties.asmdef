@@ -1,0 +1,27 @@
+{
+    "name": "Unity.Properties",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!USE_PROPERTIES_MODULE"
+    ],
+    "versionDefines": [
+        {
+            "name": "Unity",
+            "expression": "2022.1.0b1",
+            "define": "ENABLE_IL2CPP_REFLECTION"
+        },
+        {
+            "name": "Unity",
+            "expression": "2022.2.0a18",
+            "define": "USE_PROPERTIES_MODULE"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,18 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public HealthSystem healthSystem;
-    
-    public void SetUp(HealthSystem healthSystem)
-    {
-        this.healthSystem = healthSystem;
-        healthSystem.OnHealthChanged += Unit_OnHealthChanged;
-    }
+    [SerializeField] private Slider slider;
 
-    public void Unit_OnHealthChanged(object sender, System.EventArgs e)
+    public void UpdateHealthBar(float healthPercent)
     {
-        transform.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 1);
+        if (slider == null)
+        {
+            Debug.LogWarning($"HealthBar on '{gameObject.name}' has no Slider assigned.", this);
+            return;
+        }
+        slider.value = healthPercent;
     }
 
 }
