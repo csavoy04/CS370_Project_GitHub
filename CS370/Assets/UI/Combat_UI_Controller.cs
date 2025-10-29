@@ -16,7 +16,7 @@ public class Combat_UI_Controller : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        root = uiDocument.rootVisualElement;
+        //root = uiDocument.rootVisualElement;
 
     }
 
@@ -24,7 +24,7 @@ public class Combat_UI_Controller : MonoBehaviour
     void Update()
     {
         MState = combatHandler.GetMState();
-
+        /*
         var move0 = root.Q<Button>("Move_0");
         move0.RegisterCallback<ClickEvent>(Move0Event);
 
@@ -36,6 +36,7 @@ public class Combat_UI_Controller : MonoBehaviour
 
         var move3 = root.Q<Button>("Move_3");
         move3.RegisterCallback<ClickEvent>(Move3Event);
+        
 
         //Main Battle Text
         if (MState == "Main")
@@ -53,6 +54,7 @@ public class Combat_UI_Controller : MonoBehaviour
             move2.text = combatHandler.GetCurrentUnitMove(2);
             move3.text = "Back";
         }
+        */
     }
 
     private void Move0Event(ClickEvent evt)

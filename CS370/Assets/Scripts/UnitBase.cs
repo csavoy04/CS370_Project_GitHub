@@ -41,8 +41,8 @@ public class Unit
     public enum PartyClass
     {
         Player,
-        Enemy
-        //,Empty
+        Enemy,
+        Empty
     }
 
     public enum UnitClass
@@ -52,8 +52,8 @@ public class Unit
         Rogue,
         Slime,
         Goblin,
-        Orc
-        //,Empty
+        Orc,
+        Empty
     }
 
     public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, string[] GivenMoveSet)
@@ -271,7 +271,14 @@ public class Unit
     // Applies damage to the unit, reducing current health
     public void TakeDamage(int Amount)
     {
+        //Take Damage
         CurrentHealth -= Amount;
+        //Clamp Health to not go below 0
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
+
         if (HealthBar != null)
         {
             HealthBar.UpdateHealthBar(GetHealthPercent());

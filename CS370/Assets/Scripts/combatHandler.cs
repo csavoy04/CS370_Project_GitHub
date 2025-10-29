@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems; 
 using UnityEngine.SceneManagement;
 
-public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd, AnimationWait, QTEWait}
-public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide}
+public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd, AnimationWait, QTEWait }
+public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide }
 
 
 public class CombatHandler : MonoBehaviour
@@ -66,31 +66,40 @@ public class CombatHandler : MonoBehaviour
             {
                 CurrentUnit = UnitBattleList[CurrentUnitIndex];
 
-                if (CurrentUnit.GetCurrentHealth() > 0)
-                {
-                    //Change BState Based on Current Unit's Party Class
-                    if (CurrentUnit.GetPartyClass() == "Player")
+                    if (CurrentUnit.GetPartyClass() != "Empty")
                     {
-                        BState = BattleState.PlayerTurn;
-                        Debug.Log("Player Turn: " + CurrentUnit.GetName());
-                        OpenMainMenu();
+                        if (CurrentUnit.GetCurrentHealth() > 0)
+                        {
+                            //Change BState Based on Current Unit's Party Class
+                            if (CurrentUnit.GetPartyClass() == "Player")
+                            {
+                                BState = BattleState.PlayerTurn;
+                                Debug.Log("Player Turn: " + CurrentUnit.GetName());
+                                OpenMainMenu();
 
+                            }
+                            else if (CurrentUnit.GetPartyClass() == "Enemy")
+                            {
+                                BState = BattleState.EnemyTurn;
+                                Debug.Log("Enemy Turn: " + CurrentUnit.GetName());
+                                MState = MenuState.Hide;
+
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
+
+                            CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+                            BState = BattleState.DetermineTurn;
+                        }
                     }
-                    else if (CurrentUnit.GetPartyClass() == "Enemy")
+                    else
                     {
-                        BState = BattleState.EnemyTurn;
-                        Debug.Log("Enemy Turn: " + CurrentUnit.GetName());
-                        MState = MenuState.Hide;
-
+                        Debug.Log("Current Unit is Empty. Skipping turn.");
+                        CurrentUnitIndex = NextTurn(CurrentUnitIndex);
+                        BState = BattleState.DetermineTurn;
                     }
-                }
-                else
-                {
-                    Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
-
-                    CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-                    BState = BattleState.DetermineTurn;
-                }
             }
 
             //Execute Turn
@@ -111,14 +120,24 @@ public class CombatHandler : MonoBehaviour
                 //Tracks Defeated Units
                 int temp = 0;
 
-                //For each unit in battle list, check if health <= 0 and party class is enemy
-                foreach (Unit unit in UnitBattleList)
+                    //Tracks Number of Units in Player Party
+                    int numParty = 0;
+                foreach (Unit unit in PartySystem.Instance.PlayerParty)
                 {
-                    //If both conditions are met, increment temp
-                    if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Enemy")
+                    if (unit.GetPartyClass() != "Empty")
                     {
-                        temp++;
+                        numParty++;
                     }
+                }
+
+                //For each unit in enemy party, check if health <= 0
+                foreach (Unit unit in PartySystem.Instance.EnemyParty)
+                {
+                        //If conditions are met, increment temp
+                        if (unit.GetCurrentHealth() <= 0)
+                        {
+                            temp++;
+                        }
                 }
 
                 //If temp is equal to or greater than number of enemies, player wins. If Not, check for player defeat
@@ -131,18 +150,18 @@ public class CombatHandler : MonoBehaviour
                     //Tracks Defeated Units
                     temp = 0;
 
-                    //For each unit in battle list, check if health <= 0 and party class is player
-                    foreach (Unit unit in UnitBattleList)
+                    //For each unit in player party, check if health <= 0
+                    foreach (Unit unit in PartySystem.Instance.PlayerParty)
                     {
                         //If both conditions are met, increment temp
-                        if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Player")
-                        {
-                            temp++;
-                        }
+                            if (unit.GetPartyClass() != "Empty" && unit.GetCurrentHealth() <= 0)
+                            {
+                                temp++;
+                            }
                     }
 
                     //If temp is equal to or greater than number of players, player loses. If Not, continue battle
-                    if (temp >= PartySystem.Instance.PlayerParty.Count)
+                    if (temp >= numParty)
                     {
                         BState = BattleState.Lost;
                     }
@@ -181,7 +200,12 @@ public class CombatHandler : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
-                Debug.Log(CurrentUnit.GetName() + " Defended!");
+                //Restore some mana for defending
+                CurrentUnit.RestoreMana(5);
+
+                Debug.Log(CurrentUnit.GetName() + " defended and restored some mana!");
+
+                //End Turn
                 CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                 BState = BattleState.CheckEnd;
             }
@@ -216,9 +240,8 @@ public class CombatHandler : MonoBehaviour
                 Defender = PartySystem.Instance.EnemyParty[0];
                 if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
-                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
-                } 
+                }
                 else
                 {
                     MState = MenuState.Hide;
@@ -229,7 +252,6 @@ public class CombatHandler : MonoBehaviour
                 Defender = PartySystem.Instance.EnemyParty[1];
                 if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
-                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
                 }
                 else
@@ -242,7 +264,6 @@ public class CombatHandler : MonoBehaviour
                 Defender = PartySystem.Instance.EnemyParty[2];
                 if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
                 {
-                    Debug.Log("Not enough mana to perform move. Returning to Main Menu.");
                     OpenMainMenu();
                 }
                 else
@@ -266,7 +287,7 @@ public class CombatHandler : MonoBehaviour
                 //Update Health Bars Here
 
                 RunAnimation(SelectedMove);
-                
+
             }
             else if (QTE.State == QuickTimeEvents.QTEState.Fail)
             {
@@ -275,7 +296,7 @@ public class CombatHandler : MonoBehaviour
                 RunAnimation(SelectedMove);
 
             }
-        }   
+        }
     }
 
     //Enemy Turn Function
@@ -283,9 +304,20 @@ public class CombatHandler : MonoBehaviour
     {
         //EnemyTargetOptions
         string Targets = "";
+
+        //Tracks Number of Units in Player Party
+        int numParty = 0;
+        foreach (Unit unit in PartySystem.Instance.PlayerParty)
+        {
+            if (unit.GetPartyClass() != "Empty")
+            {
+                numParty++;
+            }
+        }
+
         for (int i = 0; i < PartySystem.Instance.PlayerParty.Count; i++)
         {
-            if (PartySystem.Instance.PlayerParty[i].IsAlive())
+            if (PartySystem.Instance.PlayerParty[i].GetPartyClass() != "Empty" && PartySystem.Instance.PlayerParty[i].IsAlive())
             {
                 Targets += i;
             }
@@ -294,7 +326,9 @@ public class CombatHandler : MonoBehaviour
         int RandomTargetIndex = UnityEngine.Random.Range(0, Targets.Length);
         int RandomMoveIndex = UnityEngine.Random.Range(0, CurrentUnit.MoveSet.Length);
 
-        ExecuteMove(CurrentUnit.MoveSet[RandomMoveIndex], CurrentUnit, PartySystem.Instance.PlayerParty[RandomTargetIndex]);
+        int chosenTarget = (int)Char.GetNumericValue(Targets[RandomTargetIndex]);
+
+        ExecuteMove(CurrentUnit.MoveSet[RandomMoveIndex], CurrentUnit, PartySystem.Instance.PlayerParty[chosenTarget]);
     }
 
     //Battle End Function
@@ -308,10 +342,10 @@ public class CombatHandler : MonoBehaviour
             int MoneyGain = 0;
 
             //For each unit in battle list, check if health <= 0 and party class is enemy
-            foreach (Unit unit in UnitBattleList)
+            foreach (Unit unit in PartySystem.Instance.EnemyParty)
             {
-                //If both conditions are met, increment temp
-                if (unit.GetCurrentHealth() <= 0 && unit.GetPartyClass() == "Enemy")
+                //If conditions are met, increment temp
+                if (unit.GetCurrentHealth() <= 0)
                 {
                     TempExpGain += unit.GetLevel() * 10;                    //Exp Gain Formula: Enemy Level * 10
                     MoneyGain += unit.GetLevel() * 5;                       //Money Gain Formula: Enemy Level * 5
@@ -324,7 +358,10 @@ public class CombatHandler : MonoBehaviour
             //Distribute Exp to Player Party
             foreach (Unit unit in PartySystem.Instance.PlayerParty)
             {
-                unit.ResetStats(TempExpGain);
+                if (unit.GetPartyClass() != "Empty")
+                {
+                    unit.ResetStats(TempExpGain);
+                }
             }
 
             Debug.Log("You won the battle!");
@@ -389,7 +426,7 @@ public class CombatHandler : MonoBehaviour
         {
             Debug.Log(Attacker.GetName() + " does not have enough mana to use " + MoveName + "!");
 
-            if(Attacker.GetPartyClass() == "Enemy")
+            if (Attacker.GetPartyClass() == "Enemy")
             {
 
                 Attacker.RestoreMana(5);  //Restore some mana to enemy for next turn
@@ -413,7 +450,7 @@ public class CombatHandler : MonoBehaviour
     {
         int duration;
 
-        switch(AnimationName)
+        switch (AnimationName)
         {
             case "Slash":
             case "Fireball":
@@ -539,6 +576,7 @@ public class CombatHandler : MonoBehaviour
     //Spawn Enemies Function
     public void SpawnEnemy()
     {
+
         int enemyCount = PartySystem.Instance.EnemyParty != null ? PartySystem.Instance.EnemyParty.Count : 0;
         for (int NoOfEnemies = 0; NoOfEnemies < enemyCount; NoOfEnemies++)
         {
@@ -586,10 +624,9 @@ public class CombatHandler : MonoBehaviour
     {
         return CurrentUnit.MoveSet[index];
     }
+
 }
 
-
-
-//Add exp after battle
-//Add money after battle
-
+//Status effects can be added later as needed
+//Examples: Poison, Burn, Freeze, Stun, Buffs/Debuffs, etc.
+//Function for targeting allies for healing or buffs can also be added later
