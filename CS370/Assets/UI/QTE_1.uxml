@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <QTE_1 line="10.7" style="height: 50%;">
+        <Bindings>
+            <ui:DataBinding property="line" data-source-path="CurrentTiming" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
+        </Bindings>
+    </QTE_1>
+</ui:UXML>
