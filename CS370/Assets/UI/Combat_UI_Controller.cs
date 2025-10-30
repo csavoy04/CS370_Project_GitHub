@@ -13,18 +13,20 @@ public class Combat_UI_Controller : MonoBehaviour
     public string MState;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
-        //root = uiDocument.rootVisualElement;
+        root = uiDocument.rootVisualElement;
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
         MState = combatHandler.GetMState();
-        /*
+        
         var move0 = root.Q<Button>("Move_0");
         move0.RegisterCallback<ClickEvent>(Move0Event);
 
@@ -54,26 +56,51 @@ public class Combat_UI_Controller : MonoBehaviour
             move2.text = combatHandler.GetCurrentUnitMove(2);
             move3.text = "Back";
         }
-        */
+        
     }
 
     private void Move0Event(ClickEvent evt)
     {
-        
+        if (MState == "Main")
+        {
+            combatHandler.OpenMoveSelectMenu();
+        }
+        else if (MState == "MoveSelect")
+        {
+            combatHandler.OpenTargetSelectMenu(0);
+        }
     }
 
     private void Move1Event(ClickEvent evt)
     {
-        
+        if (MState == "Main")
+        {
+            combatHandler.OpenMoveSelectMenu();
+        }
+        else if (MState == "MoveSelect")
+        {
+            combatHandler.OpenTargetSelectMenu(1);
+        }
     }
 
     private void Move2Event(ClickEvent evt)
     {
-        
+        if (MState == "Main")
+        {
+            combatHandler.OpenMoveSelectMenu();
+        }
+        else if (MState == "MoveSelect")
+        {
+            combatHandler.OpenTargetSelectMenu(2);
+        }
     }
 
     private void Move3Event(ClickEvent evt)
     {
-        
+        if (MState == "MoveSelect")
+        {
+            combatHandler.OpenMainMenu();
+        }
+
     }
 }
