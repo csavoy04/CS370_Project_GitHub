@@ -226,6 +226,7 @@ public class Unit
     public void Heal(int Amount)
     {
         CurrentHealth += Amount;
+        HealthBar.UpdateHealthBar(GetHealthPercent());
     }
 
     //Deal Damage to another unit

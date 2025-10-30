@@ -50,7 +50,7 @@ public class CombatHandler : MonoBehaviour
         UnitBattleList.AddRange(PartySystem.Instance.PlayerParty);
         UnitBattleList.AddRange(PartySystem.Instance.EnemyParty);
         UnitBattleList.Sort((x, y) => y.GetSpeed().CompareTo(x.GetSpeed()));
-
+             
         BattleStart();
 
         MState = MenuState.Hide;
@@ -186,6 +186,15 @@ public class CombatHandler : MonoBehaviour
         SpawnEnemy();
         SpawnPlayerTeam();
 
+        foreach (Unit unit in PartySystem.Instance.PlayerParty)
+        {
+            if(unit.GetPartyClass() != "Empty")
+            {
+                unit.Heal(0);
+            }
+            
+        } 
+        
         BState = BattleState.DetermineTurn;
     }
 
@@ -598,19 +607,21 @@ public class CombatHandler : MonoBehaviour
     //Spawn Player Team Function
     public void SpawnPlayerTeam()
     {
-
         int allyCount = PartySystem.Instance.PlayerParty != null ? PartySystem.Instance.PlayerParty.Count : 0;
         for (int NoOfAllies = 0; NoOfAllies < allyCount; NoOfAllies++)
         {
-            GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, NoOfAllies * 2, 0), UnityEngine.Quaternion.identity);
-            HealthBar fhb = go.GetComponentInChildren<HealthBar>();
-            if (fhb != null)
+            if (PartySystem.Instance.PlayerParty[NoOfAllies].GetPartyClass() != "Empty")
             {
-                PartySystem.Instance.PlayerParty[NoOfAllies].HealthBar = fhb;
-            }
-            else
-            {
-                Debug.LogWarning($"SpawnPlayerTeam: spawned player prefab at index {NoOfAllies} has no FloatingHealthBar component.");
+                GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, NoOfAllies * 2, 0), UnityEngine.Quaternion.identity);
+                HealthBar fhb = go.GetComponentInChildren<HealthBar>();
+                if (fhb != null)
+                {
+                    PartySystem.Instance.PlayerParty[NoOfAllies].HealthBar = fhb;
+                }
+                else
+                {
+                    Debug.LogWarning($"SpawnPlayerTeam: spawned player prefab at index {NoOfAllies} has no FloatingHealthBar component.");
+                }
             }
         }
     }
