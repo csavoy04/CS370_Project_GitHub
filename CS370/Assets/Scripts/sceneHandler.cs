@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class sceneHandler : MonoBehaviour
 {
     [Header("Scenes")]
-    public string curScene;
+    public static string curScene;
     public string tarScene;
     public string prevScene;
 
@@ -16,7 +16,6 @@ public class sceneHandler : MonoBehaviour
     public Dictionary<string, Vector3> locations = new Dictionary<string, Vector3>()
     {
         // curScene | prevScene, Vector3
-        {"TestAreaTestArea", new Vector3(-20f, 2f, 0f)},
         {"TestAreaBlackSmith", new Vector3(-6.8f, 2f, 7f)},
         {"World2TestArea", new Vector3(-18f, 2f, 0f)},
         {"World2BlackSmith", new Vector3(-4.4f, 2f, 7.3f)},
@@ -32,7 +31,7 @@ public class sceneHandler : MonoBehaviour
         {
             key = string.Concat(curScene, prevScene);
             // If prev and cur scene are the same player is set to defualt location
-            if (key != string.Concat(curScene, curScene))
+            if (locations.ContainsKey(key))
             {
                 pos = locations[key];
                 transform.position = pos;
