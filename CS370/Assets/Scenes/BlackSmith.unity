@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 523267931}
   - component: {fileID: 523267930}
   m_Layer: 0
-  m_Name: TestArea
+  m_Name: prevScene
   m_TagString: w1Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,6 +832,8 @@ MonoBehaviour:
   curScene: 
   tarScene: 
   prevScene: 
+  key: 
+  pos: {x: 0, y: 0, z: 0}
 --- !u!143 &1152818461
 CharacterController:
   m_ObjectHideFlags: 0
