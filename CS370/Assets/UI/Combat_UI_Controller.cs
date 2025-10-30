@@ -26,7 +26,7 @@ public class Combat_UI_Controller : MonoBehaviour
     {
 
         MState = combatHandler.GetMState();
-        
+
         var move0 = root.Q<Button>("Move_0");
         move0.RegisterCallback<ClickEvent>(Move0Event);
 
@@ -38,7 +38,7 @@ public class Combat_UI_Controller : MonoBehaviour
 
         var move3 = root.Q<Button>("Move_3");
         move3.RegisterCallback<ClickEvent>(Move3Event);
-        
+
 
         //Main Battle Text
         if (MState == "Main")
@@ -56,20 +56,49 @@ public class Combat_UI_Controller : MonoBehaviour
             move2.text = combatHandler.GetCurrentUnitMove(2);
             move3.text = "Back";
         }
-        
+        //Target Select
+        else if (MState == "TargetSelect")
+        {
+            for (int i = 0; i < PartySystem.Instance.EnemyParty.Count; i++)
+            {
+                if (PartySystem.Instance.EnemyParty[i].IsAlive())
+                {
+                    if (i == 0)
+                    {
+                        move0.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        move1.text = "No Selection";
+                        move2.text = "No Selection";
+                    }
+                    else if (i == 1 && PartySystem.Instance.EnemyParty[0].IsDead())
+                    {
+                        move1.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        move2.text = "No Selection";
+                    }
+                    else if (i == 2 && PartySystem.Instance.EnemyParty[0].IsDead() && PartySystem.Instance.EnemyParty[1].IsDead())
+                    {
+                        move2.text = PartySystem.Instance.EnemyParty[i].GetName();
+                    }
+                }
+            }
+            move3.text = "Back";
+        }
     }
 
-    private void Move0Event(ClickEvent evt)
-    {
-        if (MState == "Main")
-        {
-            combatHandler.OpenMoveSelectMenu();
-        }
-        else if (MState == "MoveSelect")
-        {
-            combatHandler.OpenTargetSelectMenu(0);
-        }
-    }
+       private void Move0Event(ClickEvent evt)
+       {
+           if (MState == "Main")
+           {
+               combatHandler.OpenMoveSelectMenu();
+           }
+           else if (MState == "MoveSelect")
+           {
+               combatHandler.OpenTargetSelectMenu(0);
+           }
+           else if (MState == "TargetSelect")
+           {
+               combatHandler.EnemyTargetSelect(0);
+           }
+       }
 
     private void Move1Event(ClickEvent evt)
     {
@@ -80,6 +109,10 @@ public class Combat_UI_Controller : MonoBehaviour
         else if (MState == "MoveSelect")
         {
             combatHandler.OpenTargetSelectMenu(1);
+        }
+        else if (MState == "TargetSelect")
+        {
+            combatHandler.EnemyTargetSelect(1);
         }
     }
 
@@ -93,6 +126,10 @@ public class Combat_UI_Controller : MonoBehaviour
         {
             combatHandler.OpenTargetSelectMenu(2);
         }
+        else if (MState == "TargetSelect")
+        {
+            combatHandler.EnemyTargetSelect(2);
+        }
     }
 
     private void Move3Event(ClickEvent evt)
@@ -101,6 +138,9 @@ public class Combat_UI_Controller : MonoBehaviour
         {
             combatHandler.OpenMainMenu();
         }
-
+        else if (MState == "TargetSelect")
+        {
+            combatHandler.OpenMoveSelectMenu();
+        }
     }
 }

@@ -53,8 +53,8 @@ public class QuickTimeEvents : MonoBehaviour
     public int ButtonMashMaxDuration;
 
     //DBD Timing
-    float RandomTiming;
-    double CurrentTiming;
+    public float RandomTiming;
+    public double CurrentTiming;
     bool DBDTimerStarted;
     public int DBDMaxDuration;
 

@@ -249,39 +249,15 @@ public class CombatHandler : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) && PartySystem.Instance.EnemyParty[0].IsAlive())
             {
-                Defender = PartySystem.Instance.EnemyParty[0];
-                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
-                {
-                    OpenMainMenu();
-                }
-                else
-                {
-                    MState = MenuState.Hide;
-                }
+                EnemyTargetSelect(0);
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 2 && (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) && PartySystem.Instance.EnemyParty[1].IsAlive())
             {
-                Defender = PartySystem.Instance.EnemyParty[1];
-                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
-                {
-                    OpenMainMenu();
-                }
-                else
-                {
-                    MState = MenuState.Hide;
-                }
+                EnemyTargetSelect(1);
             }
             else if (PartySystem.Instance.EnemyParty.Count >= 3 && (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) && PartySystem.Instance.EnemyParty[2].IsAlive())
             {
-                Defender = PartySystem.Instance.EnemyParty[2];
-                if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
-                {
-                    OpenMainMenu();
-                }
-                else
-                {
-                    MState = MenuState.Hide;
-                }
+                EnemyTargetSelect(2);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
@@ -626,6 +602,19 @@ public class CombatHandler : MonoBehaviour
                     Debug.LogWarning($"SpawnPlayerTeam: spawned player prefab at index {NoOfAllies} has no FloatingHealthBar component.");
                 }
             }
+        }
+    }
+
+    public void EnemyTargetSelect(int enemyNum)
+    {
+        Defender = PartySystem.Instance.EnemyParty[enemyNum];
+        if (ExecuteMove(SelectedMove, CurrentUnit, Defender) == false)
+        {
+            OpenMainMenu();
+        }
+        else
+        {
+            MState = MenuState.Hide;
         }
     }
 
