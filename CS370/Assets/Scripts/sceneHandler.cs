@@ -18,7 +18,9 @@ public class sceneHandler : MonoBehaviour
         // curScene | prevScene, Vector3
         {"TestAreaTestArea", new Vector3(-20f, 2f, 0f)},
         {"BlackSmithTestArea", new Vector3(0f, 0f, 0f)},
-        {"TestAreaBlackSmith", new Vector3(-6.8f, 2f, 7f)}
+        {"TestAreaBlackSmith", new Vector3(-6.8f, 2f, 7f)},
+        {"World2TestArea", new Vector3(-18f, 2f, 0f)},
+        {"TestAreaWorld2", new Vector3(300f, 2f, 0f)}
     };
 
     public void Start()
