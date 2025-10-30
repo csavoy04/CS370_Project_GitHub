@@ -11,6 +11,8 @@ public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide }
 
 public class CombatHandler : MonoBehaviour
 {
+    public GameObject Player;
+    public static string curScene;
 
     public static CombatHandler Instance;
 
@@ -41,6 +43,7 @@ public class CombatHandler : MonoBehaviour
     void Start()
     {
         DetermineEnemyUnits();
+        curScene = sceneHandler.curScene;
 
         //Start Battle
         BState = BattleState.Start;
@@ -374,17 +377,17 @@ public class CombatHandler : MonoBehaviour
             }
 
             Debug.Log("You won the battle!");
-            SceneManager.LoadScene("TestArea");
+            SceneManager.LoadScene(curScene);
         }
         else if (BState == BattleState.Lost)
         {
             Debug.Log("You lost the battle...");
-            SceneManager.LoadScene("TestArea");
+            SceneManager.LoadScene(curScene);
         }
         else if (BState == BattleState.Fled)
         {
             Debug.Log("You fled the battle.");
-            SceneManager.LoadScene("TestArea");
+            SceneManager.LoadScene(curScene);
         }
     }
 
