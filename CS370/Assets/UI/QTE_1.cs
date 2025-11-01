@@ -45,6 +45,7 @@ public partial class QTE_1: VisualElement
         }
     }
 
+
     public QTE_1()
     {
         //Registers a callback to generate the visual contents of the units
