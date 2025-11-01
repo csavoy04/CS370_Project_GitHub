@@ -16,8 +16,8 @@
             {
                 "m_OpenUSSFiles": [],
                 "m_OpenendVisualTreeAssetOldPath": "Assets/UI/QTE_1.uxml",
-                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <QTE_1 line=\"10.7\" style=\"height: 50%;\">\r\n        <Bindings>\r\n            <ui:DataBinding property=\"line\" data-source-path=\"CurrentTiming\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n        </Bindings>\r\n    </QTE_1>\r\n</ui:UXML>\r\n",
-                "m_ContentHash": -1441079239,
+                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <QTE_1 line=\"0.04\" max-rotation=\"2\" timing=\"0.5\" style=\"height: 50%;\">\r\n        <Bindings>\r\n            <ui:DataBinding property=\"line\" data-source-path=\"CurrentTiming\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n            <ui:DataBinding property=\"maxRotation\" data-source-path=\"DBDMaxDuration\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n            <ui:DataBinding property=\"timing\" data-source-path=\"RandomTiming\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n        </Bindings>\r\n    </QTE_1>\r\n</ui:UXML>\r\n",
+                "m_ContentHash": 1784285508,
                 "m_VisualTreeAssetRef": {
                     "fileID": 9197481963319205126,
                     "guid": "b28dce459e7d28543afba590733371f5",

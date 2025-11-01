@@ -10,6 +10,7 @@ public class QTE_1_Controller : MonoBehaviour
 
     private void OnEnable()
     {
+        root = uiDocument.rootVisualElement;
         root.Q<QTE_1>().dataSource = quickTimeEvents;
     }
 }

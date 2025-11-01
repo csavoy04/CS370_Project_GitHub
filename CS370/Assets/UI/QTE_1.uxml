@@ -1,7 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <QTE_1 line="10.7" style="height: 50%;">
+    <QTE_1 line="0.04" max-rotation="2" timing="0.5" style="height: 50%;">
         <Bindings>
             <ui:DataBinding property="line" data-source-path="CurrentTiming" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
+            <ui:DataBinding property="maxRotation" data-source-path="DBDMaxDuration" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
+            <ui:DataBinding property="timing" data-source-path="RandomTiming" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
         </Bindings>
     </QTE_1>
 </ui:UXML>
