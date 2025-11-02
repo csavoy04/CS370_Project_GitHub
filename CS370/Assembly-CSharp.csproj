@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Generated file, do not modify, your changes will be overwritten (use AssetPostprocessor.OnGeneratedCSProject) -->
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,7 +55,7 @@
     <UnityVersion>6000.2.3f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.3f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.3f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.3f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -69,6 +69,7 @@
     <Compile Include="Assets\Prefabs\Hero Knight - Pixel Art\Demo\DestroyEvent_HeroKnight.cs" />
     <Compile Include="Assets\Scripts\Crouch.cs" />
     <Compile Include="Assets\Scripts\combatHandler.cs" />
+    <Compile Include="Assets\UI\QTE_2.cs" />
     <Compile Include="Assets\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Scripts\Dash.cs" />
     <Compile Include="Assets\UI\QTE_1.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\moveNextWorld.cs" />
     <Compile Include="Assets\UI\QTE_1_Controller.cs" />
     <Compile Include="Assets\Scripts\playerCamera.cs" />
+    <Compile Include="Assets\UI\QTE_2_Controller.cs" />
     <Compile Include="Assets\UI\Combat_UI_Controller.cs" />
     <Compile Include="Assets\Prefabs\Hero Knight - Pixel Art\Demo\Sensor_HeroKnight.cs" />
     <Compile Include="Assets\Scripts\UnitBase.cs" />
@@ -88,6 +90,7 @@
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_SETTINGS.cginc" />
     <None Include="Assets\UI\QTE_1.uxml" />
     <None Include="Assets\Free Particle Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
+    <None Include="Assets\UI\QTE_2.uxml" />
     <None Include="Assets\UI\Main_Menu.uxml" />
     <None Include="Assets\UI\Combat_UI.uxml" />
     <None Include="Assets\UI\HUD.uxml" />

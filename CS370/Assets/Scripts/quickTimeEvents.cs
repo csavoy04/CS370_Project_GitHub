@@ -39,11 +39,12 @@ public class QuickTimeEvents : MonoBehaviour
     public QTEState State;
 
     //Key Combination
-    int NumKeys;
+    public int NumKeys;
     public static char[] KeyCombination;
     string Characters;
     int CurrentTestedKey;
     public int KeyCombinationMaxDuration;
+    public string combinationOrder;
 
     int RandomNum;
 
@@ -124,6 +125,8 @@ public class QuickTimeEvents : MonoBehaviour
 
                         Debug.Log(KeyCombination[i]);
                     }
+
+                    combinationOrder = new string(KeyCombination);
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(KeyCombinationMaxDuration));
