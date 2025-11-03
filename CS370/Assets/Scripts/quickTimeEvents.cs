@@ -51,6 +51,7 @@ public class QuickTimeEvents : MonoBehaviour
     //Button Mash
     public static int NumClicks;
     public static int CurrentClicks;
+    public float percentageClicks;
     public int ButtonMashMaxDuration;
 
     //DBD Timing
@@ -216,6 +217,7 @@ public class QuickTimeEvents : MonoBehaviour
                 {
                     CurrentClicks++;
                     Debug.Log("Space Pressed");
+                    percentageClicks = (float)CurrentClicks / NumClicks;
                 }
 
                 //If Required Number of Clicks is Reached

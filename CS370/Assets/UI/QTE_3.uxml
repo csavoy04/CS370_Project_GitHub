@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <QTE_3 name="QTE_3" max-fill="10" fill="10" fill-percentage="0.4" style="width: 100%; height: 100%;">
+        <Bindings>
+            <ui:DataBinding property="fillPercentage" data-source-path="percentageClicks" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
+        </Bindings>
+    </QTE_3>
+</ui:UXML>

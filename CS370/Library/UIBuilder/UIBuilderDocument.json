@@ -15,29 +15,29 @@
         "m_OpenUXMLFiles": [
             {
                 "m_OpenUSSFiles": [],
-                "m_OpenendVisualTreeAssetOldPath": "Assets/UI/QTE_2.uxml",
-                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <QTE_2 num-keys=\"4\" character=\"A\" combination=\"NOTS\" num-pressed=\"0\" style=\"height: 100%; width: 100%;\">\r\n        <Bindings>\r\n            <ui:DataBinding property=\"numKeys\" data-source-path=\"NumKeys\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n            <ui:DataBinding property=\"character\" data-source-path=\"combinationOrder\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n            <ui:DataBinding property=\"combination\" data-source-path=\"combinationOrder\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n            <ui:DataBinding property=\"numPressed\" data-source-path=\"CurrentTestedKey\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n        </Bindings>\r\n    </QTE_2>\r\n</ui:UXML>\r\n",
-                "m_ContentHash": -264123580,
+                "m_OpenendVisualTreeAssetOldPath": "Assets/UI/QTE_3.uxml",
+                "m_UxmlPreview": "<ui:UXML xmlns:ui=\"UnityEngine.UIElements\" xmlns:uie=\"UnityEditor.UIElements\" editor-extension-mode=\"False\">\r\n    <QTE_3 name=\"QTE_3\" max-fill=\"10\" fill=\"10\" fill-percentage=\"0.4\" style=\"width: 100%; height: 100%;\">\r\n        <Bindings>\r\n            <ui:DataBinding property=\"fillPercentage\" data-source-path=\"percentageClicks\" data-source-type=\"QuickTimeEvents, Assembly-CSharp\" binding-mode=\"ToTarget\" />\r\n        </Bindings>\r\n    </QTE_3>\r\n</ui:UXML>\r\n",
+                "m_ContentHash": -1138346949,
                 "m_VisualTreeAssetRef": {
                     "fileID": 9197481963319205126,
-                    "guid": "a54f03fd1bd52b54c87769548b82bd0e",
+                    "guid": "3ef8d76ee194a0740a627e7873ba81b0",
                     "type": 3
                 },
                 "m_ActiveStyleSheet": {
                     "instanceID": 0
                 },
                 "m_Settings": {
-                    "UxmlGuid": "a54f03fd1bd52b54c87769548b82bd0e",
-                    "UxmlPath": "Assets/UI/QTE_2.uxml",
+                    "UxmlGuid": "3ef8d76ee194a0740a627e7873ba81b0",
+                    "UxmlPath": "Assets/UI/QTE_3.uxml",
                     "CanvasX": 0,
                     "CanvasY": 0,
                     "CanvasWidth": 1920,
                     "CanvasHeight": 1080,
                     "MatchGameView": true,
-                    "ZoomScale": 0.4000000059604645,
+                    "ZoomScale": 0.25,
                     "PanOffset": {
-                        "x": -19.47113037109375,
-                        "y": 103.54287719726563
+                        "x": 197.34530639648438,
+                        "y": 126.97163391113281
                     },
                     "ColorModeBackgroundOpacity": 1.0,
                     "ImageModeCanvasBackgroundOpacity": 1.0,
