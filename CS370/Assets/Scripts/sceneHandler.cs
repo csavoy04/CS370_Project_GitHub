@@ -2,6 +2,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+/*  Script made by: Coolman Savvy
+        Script that:
+            - Scene handler that allows the player
+            to move between scenes
+            - Uses a dictionary to properly place
+            the player based off prev and cur scenes
+    Date: 10/30/2025
+    Made in: C# VsCode
+*/
 public class sceneHandler : MonoBehaviour
 {
     [Header("Scenes")]

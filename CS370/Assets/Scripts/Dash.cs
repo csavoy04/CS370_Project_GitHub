@@ -1,10 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.InputSystem.EnhancedTouch;
-using UnityEngine.LowLevelPhysics;
 
-/*  Script made by:
+/*  Script made by: Coleman with help from Jaden
         Script that:
             - obtains the current direction of the player as a Vector3
             - allows the player to dash 5 units ahead, or obj detection -0.5

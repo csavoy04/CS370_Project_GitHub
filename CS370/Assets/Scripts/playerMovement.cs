@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
 
 /* Script made by: Coleman
         - Script that takes in the user's input and corelates it to a given transform command
