@@ -2,6 +2,7 @@ using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static QuickTimeEvents;
 
 [UxmlElement]
 public partial class QTE_2 : VisualElement
@@ -12,6 +13,9 @@ public partial class QTE_2 : VisualElement
 
     [SerializeField, DontCreateProperty]
     private int m_NumKeys;
+
+    [SerializeField, DontCreateProperty]
+    private int m_NumPressed;
 
     [UxmlAttribute, CreateProperty]
     public string combination
@@ -37,6 +41,20 @@ public partial class QTE_2 : VisualElement
         }
     }
 
+    [UxmlAttribute, CreateProperty]
+    public int numPressed
+    {
+        get => m_NumPressed;
+        set
+        {
+            m_NumPressed = value;
+            RefreshLetters();
+            MarkDirtyRepaint();
+        }
+    }
+
+    public int timesPressed;
+
     public QTE_2()
     {
         
@@ -59,16 +77,16 @@ public partial class QTE_2 : VisualElement
         painter.Stroke();
 
 
-
         //Key Visual
         for (int i = 0; i < numKeys; i++)
         {
-            offset = i * (width * 0.2f);
+            offset = (i - numPressed) * (width * 0.2f);
             Box(painter, (width * 0.5f) + offset, height * 0.4f, height * 0.2f);
         }
         
     }
 
+    //Makes a box
     private void Box(Painter2D painter, float startX, float startY, float size)
     {
         painter.BeginPath();
@@ -86,19 +104,22 @@ public partial class QTE_2 : VisualElement
 
     private void RefreshLetters()
     {
-        Clear(); // remove old labels
+        Clear(); //Remove old labels
 
         float width = layout.width;
         float height = layout.height;
         if (float.IsNaN(width) || float.IsNaN(height) || width <= 0 || height <= 0)
+        {
             return;
+        }
+            
 
         int count = Mathf.Min(combination.Length, numKeys);
-        float totalWidth = numKeys * (height * 0.25f);
 
+        //Pastes Letters onto the boxes
         for (int i = 0; i < count; i++)
         {
-            float boxX = (width * 0.5f) - (totalWidth / 2) + i * (height * 0.25f);
+            float boxX = (width * 0.5f) + ((i - numPressed)  * (width * 0.2f));
             float boxY = height * 0.4f;
             float boxSize = height * 0.2f;
 
@@ -109,7 +130,7 @@ public partial class QTE_2 : VisualElement
             label.style.width = boxSize;
             label.style.height = boxSize;
             label.style.unityTextAlign = TextAnchor.MiddleCenter;
-            label.style.fontSize = 40;
+            label.style.fontSize = 100;
             label.style.color = Color.black;
             label.style.unityFontStyleAndWeight = FontStyle.Bold;
             Add(label);

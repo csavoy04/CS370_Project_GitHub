@@ -1,9 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <QTE_2 num-keys="2" character="A" combination="NOTS" style="height: 100%; width: 100%;">
+    <QTE_2 num-keys="4" character="A" combination="NOTS" num-pressed="0" style="height: 100%; width: 100%;">
         <Bindings>
             <ui:DataBinding property="numKeys" data-source-path="NumKeys" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
             <ui:DataBinding property="character" data-source-path="combinationOrder" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
             <ui:DataBinding property="combination" data-source-path="combinationOrder" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
+            <ui:DataBinding property="numPressed" data-source-path="CurrentTestedKey" data-source-type="QuickTimeEvents, Assembly-CSharp" binding-mode="ToTarget" />
         </Bindings>
     </QTE_2>
 </ui:UXML>

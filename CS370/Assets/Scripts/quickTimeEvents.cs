@@ -42,7 +42,7 @@ public class QuickTimeEvents : MonoBehaviour
     public int NumKeys;
     public static char[] KeyCombination;
     string Characters;
-    int CurrentTestedKey;
+    public int CurrentTestedKey;
     public int KeyCombinationMaxDuration;
     public string combinationOrder;
 
