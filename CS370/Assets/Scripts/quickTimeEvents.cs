@@ -231,6 +231,7 @@ public class QuickTimeEvents : MonoBehaviour
                     //Stop Timer
                     StopCoroutine(Timer);
                     Timer = null;
+                    percentageClicks = 0.01f;
                 }
 
             }

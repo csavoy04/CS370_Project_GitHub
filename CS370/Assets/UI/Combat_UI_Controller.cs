@@ -65,18 +65,67 @@ public class Combat_UI_Controller : MonoBehaviour
                 {
                     if (i == 0)
                     {
-                        move0.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        if (PartySystem.Instance.EnemyParty[0].IsDead())
+                        {
+                            move0.text = "No Selection";
+                        }
+                        else
+                        {
+                            move0.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        }
+
                         move1.text = "No Selection";
                         move2.text = "No Selection";
                     }
-                    else if (i == 1 && PartySystem.Instance.EnemyParty[0].IsDead())
+                    else if (i == 1)
                     {
-                        move1.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        if (PartySystem.Instance.EnemyParty[0].IsDead())
+                        {
+                            move0.text = "No Selection";
+                        }
+                        else
+                        {
+                            move0.text = PartySystem.Instance.EnemyParty[0].GetName();
+                        }
+
+                        if (PartySystem.Instance.EnemyParty[1].IsDead())
+                        {
+                            move1.text = "No Selection";
+                        }
+                        else
+                        {
+                            move1.text = PartySystem.Instance.EnemyParty[1].GetName();
+                        }
                         move2.text = "No Selection";
                     }
-                    else if (i == 2 && PartySystem.Instance.EnemyParty[0].IsDead() && PartySystem.Instance.EnemyParty[1].IsDead())
+                    else if (i == 2)
                     {
-                        move2.text = PartySystem.Instance.EnemyParty[i].GetName();
+                        if (PartySystem.Instance.EnemyParty[0].IsDead())
+                        {
+                            move0.text = "No Selection";
+                        }
+                        else
+                        {
+                            move0.text = PartySystem.Instance.EnemyParty[0].GetName();
+                        }
+
+                        if (PartySystem.Instance.EnemyParty[1].IsDead())
+                        {
+                            move1.text = "No Selection";
+                        }
+                        else
+                        {
+                            move1.text = PartySystem.Instance.EnemyParty[1].GetName();
+                        }
+
+                        if (PartySystem.Instance.EnemyParty[2].IsDead())
+                        {
+                            move2.text = "No Selection";
+                        }
+                        else
+                        {
+                            move2.text = PartySystem.Instance.EnemyParty[2].GetName();
+                        }
                     }
                 }
             }
