@@ -568,7 +568,7 @@ public class CombatHandler : MonoBehaviour
         int enemyCount = PartySystem.Instance.EnemyParty != null ? PartySystem.Instance.EnemyParty.Count : 0;
         for (int NoOfEnemies = 0; NoOfEnemies < enemyCount; NoOfEnemies++)
         {
-            GameObject go = Instantiate(enemyprefab, new UnityEngine.Vector3(5, NoOfEnemies * 2, 0), UnityEngine.Quaternion.identity);
+            GameObject go = Instantiate(enemyprefab, new UnityEngine.Vector3(5, 0, (NoOfEnemies - 1) * 3), UnityEngine.Quaternion.identity);
             // Try to find a FloatingHealthBar component on the instantiated prefab (or its children)
             HealthBar fhb = go.GetComponentInChildren<HealthBar>();
             if (fhb != null)
@@ -591,7 +591,7 @@ public class CombatHandler : MonoBehaviour
         {
             if (PartySystem.Instance.PlayerParty[NoOfAllies].GetPartyClass() != "Empty")
             {
-                GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, NoOfAllies * 2, 0), UnityEngine.Quaternion.identity);
+                GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, 0, (NoOfAllies - 1) * 3), UnityEngine.Quaternion.identity);
                 HealthBar fhb = go.GetComponentInChildren<HealthBar>();
                 if (fhb != null)
                 {

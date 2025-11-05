@@ -450,7 +450,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 651d6ef41531c894eaf960f4ce8fa1a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38d62008982dad24c8bebb7b27b30176, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -829,7 +829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3088a02c6a27a04a97c3dd5e2889939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  curScene: 
   tarScene: 
   prevScene: 
   key: 
@@ -907,8 +906,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::quickTimeEvents
   QTEType: 0
   State: 0
+  NumKeys: 0
+  CurrentTestedKey: 0
   KeyCombinationMaxDuration: 0
+  combinationOrder: 
+  percentageClicks: 0
   ButtonMashMaxDuration: 0
+  RandomTiming: 0
+  CurrentTiming: 0
   DBDMaxDuration: 0
 --- !u!54 &1152818465
 Rigidbody:
