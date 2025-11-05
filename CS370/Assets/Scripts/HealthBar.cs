@@ -16,17 +16,13 @@ public class HealthBar : MonoBehaviour
         Image fillImage = slider.fillRect.GetComponent<Image>();
         if (fillImage != null)
         {
-            if (healthPercent > 0.2f)
+            if (healthPercent < 0.7f)
             {
                 fillImage.color = Color.yellow;
             }
-            else if (healthPercent == 0f)
+            if (healthPercent <= 0f)
             {
                 fillImage.color = Color.clear;
-            }
-            else
-            {
-                fillImage.color = Color.red;
             }
         }
     }
