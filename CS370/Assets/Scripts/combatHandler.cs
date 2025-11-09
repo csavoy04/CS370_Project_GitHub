@@ -623,6 +623,11 @@ public class CombatHandler : MonoBehaviour
         return MState.ToString();
     }
 
+    public string GetCurrentUnitName()
+    {
+        return CurrentUnit.GetName();
+    }
+
     public string GetCurrentUnitMove(int index)
     {
         return CurrentUnit.MoveSet[index];
