@@ -548,11 +548,12 @@ public class CombatHandler : MonoBehaviour
                     int EnemyAttack = 10 + (EnemyLevel - 1) * 2;            //Attack Scaling
                     int EnemyDefense = 5 + (EnemyLevel - 1) * 2;            //Defense Scaling
                     int EnemySpeed = 5 + (EnemyLevel - 1) * 1;              //Speed Scaling
+                    int EnemyCritChance = 5;                                //Crit Chance (Not Scaling)
 
                     EnemyName = "Slime" + (i + 1);
 
-                    //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, MoveSet
-                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, new string[] { "Tackle", "Bite", "Stomp" }));
+                    //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, CritChance, MoveSet
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, new string[] { "Tackle", "Bite", "Stomp" }));
                     //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
                 }
                 break;

@@ -33,6 +33,8 @@ public class Unit
     //Resistances? (Fire, Ice, Lightning, Poison, etc.)
 
     //Critical Chance/Dmg, Evasion Rate, Accuracy?
+    public int CurrentCritChance;
+    public int CritChance;
 
     //Scaling Stats? (Physical/Magical)
 
@@ -56,7 +58,7 @@ public class Unit
         Empty
     }
 
-    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, string[] GivenMoveSet)
+    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, int GivenCritChance, string[] GivenMoveSet)
     {
         PartyType = GivenPartyType;
         Name = GivenName;
@@ -77,6 +79,9 @@ public class Unit
 
         Speed = GivenSpeed;
         CurrentSpeed = GivenSpeed;
+
+        CritChance = GivenCritChance;
+        CurrentCritChance = GivenCritChance;
 
         Experience = 0;
         MaxExperience = Level * 100;
@@ -211,6 +216,16 @@ public class Unit
         return MaxExperience;
     }
 
+    public int GetCurrentCritChance()
+    {
+        return CurrentCritChance;
+    }
+
+    public int GetCritChance()
+    {
+        return CritChance;
+    }
+
     public string[] GetMoveSet()
     {
         return MoveSet;
@@ -246,26 +261,35 @@ public class Unit
     //Calculates damage to deal to another unit based on attack and defense stats, etc.
     public int CalculateDamage(Unit Target, string MoveName)
     {
+        int CriticalHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
+        int DamageAmount = CurrentAttack;
+
+        if (CriticalHitChance <= CurrentCritChance)
+        {
+            DamageAmount = (int)(DamageAmount * 1.5f); // 50% more damage on critical hit
+            Debug.Log($"{Name} landed a Critical Hit!");
+        }
+
         switch (MoveName)
         {
             case "Slash":
             case "Shield Bash":
             case "War Cry":
-                return Mathf.Max(0, CurrentAttack - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
             case "Tackle":
             case "Bite":
             case "Stomp":
-                return Mathf.Max(0, CurrentAttack - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
             case "Fireball":
             case "Ice Spike":
             case "Lightning Bolt":
-                return Mathf.Max(0, CurrentAttack - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
             case "Backstab":
             case "Poison Dart":
             case "Vanish":
-                return Mathf.Max(0, CurrentAttack - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
             default:
-                return Mathf.Max(0, CurrentAttack - Target.CurrentDefense);
+                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);
         }
     }
 
@@ -390,6 +414,7 @@ public class Unit
         CurrentAttack = Attack;
         CurrentDefense = Defense;
         CurrentSpeed = Speed;
+        CurrentCritChance = CritChance;
 
         Experience += GivenExperience;
         if(Experience >= MaxExperience)
