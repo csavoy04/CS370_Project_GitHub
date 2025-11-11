@@ -927,6 +927,7 @@ GameObject:
   - component: {fileID: 564007026}
   - component: {fileID: 564007025}
   - component: {fileID: 564007024}
+  - component: {fileID: 564007028}
   m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
@@ -1026,6 +1027,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 149700890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &564007028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564007023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: cb5acfaeded23614eaebd9108528fd8a, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &566697541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3579,17 +3612,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1540602390}
     m_Modifications:
+    - target: {fileID: 6101889173092723316, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101889173092723316, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7340851059801259576, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
       propertyPath: m_Name
       value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 8583093566715920365, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.800888
+      value: 4.93
       objectReference: {fileID: 0}
     - target: {fileID: 8583093566715920365, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.45500004
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 8583093566715920365, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3634,7 +3675,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7340851059801259576, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2097482998}
+    - targetCorrespondingSourceObject: {fileID: 7340851059801259576, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2097482999}
   m_SourcePrefab: {fileID: 100100000, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
 --- !u!4 &1802381212 stripped
 Transform:
@@ -4082,6 +4129,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2097482994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7340851059801259576, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+  m_PrefabInstance: {fileID: 1802381211}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2097482998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097482994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868af0904f25fe34a831e3fc45237468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlimeMovement
+  player: {fileID: 1144929334}
+  chaseRange: 10
+--- !u!195 &2097482999
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097482994}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 2.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 4
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &2101643752
 PrefabInstance:
   m_ObjectHideFlags: 0
