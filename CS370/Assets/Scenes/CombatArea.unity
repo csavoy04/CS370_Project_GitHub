@@ -13840,6 +13840,12 @@ MonoBehaviour:
     CurrentSpeed: 0
     Experience: 0
     MaxExperience: 0
+    CurrentCritChance: 0
+    CritChance: 0
+    CurrentDodgeChance: 0
+    DodgeChance: 0
+    CurrentAccuracy: 0
+    Accuracy: 0
     MoveSet: []
   CurrentUnitIndex: 0
   Defender:
@@ -13860,6 +13866,12 @@ MonoBehaviour:
     CurrentSpeed: 0
     Experience: 0
     MaxExperience: 0
+    CurrentCritChance: 0
+    CritChance: 0
+    CurrentDodgeChance: 0
+    DodgeChance: 0
+    CurrentAccuracy: 0
+    Accuracy: 0
     MoveSet: []
   SelectedMove: 
 --- !u!4 &1099780625
@@ -25315,6 +25327,8 @@ MonoBehaviour:
   RandomTiming: 0
   CurrentTiming: 0
   DBDMaxDuration: 0
+  CombatHandler: {fileID: 1099780624}
+  Difficulty: 0
 --- !u!4 &2113566662
 Transform:
   m_ObjectHideFlags: 0

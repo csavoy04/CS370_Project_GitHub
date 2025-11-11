@@ -39,6 +39,7 @@ public class QuickTimeEvents : MonoBehaviour
     public QTEState State;
 
     //Key Combination
+    public int BaseNumKeys;
     public int NumKeys;
     public static char[] KeyCombination;
     string Characters;
@@ -49,16 +50,23 @@ public class QuickTimeEvents : MonoBehaviour
     int RandomNum;
 
     //Button Mash
+    public int BaseNumClicks;
     public static int NumClicks;
     public static int CurrentClicks;
     public float percentageClicks;
     public int ButtonMashMaxDuration;
 
     //DBD Timing
+    public float BaseWindowTiming;
+    public float WindowTiming;
     public float RandomTiming;
     public double CurrentTiming;
     bool DBDTimerStarted;
     public int DBDMaxDuration;
+
+    //Difficulty
+    public CombatHandler CombatHandler;
+    public int Difficulty;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,14 +77,14 @@ public class QuickTimeEvents : MonoBehaviour
         State = QTEState.Fail;
 
         //Key Combination QTE
-        NumKeys = 5;                                    //Number of keys required for KeyCombination
-        KeyCombination = new char[NumKeys];             //KeyCombination Sequence
+        BaseNumKeys = 5;                                    //Number of keys required for KeyCombination
+        KeyCombination = new char[20];             //KeyCombination Sequence
         Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";      //Possible character values for KeyCombination
         CurrentTestedKey = 0;                           //Key input index for KeyCombination
         KeyCombinationMaxDuration = 5;                  //Duration of KeyCombination QTE
 
         //Button Mash QTE
-        NumClicks = 10;                                 //Number of clicks required for Button Mash QTE to finish
+        BaseNumClicks = 10;                                 //Number of clicks required for Button Mash QTE to finish
         CurrentClicks = 0;                              //Tracks the number of times space is pressed
         ButtonMashMaxDuration = 5;                      //Duration of Button Mash QTE
 
@@ -84,6 +92,10 @@ public class QuickTimeEvents : MonoBehaviour
         CurrentTiming = 0;                              //Tracks the timing of when space is pressed
         DBDTimerStarted = false;                        //Tracks if the DBD Timer has started   
         DBDMaxDuration = 2;                             //Duration of DBD Timing QTE
+        BaseWindowTiming = 0.5f;
+
+        //Difficulty
+        Difficulty = 1;                                 //1 (Easiest) - 4 (Hardest)
     }
 
     // Update is called once per frame
@@ -103,6 +115,21 @@ public class QuickTimeEvents : MonoBehaviour
                 CurrentTestedKey = 0;
                 CurrentClicks = 0;
                 CurrentTiming = 0;
+
+                if (CombatHandler.CurrentUnit.GetCurrentAccuracy() > 0)
+                {
+                    Difficulty = Mathf.Abs(Mathf.CeilToInt(CombatHandler.CurrentUnit.GetCurrentAccuracy() / 25.0f) - 5);
+                }
+                else
+                {
+                    Difficulty = 4;
+                }
+
+                NumKeys = Difficulty * BaseNumKeys;
+                NumClicks = Difficulty * BaseNumClicks;
+                WindowTiming = BaseWindowTiming / Difficulty;
+
+
             }
 
             //Do the Generation
@@ -147,7 +174,7 @@ public class QuickTimeEvents : MonoBehaviour
                     RandomTiming = (RandomTiming / 360) * DBDMaxDuration;                   //Calculates the actual time
 
                     Debug.Log("Timing window starts: " + RandomTiming);                     //Prints out the start of the timing window
-                    Debug.Log("Timing window ends: " + (RandomTiming + 0.5f));              //Prints out the end of the timing window
+                    Debug.Log("Timing window ends: " + (RandomTiming + WindowTiming));              //Prints out the end of the timing window
 
                     //Start Timer
                     Timer = StartCoroutine(TimerCoroutine(DBDMaxDuration));
@@ -245,7 +272,7 @@ public class QuickTimeEvents : MonoBehaviour
                     Debug.Log("Space Pressed at time " + CurrentTiming);
 
                     //If Pressed within the Timing Window
-                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + 0.5f))
+                    if (CurrentTiming >= RandomTiming && CurrentTiming <= (RandomTiming + WindowTiming))
                     {
 
                         Debug.Log("QTE Completed Successfully!");

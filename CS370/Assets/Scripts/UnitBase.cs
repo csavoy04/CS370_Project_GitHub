@@ -32,9 +32,14 @@ public class Unit
     //Armor? (Phyiscal, Magical)
     //Resistances? (Fire, Ice, Lightning, Poison, etc.)
 
-    //Critical Chance/Dmg, Evasion Rate, Accuracy?
     public int CurrentCritChance;
     public int CritChance;
+
+    public int CurrentDodgeChance;
+    public int DodgeChance;
+
+    public int CurrentAccuracy;
+    public int Accuracy;
 
     //Scaling Stats? (Physical/Magical)
 
@@ -58,7 +63,7 @@ public class Unit
         Empty
     }
 
-    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, int GivenCritChance, string[] GivenMoveSet)
+    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, int GivenCritChance, int GivenDodgeChance, int GivenAccuracy, string[] GivenMoveSet)
     {
         PartyType = GivenPartyType;
         Name = GivenName;
@@ -82,6 +87,12 @@ public class Unit
 
         CritChance = GivenCritChance;
         CurrentCritChance = GivenCritChance;
+
+        DodgeChance = GivenDodgeChance;
+        CurrentDodgeChance = GivenDodgeChance;
+
+        Accuracy = GivenAccuracy;
+        CurrentAccuracy = GivenAccuracy;
 
         Experience = 0;
         MaxExperience = Level * 100;
@@ -226,6 +237,26 @@ public class Unit
         return CritChance;
     }
 
+    public int GetCurrentDodgeChance()
+    {
+        return CurrentDodgeChance;
+    }
+
+    public int GetDodgeChance()
+    {
+        return DodgeChance;
+    }
+
+    public int GetCurrentAccuracy()
+    {
+        return CurrentAccuracy;
+    }
+
+    public int GetAccuracy()
+    {
+        return Accuracy;
+    }
+
     public string[] GetMoveSet()
     {
         return MoveSet;
@@ -247,7 +278,21 @@ public class Unit
     //Deal Damage to another unit
     public void DealDamage(Unit Target, string MoveName)
     {
-        Target.TakeDamage(CalculateDamage(Target, MoveName));
+        //Calculate Enemy Accuracy
+        int AccuracyHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
+        if (AccuracyHitChance <= CurrentAccuracy && GetPartyClass() == "Enemy")
+        {
+            Target.TakeDamage(CalculateDamage(Target, MoveName));
+        } 
+        else if(GetPartyClass() == "Enemy")
+        {
+            Debug.Log($"{Name} missed");
+        }
+        else
+        {
+            Target.TakeDamage(CalculateDamage(Target, MoveName));
+        }
+
         if (Target.HealthBar != null)
         {
             Target.HealthBar.UpdateHealthBar(Target.GetHealthPercent());
@@ -261,35 +306,46 @@ public class Unit
     //Calculates damage to deal to another unit based on attack and defense stats, etc.
     public int CalculateDamage(Unit Target, string MoveName)
     {
-        int CriticalHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
-        int DamageAmount = CurrentAttack;
-
-        if (CriticalHitChance <= CurrentCritChance)
+        //Calculate Dodge
+        int DodgeHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
+        if (DodgeHitChance <= Target.GetCurrentDodgeChance())
         {
-            DamageAmount = (int)(DamageAmount * 1.5f); // 50% more damage on critical hit
-            Debug.Log($"{Name} landed a Critical Hit!");
+            Debug.Log($"{Target.GetName()} dodged the attack!");
+            return 0;
         }
-
-        switch (MoveName)
+        else
         {
-            case "Slash":
-            case "Shield Bash":
-            case "War Cry":
-                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
-            case "Tackle":
-            case "Bite":
-            case "Stomp":
-                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
-            case "Fireball":
-            case "Ice Spike":
-            case "Lightning Bolt":
-                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
-            case "Backstab":
-            case "Poison Dart":
-            case "Vanish":
-                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
-            default:
-                return Mathf.Max(0, DamageAmount - Target.CurrentDefense);
+            //Calculate Crit
+            int CriticalHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
+            int DamageAmount = CurrentAttack;
+
+            if (CriticalHitChance <= CurrentCritChance)
+            {
+                DamageAmount = (int)(DamageAmount * 1.5f); // 50% more damage on critical hit
+                Debug.Log($"{Name} landed a Critical Hit!");
+            }
+
+            switch (MoveName)
+            {
+                case "Slash":
+                case "Shield Bash":
+                case "War Cry":
+                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                case "Tackle":
+                case "Bite":
+                case "Stomp":
+                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                case "Fireball":
+                case "Ice Spike":
+                case "Lightning Bolt":
+                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                case "Backstab":
+                case "Poison Dart":
+                case "Vanish":
+                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                default:
+                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);
+            }
         }
     }
 
@@ -415,6 +471,8 @@ public class Unit
         CurrentDefense = Defense;
         CurrentSpeed = Speed;
         CurrentCritChance = CritChance;
+        CurrentDodgeChance = DodgeChance;
+        CurrentAccuracy = Accuracy;
 
         Experience += GivenExperience;
         if(Experience >= MaxExperience)

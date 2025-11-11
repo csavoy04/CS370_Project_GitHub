@@ -448,12 +448,12 @@ public class CombatHandler : MonoBehaviour
             case "Shield Bash":
             case "Ice Spike":
             case "Poison Dart":
-                duration = 5;
+                duration = 2;
                 break;
             case "War Cry":
             case "Lightning Bolt":
             case "Vanish":
-                duration = 3;
+                duration = 2;
                 break;
             default:
                 duration = 1;
@@ -549,11 +549,13 @@ public class CombatHandler : MonoBehaviour
                     int EnemyDefense = 5 + (EnemyLevel - 1) * 2;            //Defense Scaling
                     int EnemySpeed = 5 + (EnemyLevel - 1) * 1;              //Speed Scaling
                     int EnemyCritChance = 5;                                //Crit Chance (Not Scaling)
+                    int EnemyDodgeChance = 50;                               //Dodge Chance (Not Scaling)
+                    int EnemyAccuracy = 50;                                //Accuracy (Not Scaling)
 
                     EnemyName = "Slime" + (i + 1);
 
                     //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, CritChance, MoveSet
-                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, new string[] { "Tackle", "Bite", "Stomp" }));
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }));
                     //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
                 }
                 break;
