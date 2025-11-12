@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 
@@ -12,13 +13,13 @@ public class Combat_UI_Controller : MonoBehaviour
     public BattleState BState;
     public string MState;
 
+    public static string curScene;
 
-    
     void Start()
     {
         root = uiDocument.rootVisualElement;
 
-
+        curScene = sceneHandler.curScene;
     }
 
     // Update is called once per frame
@@ -169,7 +170,7 @@ public class Combat_UI_Controller : MonoBehaviour
     {
         if (MState == "Main")
         {
-            combatHandler.OpenMoveSelectMenu();
+            SceneManager.LoadScene(curScene);
         }
         else if (MState == "MoveSelect")
         {
