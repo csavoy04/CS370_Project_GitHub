@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+// using System.Numerics;
 
 /*  Script made by: Coleman with help from Jaden
         Script that:
@@ -15,21 +16,38 @@ using System.Collections;
 public class Dash : MonoBehaviour
 {
     [Header("References")]
-    Movement Movement;
     Coroutine Timer;
     RaycastHit hit;
     public Vector3 direction;
-    public Movement pm;
+    public Vector3 dashDistance;
+    public float distance = 0f;
 
     [Header("Variables")]
-    float dashCooldown = 0;
-    float dashDistance = 5;
+    float dashCooldown = 0f;
     bool dashing = false;
+
+    // Function that gets the player direction and sets the dash distance accordingly
+    void getDashDistance()
+    {
+        if (Physics.Raycast(transform.position, direction, 10f))
+        {
+            distance = (hit.distance / 10f) - 0.1f;
+        }
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        if (direction.x != 0)
+        {
+            dashDistance = (direction.x > 0) ? new Vector3((1f-distance), 0f, 0f) : new Vector3((-1f+distance), 0f, 0f);
+        }
+        else if (direction.z != 0)
+        {
+            dashDistance = (direction.z > 0) ? new Vector3(0f, 0f, (1f-distance)) : new Vector3(0f, 0f, (-1f+distance));
+        }
+        transform.position += dashDistance;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         /*------------------------------------ PLAYER DASHING ----------------------------*/
         if (Input.GetKeyDown(KeyCode.LeftControl) && dashCooldown <= 0)
         {
@@ -38,22 +56,8 @@ public class Dash : MonoBehaviour
 
         if (dashing == true)
         {
-            /* Obtains current direction and store it as direction, if there is nothing
-            detected in front of the player then the player will dash in it's
-            current direction 5 units. If the raycast detects an object then the 
-            dash distance is change to that of collision distance - 0.5 */
-
-            if (Physics.Raycast(transform.position, direction, 5.25f))
-            { 
-                dashDistance = hit.distance - 0.25f;
-                Timer = StartCoroutine(TimerCoroutine(0.1f));
-            }
-            else
-            {
-                dashDistance = 5.0f;
-                Timer = StartCoroutine(TimerCoroutine(0.1f));
-            }
-            transform.Translate(direction * dashDistance);
+            getDashDistance();
+            Timer = StartCoroutine(TimerCoroutine(0.1f));
         }
 
         // Dash cooldown
