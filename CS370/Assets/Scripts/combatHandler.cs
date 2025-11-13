@@ -91,17 +91,17 @@ public class CombatHandler : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
+                        //Debug.Log(CurrentUnit.GetName() + " is defeated and cannot take a turn.");
 
                         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-                        BState = BattleState.DetermineTurn;
+                        BState = BattleState.CheckEnd;
                     }
                 }
                 else
                 {
-                    Debug.Log("Current Unit is Empty. Skipping turn.");
+                    //Debug.Log("Current Unit is Empty. Skipping turn.");
                     CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-                    BState = BattleState.DetermineTurn;
+                    BState = BattleState.CheckEnd;
                 }
             }
 
@@ -373,6 +373,15 @@ public class CombatHandler : MonoBehaviour
         TempCurrentUnitIndex++;
         if (TempCurrentUnitIndex >= UnitBattleList.Count)
         {
+            //Execute Damaging Status Effects
+            foreach (Unit unit in UnitBattleList)
+            {
+                if (unit.GetPartyClass() != "Empty")
+                {
+                    unit.DamageStatusEffects();
+                }
+            }
+
             //Update Turn Order Based on Current Speed Stats
             UnitBattleList.Sort((x, y) => y.GetSpeed().CompareTo(x.GetSpeed()));
 
@@ -549,13 +558,13 @@ public class CombatHandler : MonoBehaviour
                     int EnemyDefense = 5 + (EnemyLevel - 1) * 2;            //Defense Scaling
                     int EnemySpeed = 5 + (EnemyLevel - 1) * 1;              //Speed Scaling
                     int EnemyCritChance = 5;                                //Crit Chance (Not Scaling)
-                    int EnemyDodgeChance = 50;                               //Dodge Chance (Not Scaling)
-                    int EnemyAccuracy = 50;                                //Accuracy (Not Scaling)
+                    int EnemyDodgeChance = 0;                               //Dodge Chance (Not Scaling)
+                    int EnemyAccuracy = 100;                                //Accuracy (Not Scaling)
 
                     EnemyName = "Slime" + (i + 1);
 
                     //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, CritChance, MoveSet
-                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }));
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }, new Unit.StatusEffect[] { }));
                     //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
                 }
                 break;

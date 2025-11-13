@@ -116,9 +116,9 @@ public class QuickTimeEvents : MonoBehaviour
                 CurrentClicks = 0;
                 CurrentTiming = 0;
 
-                if (CombatHandler.CurrentUnit.GetCurrentAccuracy() > 0)
+                if (CombatHandler.CurrentUnit.GetAccuracy() > 0)
                 {
-                    Difficulty = (Mathf.Abs((CombatHandler.CurrentUnit.GetCurrentAccuracy() / 25.0f) - 5));
+                    Difficulty = (Mathf.Abs((CombatHandler.CurrentUnit.GetAccuracy() / 25.0f) - 5));
                 }
                 else
                 {

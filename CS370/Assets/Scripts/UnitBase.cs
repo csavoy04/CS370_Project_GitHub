@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [System.Serializable]
 public class Unit
@@ -29,19 +30,20 @@ public class Unit
     public int Experience;              // Current Experience Points
     public int MaxExperience;           // Experience Points needed for next level
 
-    //Armor? (Phyiscal, Magical)
-    //Resistances? (Fire, Ice, Lightning, Poison, etc.)
+    public int CurrentCritChance;       //Current Critical Chance stat
+    public int CritChance;              //Modified Critical Chance stat during battle
 
-    public int CurrentCritChance;
-    public int CritChance;
+    public int CurrentDodgeChance;      //Current Dodge Chance stat
+    public int DodgeChance;             //Modified Dodge Chance stat during battle
 
-    public int CurrentDodgeChance;
-    public int DodgeChance;
+    public int CurrentAccuracy;         //Current Accuracy stat
+    public int Accuracy;                //Modified Accuracy stat during battle
 
-    public int CurrentAccuracy;
-    public int Accuracy;
+    public StatusEffect[] StatusEffects;
 
     //Scaling Stats? (Physical/Magical)
+    //Armor? (Phyiscal, Magical)
+    //Resistances? (Fire, Ice, Lightning, Poison, etc.)
 
     public string[] MoveSet;
 
@@ -63,7 +65,52 @@ public class Unit
         Empty
     }
 
-    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, int GivenCritChance, int GivenDodgeChance, int GivenAccuracy, string[] GivenMoveSet)
+    [System.Serializable]
+    public struct StatusEffect
+    {
+        public StatusEffectType Type;
+        public int Duration;
+        public int Stacks;
+        public int Damage;
+    }
+
+    public enum StatusEffectType
+    {
+        //DOT
+        Burning,
+        //Poisoned
+        Bleeding
+        //Cursed
+
+        //Stat Buffs
+        //Haste
+        //Regen
+        //Barrier
+        //Focused
+        //Inspired
+        //Fortified
+        //Reflect
+        //EvasionUp
+        //Counter
+
+        //Stat Debuff
+        //Slowed
+        //Weakened
+        //Broken
+        //Silenced
+        //Blinded
+        //Confused
+        //Feared
+        //Staggered
+        //Exhausted
+
+        //Controlling Effects
+        //Stunned
+        //Frozen
+        //Slept
+    }
+
+    public Unit (PartyClass GivenPartyType, string GivenName, UnitClass GivenClassType, int GivenLevel, int GivenHealth, int GivenMana, int GivenAttack, int GivenDefense, int GivenSpeed, int GivenCritChance, int GivenDodgeChance, int GivenAccuracy, string[] GivenMoveSet, StatusEffect[] GivenStatusEffects)
     {
         PartyType = GivenPartyType;
         Name = GivenName;
@@ -98,6 +145,8 @@ public class Unit
         MaxExperience = Level * 100;
 
         MoveSet = GivenMoveSet;
+
+        StatusEffects = GivenStatusEffects;
     }
 
     public void LevelUp()
@@ -227,32 +276,32 @@ public class Unit
         return MaxExperience;
     }
 
-    public int GetCurrentCritChance()
+    public int GetCritChance()
     {
         return CurrentCritChance;
     }
 
-    public int GetCritChance()
+    public int GetBaseCritChance()
     {
         return CritChance;
     }
 
-    public int GetCurrentDodgeChance()
+    public int GetDodgeChance()
     {
         return CurrentDodgeChance;
     }
 
-    public int GetDodgeChance()
+    public int GetBaseDodgeChance()
     {
         return DodgeChance;
     }
 
-    public int GetCurrentAccuracy()
+    public int GetAccuracy()
     {
         return CurrentAccuracy;
     }
 
-    public int GetAccuracy()
+    public int GetBaseAccuracy()
     {
         return Accuracy;
     }
@@ -283,6 +332,7 @@ public class Unit
         if (AccuracyHitChance <= CurrentAccuracy && GetPartyClass() == "Enemy")
         {
             Target.TakeDamage(CalculateDamage(Target, MoveName));
+            ApplyStatusEffects(Target, MoveName);
         } 
         else if(GetPartyClass() == "Enemy")
         {
@@ -291,6 +341,7 @@ public class Unit
         else
         {
             Target.TakeDamage(CalculateDamage(Target, MoveName));
+            ApplyStatusEffects(Target, MoveName);
         }
 
         if (Target.HealthBar != null)
@@ -308,7 +359,7 @@ public class Unit
     {
         //Calculate Dodge
         int DodgeHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
-        if (DodgeHitChance <= Target.GetCurrentDodgeChance())
+        if (DodgeHitChance <= Target.GetDodgeChance())
         {
             Debug.Log($"{Target.GetName()} dodged the attack!");
             return 0;
@@ -481,4 +532,115 @@ public class Unit
             LevelUp();
         }
     }
+
+    public void ApplyStatusEffects(Unit Target, string MoveName)
+    {
+        StatusEffect TempStatusEffect = new StatusEffect();
+        switch (MoveName)
+        {
+            case "Slash":
+            case "Shield Bash":
+            case "War Cry":
+                break;
+            case "Tackle":
+            case "Bite":
+            case "Stomp":
+                TempStatusEffect.Type = StatusEffectType.Burning;
+                TempStatusEffect.Duration = 2;
+                TempStatusEffect.Stacks = 1;
+                TempStatusEffect.Damage = Mathf.FloorToInt(Target.GetMaxHealth() / 50.0f);
+                Target.GiveStatusEffect(TempStatusEffect);
+                break;
+            case "Fireball":
+            case "Ice Spike":
+            case "Lightning Bolt":
+                break;
+            case "Backstab":
+            case "Poison Dart":
+            case "Vanish":
+                break;
+            default:
+                break;
+        }
+    }
+    public void GiveStatusEffect(StatusEffect NewEffect)
+    {
+        //Make sure array exists
+        if (StatusEffects == null)
+        {
+            StatusEffects = new StatusEffect[0];
+        }
+
+        bool TempFound = false;
+        //Check if this effect already exists
+        for (int i = 0; i < StatusEffects.Length; i++)
+        {
+            if (StatusEffects[i].Type == NewEffect.Type)
+            {
+                TempFound = true;
+                switch (NewEffect.Type)
+                {
+                    case (StatusEffectType.Burning):
+                        StatusEffects[i].Duration += NewEffect.Duration;
+                        break;
+                    case (StatusEffectType.Bleeding):
+                        StatusEffects[i].Stacks += NewEffect.Stacks;
+                        break;
+                    default:
+                        break;
+                }
+                Debug.Log($"{Name} is now affected by {StatusEffects[i].Type} for {StatusEffects[i].Duration} turns!");
+            }
+        }
+        if (!TempFound)
+        {
+            // Add new status effect
+            Array.Resize(ref StatusEffects, StatusEffects.Length + 1);
+            StatusEffects[^1] = NewEffect;
+            Debug.Log($"{Name} is now affected by {NewEffect.Type} for {NewEffect.Duration} turns!");
+        }
+    }
+
+    public void DamageStatusEffects()
+    {
+        for (int i = 0; i < StatusEffects.Length; i++)
+        {
+            switch (StatusEffects[i].Type)
+            {
+                case StatusEffectType.Burning:
+                    CurrentHealth -= StatusEffects[i].Damage;
+                    Debug.Log(StatusEffects[i].Damage + " Burning Damage Taken");
+                    break;
+                default:
+                    break;
+            }
+
+            if (StatusEffects[i].Duration > 1)
+            {
+                StatusEffects[i].Duration -= 1;
+            } else
+            {
+                StatusEffect[] newArray = new StatusEffect[StatusEffects.Length - 1];
+
+                for (int index = 0, j = 0; index < StatusEffects.Length; index++)
+                {
+                    if (index == i) continue;
+                    newArray[j++] = StatusEffects[i];
+                }
+
+                StatusEffects = newArray;
+            }
+
+            if (CurrentHealth < 0)
+            {
+                CurrentHealth = 0;
+            }
+        }
+    }
+
+    public void UpdateStatusEffects()
+    {
+        //Update damage values
+    }
+    
 }
