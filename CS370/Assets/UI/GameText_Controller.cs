@@ -46,23 +46,7 @@ public class GameText_Controller : MonoBehaviour
     // Updates per frame
     private void Update()
     {
-        var name = root1.Q<Label>("Name");
-        var text = root1.Q<Label>("Text");
 
-        MState = combatHandler.GetMState();
-
-        if (MState == "Main")
-        {
-            name.text = combatHandler.GetCurrentUnitName() + "'s Turn";
-            text.text = "";
-            root1.style.visibility = Visibility.Visible;
-        }
-        else if (MState == "TargetSelect")
-        {
-            name.text = "Select Enemy";
-            text.text = "";
-            root1.style.visibility = Visibility.Visible;
-        }
     }
 
     void OnHover(string text1, string text2)
@@ -74,21 +58,98 @@ public class GameText_Controller : MonoBehaviour
         root1.style.visibility = Visibility.Visible;
     }
 
-    void TryHover(int moveIndex)
+    void TryHover(int text1)
     {
         MState = combatHandler.GetMState();
 
-        if (MState != "MoveSelect")
+        if (MState == "MoveSelect")
+        {
+            string moveName = combatHandler.GetCurrentUnitMove(text1);
+            OnHover(moveName, "Power: " + "\nMana Cost: ");
+        }
+        else if (MState == "Main")
+        {
+            if (text1 == 0)
+            {
+                OnHover("Fight", "Select Moves.");
+            }
+            if (text1 == 1)
+            {
+                OnHover("Defend", "Recieve less damage and regenerates mana.");
+            }
+            if (text1 == 2)
+            {
+                OnHover("Flee", "Escape Battle.");
+            }
+        }
+        else if (MState == "TargetSelect")
+        {
+            if (text1 == 0)
+            {
+                if (root2.Q<Button>("Move_0").text == "No Selection")
+                {
+                    OnHover("No Enemy to Select", "");
+                }
+                else
+                {
+                    OnHover(PartySystem.Instance.EnemyParty[0].GetName(), "Attack this enemy?");
+                }
+                
+            }
+            if (text1 == 1)
+            {
+                if (root2.Q<Button>("Move_1").text == "No Selection")
+                {
+                    OnHover("No Enemy to Select", "");
+                }
+                else
+                {
+                    OnHover(PartySystem.Instance.EnemyParty[1].GetName(), "Attack this enemy?");
+                }
+            }
+            if (text1 == 2)
+            {
+                if (root2.Q<Button>("Move_2").text == "No Selection")
+                {
+                    OnHover("No Enemy to Select", "");
+                }
+                else
+                {
+                    OnHover(PartySystem.Instance.EnemyParty[2].GetName(), "Attack this enemy?");
+                }
+            }
+        }
+        else
         {
             return;
         }
-
-        string moveName = combatHandler.GetCurrentUnitMove(moveIndex);
-        OnHover(moveName, "Power:" + "\nMana Cost:");
+        
     }
 
     void ClearInfo()
     {
-        root1.style.visibility = Visibility.Hidden;
+        var name = root1.Q<Label>("Name");
+        var text = root1.Q<Label>("Text");
+
+        MState = combatHandler.GetMState();
+
+        if (MState == "Main")
+        {
+            name.text = combatHandler.GetCurrentUnitName() + "'s Turn";
+            text.text = "";
+            root1.style.visibility = Visibility.Visible;
+        }
+        else if (MState == "MoveSelect")
+        {
+            name.text = "Select Move";
+            text.text = "";
+            root1.style.visibility = Visibility.Visible;
+        }
+        else if (MState == "TargetSelect")
+        {
+            name.text = "Select Enemy";
+            text.text = "";
+            root1.style.visibility = Visibility.Visible;
+        }
     }
 }

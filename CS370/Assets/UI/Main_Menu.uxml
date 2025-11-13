@@ -13,11 +13,31 @@
             <ui:VisualElement name="Unit1-Info" style="flex-grow: 1; width: 80%; max-height: 30%; background-color: rgb(102, 238, 203); align-self: center; align-items: center;">
                 <ui:Label text="Unit #1" name="Unit1-Name" style="font-size: 25%;" />
                 <ui:VisualElement name="Unit1-Health-Holder" class="holder" style="flex-grow: 1; justify-content: space-between; align-items: auto; flex-direction: row; align-self: auto; align-content: flex-start; width: 95%; max-height: 30%; background-color: rgb(119, 223, 204);">
-                    <ui:Label text="HP:100/100" name="Unit1-Health-Num" style="font-size: 30%; align-self: center;" />
-                    <ui:ProgressBar value="22" name="Unit1-Health-Bar" focusable="false" language-direction="Inherit" style="text-overflow: clip; -unity-text-align: upper-left; white-space: normal; flex-wrap: nowrap; -unity-font-style: bold; color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); min-width: 60%; width: auto; align-self: center;" />
+                    <ui:Label text="HP: - / -" name="Unit1-Health-Num" style="font-size: 30%; align-self: center;" />
+                    <ui:ProgressBar value="0" name="Unit1-Health-Bar" focusable="false" language-direction="Inherit" style="text-overflow: clip; -unity-text-align: upper-left; white-space: normal; flex-wrap: nowrap; -unity-font-style: bold; color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); min-width: 60%; width: auto; align-self: center;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Unit1-Stats-Holder" class="holder" style="flex-grow: 1; width: 95%;">
-                    <ui:Label text="Label" name="Unit1-Stats-Num" style="font-size: 30px;" />
+                    <ui:Label text="None" name="Unit1-Stats-Num" style="font-size: 30px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Unit2-Info" style="flex-grow: 1; width: 80%; max-height: 30%; background-color: rgb(102, 238, 203); align-self: center; align-items: center;">
+                <ui:Label text="Unit #2&#10;" name="Unit2-Name" style="font-size: 25%;" />
+                <ui:VisualElement name="Unit2-Health-Holder" class="holder" style="flex-grow: 1; justify-content: space-between; align-items: auto; flex-direction: row; align-self: auto; align-content: flex-start; width: 95%; max-height: 30%; background-color: rgb(119, 223, 204);">
+                    <ui:Label text="HP: - / -" name="Unit2-Health-Num" style="font-size: 30%; align-self: center;" />
+                    <ui:ProgressBar value="0" name="Unit2-Health-Bar" focusable="false" language-direction="Inherit" style="text-overflow: clip; -unity-text-align: upper-left; white-space: normal; flex-wrap: nowrap; -unity-font-style: bold; color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); min-width: 60%; width: auto; align-self: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Unit2-Stats-Holder" class="holder" style="flex-grow: 1; width: 95%;">
+                    <ui:Label text="None" name="Unit2-Stats-Num" style="font-size: 30px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Unit3-Info" style="flex-grow: 1; width: 80%; max-height: 30%; background-color: rgb(102, 238, 203); align-self: center; align-items: center;">
+                <ui:Label text="Unit #3" name="Unit3-Name" style="font-size: 25%;" />
+                <ui:VisualElement name="Unit3-Health-Holder" class="holder" style="flex-grow: 1; justify-content: space-between; align-items: auto; flex-direction: row; align-self: auto; align-content: flex-start; width: 95%; max-height: 30%; background-color: rgb(119, 223, 204);">
+                    <ui:Label text="HP: - / -" name="Unit3-Health-Num" style="font-size: 30%; align-self: center;" />
+                    <ui:ProgressBar value="0" name="Unit3-Health-Bar" focusable="false" language-direction="Inherit" style="text-overflow: clip; -unity-text-align: upper-left; white-space: normal; flex-wrap: nowrap; -unity-font-style: bold; color: rgb(0, 0, 0); background-color: rgb(0, 0, 0); min-width: 60%; width: auto; align-self: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Unit3-Stats-Holder" class="holder" style="flex-grow: 1; width: 95%;">
+                    <ui:Label text="None" name="Unit3-Stats-Num" style="font-size: 30px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:Button text="Back" name="PartyBackBtn" style="align-content: auto; justify-content: flex-start; bottom: auto; position: relative;" />

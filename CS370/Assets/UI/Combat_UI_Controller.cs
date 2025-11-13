@@ -47,7 +47,7 @@ public class Combat_UI_Controller : MonoBehaviour
             move0.text = "Attack";
             move1.text = "Defend";
             move2.text = "Flee";
-            move3.text = "IDK";
+            move3.text = "";
         }
         //Selection of moves
         else if (MState == "MoveSelect")
