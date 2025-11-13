@@ -89,19 +89,19 @@ public class Movement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                transform.Translate(Vector3.ClampMagnitude(Vector3.forward, 1) * Time.deltaTime * speed);
+                rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.forward, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.S))
             {
-                transform.Translate(Vector3.ClampMagnitude(Vector3.back, 1) * Time.deltaTime * speed);
+                rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.back, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.Translate(Vector3.ClampMagnitude(Vector3.left, 1) * Time.deltaTime * speed);
+                rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.left, 1) * Time.deltaTime * speed);
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.Translate(Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
+                rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && grounded)
