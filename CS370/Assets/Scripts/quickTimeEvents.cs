@@ -66,7 +66,7 @@ public class QuickTimeEvents : MonoBehaviour
 
     //Difficulty
     public CombatHandler CombatHandler;
-    public int Difficulty;
+    public float Difficulty;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -118,15 +118,15 @@ public class QuickTimeEvents : MonoBehaviour
 
                 if (CombatHandler.CurrentUnit.GetCurrentAccuracy() > 0)
                 {
-                    Difficulty = Mathf.Abs(Mathf.CeilToInt(CombatHandler.CurrentUnit.GetCurrentAccuracy() / 25.0f) - 5);
+                    Difficulty = (Mathf.Abs((CombatHandler.CurrentUnit.GetCurrentAccuracy() / 25.0f) - 5));
                 }
                 else
                 {
                     Difficulty = 4;
                 }
 
-                NumKeys = Difficulty * BaseNumKeys;
-                NumClicks = Difficulty * BaseNumClicks;
+                NumKeys = Mathf.FloorToInt(Difficulty * BaseNumKeys);
+                NumClicks = Mathf.FloorToInt(Difficulty * BaseNumClicks);
                 WindowTiming = BaseWindowTiming / Difficulty;
 
 
