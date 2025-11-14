@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems; 
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum BattleState { PlayerTurn, EnemyTurn, Start, Won, Lost, Fled, DetermineTurn, CheckEnd, AnimationWait, QTEWait }
 public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide }
@@ -11,13 +12,13 @@ public enum MenuState { Main, MoveSelect, Defend, TargetSelect, Hide }
 
 public class CombatHandler : MonoBehaviour
 {
-    public GameObject Player;
     public static string curScene;
 
     public static CombatHandler Instance;
 
     public GameObject playerprefab;
     public GameObject enemyprefab;
+    public GameObject DamagePopUp;
 
     public QuickTimeEvents QTE;
 
@@ -59,6 +60,7 @@ public class CombatHandler : MonoBehaviour
         MState = MenuState.Hide;
     }
 
+   
     void Update()
     {
         //Do Corresponding Turn Based on Order
@@ -202,6 +204,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //Player Turn Function
+ 
     public void PlayerTurn()
     {
         if (MState == MenuState.Main)
@@ -288,6 +291,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //Enemy Turn Function
+
     public void EnemyTurn()
     {
         //EnemyTargetOptions
@@ -315,6 +319,7 @@ public class CombatHandler : MonoBehaviour
         int RandomMoveIndex = UnityEngine.Random.Range(0, CurrentUnit.MoveSet.Length);
 
         int chosenTarget = (int)Char.GetNumericValue(Targets[RandomTargetIndex]);
+        Defender = PartySystem.Instance.PlayerParty[chosenTarget];
 
         ExecuteMove(CurrentUnit.MoveSet[RandomMoveIndex], CurrentUnit, PartySystem.Instance.PlayerParty[chosenTarget]);
     }
@@ -368,6 +373,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //Next Turn Function
+  
     public int NextTurn(int TempCurrentUnitIndex)
     {
         TempCurrentUnitIndex++;
@@ -392,6 +398,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //Execute Move Function Placeholder
+   
     public bool ExecuteMove(string MoveName, Unit Attacker, Unit Defender)
     {
 
@@ -525,6 +532,7 @@ public class CombatHandler : MonoBehaviour
     }
 
     //QTE Timer
+
     IEnumerator TimerCoroutine(int Seconds)
     {
 
@@ -617,6 +625,7 @@ public class CombatHandler : MonoBehaviour
         }
     }
 
+
     public void EnemyTargetSelect(int enemyNum)
     {
         Defender = PartySystem.Instance.EnemyParty[enemyNum];
@@ -643,6 +652,23 @@ public class CombatHandler : MonoBehaviour
     public string GetCurrentUnitMove(int index)
     {
         return CurrentUnit.MoveSet[index];
+    }
+
+    public void SpawnDamageText(String Amount)
+    {
+        if (DamagePopUp)
+        {
+            // Determine spawn position from the unit's health bar if available
+            Vector3 spawnPos = Vector3.zero;
+            if (Defender != null && Defender.HealthBar != null)
+            {
+                spawnPos = Defender.HealthBar.transform.position + new Vector3(-2, 1, 0);
+            }
+            // Instantiate the damage text prefab at the computed position and set its text
+            GameObject dmgObj = Instantiate(DamagePopUp, spawnPos, Quaternion.identity);   
+            dmgObj.GetComponentInChildren<TextMesh>().text = Amount;
+    
+        }
     }
 
 }

@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Unit
 {
     public HealthBar HealthBar;
+
     //Stats
     public PartyClass PartyType;        // Party Type (Player or Enemy)
     public string Name;                 // Unit Name
@@ -325,6 +326,7 @@ public class Unit
     }
 
     //Deal Damage to another unit
+
     public void DealDamage(Unit Target, string MoveName)
     {
         //Calculate Enemy Accuracy
@@ -357,12 +359,14 @@ public class Unit
     //Calculates damage to deal to another unit based on attack and defense stats, etc.
     public int CalculateDamage(Unit Target, string MoveName)
     {
+        int TotalDamage = 0;
+                    
         //Calculate Dodge
         int DodgeHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
         if (DodgeHitChance <= Target.GetDodgeChance())
         {
             Debug.Log($"{Target.GetName()} dodged the attack!");
-            return 0;
+            return TotalDamage;
         }
         else
         {
@@ -381,22 +385,28 @@ public class Unit
                 case "Slash":
                 case "Shield Bash":
                 case "War Cry":
-                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    TotalDamage = Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    break;
                 case "Tackle":
                 case "Bite":
                 case "Stomp":
-                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    TotalDamage = Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    break;
                 case "Fireball":
                 case "Ice Spike":
                 case "Lightning Bolt":
-                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    TotalDamage = Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    break;
                 case "Backstab":
                 case "Poison Dart":
                 case "Vanish":
-                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    TotalDamage = Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    break;
                 default:
-                    return Mathf.Max(0, DamageAmount - Target.CurrentDefense);
+                    TotalDamage = Mathf.Max(0, DamageAmount - Target.CurrentDefense);         //Basic damage calculation (if negative, return 0)
+                    break;
             }
+            return TotalDamage;
         }
     }
 
@@ -410,16 +420,18 @@ public class Unit
         {
             CurrentHealth = 0;
         }
-
         if (HealthBar != null)
         {
             HealthBar.UpdateHealthBar(GetHealthPercent());
-        }
-        else
-        {
-            Debug.LogWarning($"Unit {Name} has no HealthBar assigned.");
+            var handler = UnityEngine.Object.FindFirstObjectByType<CombatHandler>();
+            if (handler != null)
+            {
+                handler.SpawnDamageText(Amount.ToString());
+            }
         }
     }
+
+    
 
     public int QuickTimeEventType(string MoveName)
     {
@@ -601,6 +613,7 @@ public class Unit
         }
     }
 
+
     public void DamageStatusEffects()
     {
         for (int i = 0; i < StatusEffects.Length; i++)
@@ -609,6 +622,11 @@ public class Unit
             {
                 case StatusEffectType.Burning:
                     CurrentHealth -= StatusEffects[i].Damage;
+                    var handler = UnityEngine.Object.FindFirstObjectByType<CombatHandler>();
+                    if (handler != null)
+                    {
+                        handler.SpawnDamageText(StatusEffects[i].Damage.ToString());
+                    }
                     Debug.Log(StatusEffects[i].Damage + " Burning Damage Taken");
                     break;
                 default:

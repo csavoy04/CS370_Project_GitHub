@@ -78,7 +78,7 @@ public class QuickTimeEvents : MonoBehaviour
 
         //Key Combination QTE
         BaseNumKeys = 5;                                    //Number of keys required for KeyCombination
-        KeyCombination = new char[20];             //KeyCombination Sequence
+        KeyCombination = new char[999];             //KeyCombination Sequence
         Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";      //Possible character values for KeyCombination
         CurrentTestedKey = 0;                           //Key input index for KeyCombination
         KeyCombinationMaxDuration = 5;                  //Duration of KeyCombination QTE
