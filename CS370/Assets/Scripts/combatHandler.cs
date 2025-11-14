@@ -41,6 +41,8 @@ public class CombatHandler : MonoBehaviour
     //Move Selected
     public string SelectedMove;
 
+    public AnimationSpawner AnimationSpawner;
+
     void Start()
     {
         DetermineEnemyUnits();
@@ -193,7 +195,7 @@ public class CombatHandler : MonoBehaviour
 
         foreach (Unit unit in PartySystem.Instance.PlayerParty)
         {
-            if(unit.GetPartyClass() != "Empty")
+            if(unit.GetPartyClass() != "Empty" && unit.GetCurrentHealth() > 0)
             {
                 unit.Heal(0);
             }
@@ -273,10 +275,6 @@ public class CombatHandler : MonoBehaviour
             {
                 Debug.Log(CurrentUnit.GetName() + " used " + SelectedMove + " on " + Defender.GetName() + "!");
 
-                CurrentUnit.DealDamage(Defender, SelectedMove);
-
-                //Update Health Bars Here
-
                 RunAnimation(SelectedMove);
 
             }
@@ -284,7 +282,7 @@ public class CombatHandler : MonoBehaviour
             {
                 Debug.Log(CurrentUnit.GetName() + "'s " + SelectedMove + " missed!");
 
-                RunAnimation(SelectedMove);
+                //RunAnimation(SelectedMove);
 
             }
         }
@@ -408,11 +406,8 @@ public class CombatHandler : MonoBehaviour
             if (Attacker.GetPartyClass() == "Enemy")
             {
                 Debug.Log(Attacker.GetName() + " used " + MoveName + " on " + Defender.GetName() + "!");
-                Attacker.DealDamage(Defender, MoveName);
 
-                //End Turn for Enemy
-                CurrentUnitIndex = NextTurn(CurrentUnitIndex);
-                BState = BattleState.CheckEnd;
+                RunAnimation(MoveName);
                 return true;
             }
             else
@@ -452,31 +447,39 @@ public class CombatHandler : MonoBehaviour
     //Run Animation Function Placeholder
     public void RunAnimation(string AnimationName)
     {
-        int duration;
+        float duration;
 
         switch (AnimationName)
         {
             case "Slash":
             case "Fireball":
             case "Backstab":
-                duration = 2;
+                duration = 1;
                 break;
             case "Shield Bash":
             case "Ice Spike":
             case "Poison Dart":
-                duration = 2;
+                duration = 1;
                 break;
             case "War Cry":
             case "Lightning Bolt":
             case "Vanish":
-                duration = 2;
+                duration = 1;
+                break;
+            case "Tackle":
+            case "Stomp":
+                duration = 1;
+                break;
+            case "Bite":
+                duration = 1.167f;
+                AnimationSpawner.SpawnBite(Defender);
                 break;
             default:
                 duration = 1;
                 break;
         }
 
-        StartCoroutine(TimerCoroutine(duration));
+        StartCoroutine(TimerCoroutine(duration, AnimationName));
 
         BState = BattleState.AnimationWait;
 
@@ -533,11 +536,13 @@ public class CombatHandler : MonoBehaviour
 
     //QTE Timer
 
-    IEnumerator TimerCoroutine(int Seconds)
+    IEnumerator TimerCoroutine(float Seconds, string MoveName)
     {
 
         //Start Timer
         yield return new WaitForSeconds(Seconds);
+
+        CurrentUnit.DealDamage(Defender, MoveName);
 
         //End Turn
         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
@@ -572,7 +577,8 @@ public class CombatHandler : MonoBehaviour
                     EnemyName = "Slime" + (i + 1);
 
                     //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, CritChance, MoveSet
-                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }, new Unit.StatusEffect[] { }));
+                    //PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }, new Unit.StatusEffect[] { }));
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Bite" }, new Unit.StatusEffect[] { }));
                     //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
                 }
                 break;
@@ -609,7 +615,7 @@ public class CombatHandler : MonoBehaviour
         int allyCount = PartySystem.Instance.PlayerParty != null ? PartySystem.Instance.PlayerParty.Count : 0;
         for (int NoOfAllies = 0; NoOfAllies < allyCount; NoOfAllies++)
         {
-            if (PartySystem.Instance.PlayerParty[NoOfAllies].GetPartyClass() != "Empty")
+            if (PartySystem.Instance.PlayerParty[NoOfAllies].GetPartyClass() != "Empty" && PartySystem.Instance.PlayerParty[NoOfAllies].GetCurrentHealth() > 0)
             {
                 GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, 0, (NoOfAllies - 1) * 3), UnityEngine.Quaternion.identity);
                 HealthBar fhb = go.GetComponentInChildren<HealthBar>();

@@ -38,10 +38,10 @@ public class PartySystem : MonoBehaviour{
 
             //For Testing Purposes
             PlayerParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }, new Unit.StatusEffect[] {}));
-            //PlayerParty.Add(new Unit (Unit.PartyClass.Player, "Timmy",Unit.UnitClass.Warrior, 999, 999, 999, 999, 5, 999, 50, new string[] { "Slash", "Shield Bash", "War Cry" }, new Unit.StatusEffect[] {}));
+            //PlayerParty.Add(new Unit (Unit.PartyClass.Player, "Timmy",Unit.UnitClass.Warrior, 999, 999, 999, 999, 5, 999, 50, 0, 100 new string[] { "Slash", "Shield Bash", "War Cry" }, new Unit.StatusEffect[] {}));
             PlayerParty.Add(new Unit(Unit.PartyClass.Player, "Steve", Unit.UnitClass.Mage, 10, 100, 100, 20, 5, 10, 0, 0, 100, new string[] { "Fireball", "Ice Spike", "Lightning Bolt" }, new Unit.StatusEffect[] { }));
-            PlayerParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }, new Unit.StatusEffect[] { }));
-            //PlayerParty.Add(new Unit(Unit.PartyClass.Player, "Bob", Unit.UnitClass.Rogue, 5, 5, 5, 5, 5, 5, 5, new string[] { "Backstab", "Poison Dart", "Vanish" }, new Unit.StatusEffect[] {}));
+            //PlayerParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }, new Unit.StatusEffect[] { }));
+            PlayerParty.Add(new Unit(Unit.PartyClass.Player, "Bob", Unit.UnitClass.Rogue, 5, 5, 5, 5, 5, 5, 5, 0, 100, new string[] { "Backstab", "Poison Dart", "Vanish" }, new Unit.StatusEffect[] { }));
         }
 
         if (EnemyParty == null || EnemyParty.Count == 0){
