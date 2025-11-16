@@ -9468,6 +9468,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &721375750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 721375752}
+  - component: {fileID: 721375751}
+  m_Layer: 0
+  m_Name: TurnIndicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &721375751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721375750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a9f6a9a921d02e49a288271d6b94a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnIndicator
+  TurnIndicatorPrefab: {fileID: 7048398165308888415, guid: 93d8ceb313c4b5748b5767de257fd5c2, type: 3}
+  CombatHandler: {fileID: 1099780624}
+  Spawned: 0
+--- !u!4 &721375752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721375750}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.18259, y: 0, z: 39.11105}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &729620346
 GameObject:
   m_ObjectHideFlags: 0
@@ -23822,7 +23869,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AnimationSpawner
   bitePrefab: {fileID: 2347088507974524377, guid: 136eb2f00eb1a9c4d8a33d3d0b58df21, type: 3}
   spawnPoint: {fileID: 1495046472}
-  offset: {x: 0, y: 5, z: 0}
 --- !u!4 &1949994906
 Transform:
   m_ObjectHideFlags: 0
@@ -25538,3 +25584,4 @@ SceneRoots:
   - {fileID: 538772668}
   - {fileID: 1949994906}
   - {fileID: 1495046472}
+  - {fileID: 721375752}

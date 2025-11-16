@@ -8,8 +8,9 @@ public class AnimationSpawner : MonoBehaviour
     public void SpawnBite(Unit Defender)
     {
         float x = 0;
-        float y = 0;
         float z = 0;
+
+        float offsety = 0;
 
         if(Defender.GetPartyClass() == "Player")
         {
@@ -26,7 +27,6 @@ public class AnimationSpawner : MonoBehaviour
             }
 
             x = -4.85f;
-            y = 1;
         } 
         else
         {
@@ -41,10 +41,24 @@ public class AnimationSpawner : MonoBehaviour
             }
 
             x = 4.85f;
-            y = 1;
         }
 
-        Vector3 spawnPos = new Vector3(x, y, z);
+        switch (Defender.GetUnitClass())
+        {
+            case "Warrior":
+            case "Mage":
+            case "Rogue":
+                offsety = 1;
+                break;
+            case "Slime":
+                offsety = 1;
+                break;
+            default:
+                offsety = 0;
+                break;
+        }
+
+        Vector3 spawnPos = new Vector3(x, offsety, z);
         GameObject bite = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
         bite.transform.forward = Camera.main.transform.forward;
         Destroy(bite, 1.167f);

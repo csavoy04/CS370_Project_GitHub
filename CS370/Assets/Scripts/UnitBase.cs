@@ -331,7 +331,7 @@ public class Unit
     {
         //Calculate Enemy Accuracy
         int AccuracyHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
-        if (AccuracyHitChance <= CurrentAccuracy && GetPartyClass() == "Enemy")
+        if (AccuracyHitChance <= CurrentAccuracy && GetPartyClass() == "Enemy" || GetPartyClass() == "Player")
         {
             Target.TakeDamage(CalculateDamage(Target, MoveName));
             ApplyStatusEffects(Target, MoveName);
@@ -339,11 +339,6 @@ public class Unit
         else if(GetPartyClass() == "Enemy")
         {
             Debug.Log($"{Name} missed");
-        }
-        else
-        {
-            Target.TakeDamage(CalculateDamage(Target, MoveName));
-            ApplyStatusEffects(Target, MoveName);
         }
 
         if (Target.HealthBar != null)
