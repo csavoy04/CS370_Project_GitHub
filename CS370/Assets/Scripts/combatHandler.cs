@@ -282,7 +282,7 @@ public class CombatHandler : MonoBehaviour
             {
                 Debug.Log(CurrentUnit.GetName() + "'s " + SelectedMove + " missed!");
 
-                //RunAnimation(SelectedMove);
+                BState = BattleState.CheckEnd;
 
             }
         }
