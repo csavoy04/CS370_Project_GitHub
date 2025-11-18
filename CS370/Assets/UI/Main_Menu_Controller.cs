@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,6 +7,7 @@ public class Main_Menu_Controller : MonoBehaviour
 {
 
     [SerializeField] UIDocument uiDocument;
+    public VisualTreeAsset listItemTemplate;
     private VisualElement root;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -13,9 +15,12 @@ public class Main_Menu_Controller : MonoBehaviour
 
         root = uiDocument.rootVisualElement;
 
-        //Closes Party Menu at start
+
+        //Closes Party Menu and Bag Menu at start
         var menuParty = root.Q<VisualElement>("Party-Menu");
         menuParty.style.display = DisplayStyle.None;
+        var menuBag = root.Q<VisualElement>("Bag-Menu");
+        menuBag.style.display = DisplayStyle.None;
 
         //Closes Menu at start and when opened will only show main menu
         root.style.display = DisplayStyle.None;
@@ -27,12 +32,19 @@ public class Main_Menu_Controller : MonoBehaviour
         var PartyBtn = root.Q<VisualElement>("PartyBtn");
         PartyBtn.RegisterCallback<ClickEvent>(PartyEvent);
 
+        var BagBtn = root.Q<VisualElement>("BagBtn");
+        BagBtn.RegisterCallback<ClickEvent>(BagEvent);
+
         var quitBtn = root.Q<VisualElement>("QuitBtn");
         quitBtn.RegisterCallback<ClickEvent>(QuitEvent);
 
         //Party Buttons
         var partyBack = root.Q<VisualElement>("PartyBackBtn");
         partyBack.RegisterCallback<ClickEvent>(PartyBackEvent);
+
+        //Bag Buttons
+        var bagBack = root.Q<VisualElement>("BagBackBtn");
+        bagBack.RegisterCallback<ClickEvent>(PartyBackEvent);
     }
 
     // Updates per frame
@@ -134,6 +146,39 @@ public class Main_Menu_Controller : MonoBehaviour
         }
     }
 
+    private void BagEvent(ClickEvent evt)
+    {
+        var menuMain = root.Q<VisualElement>("Player-Menu");
+        menuMain.style.display = DisplayStyle.None;
+
+        var menuBag = root.Q<VisualElement>("Bag-Menu");
+        menuBag.style.display = DisplayStyle.Flex;
+
+        ListView itemList = root.Q<ListView>("Item-List");
+        var bagItems = new List<string>()
+        {
+            "One", "Two"
+        };
+        Debug.Log("Make item called");
+        //How many in list
+        itemList.itemsSource = bagItems;
+
+        //Creates Item
+        itemList.makeItem = () =>
+        {
+            return listItemTemplate.CloneTree();
+        };
+
+        //Binds to label
+        itemList.bindItem = (element, index) =>
+        {
+            Label label = element.Q<Label>("Name");
+            label.text = bagItems[index];
+        };
+
+        itemList.selectionType = SelectionType.Single;
+    }
+
     private void QuitEvent(ClickEvent evt)
     {
         Debug.Log("Quitting Game");
@@ -147,6 +192,9 @@ public class Main_Menu_Controller : MonoBehaviour
     {
         var menuParty = root.Q<VisualElement>("Party-Menu");
         menuParty.style.display = DisplayStyle.None;
+
+        var menuBag = root.Q<VisualElement>("Bag-Menu");
+        menuBag.style.display = DisplayStyle.None;
 
         var menuMain = root.Q<VisualElement>("Player-Menu");
         menuMain.style.display = DisplayStyle.Flex;
