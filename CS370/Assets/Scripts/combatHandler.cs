@@ -668,7 +668,7 @@ public class CombatHandler : MonoBehaviour
             Vector3 spawnPos = Vector3.zero;
             if (Defender != null && Defender.HealthBar != null)
             {
-                spawnPos = Defender.HealthBar.transform.position + new Vector3(-2, 1, 0);
+                spawnPos = Defender.HealthBar.transform.position + new Vector3(UnityEngine.Random.Range(1f,-2f), 1, 0);
             }
             // Instantiate the damage text prefab at the computed position and set its text
             GameObject dmgObj = Instantiate(DamagePopUp, spawnPos, Quaternion.identity);   
