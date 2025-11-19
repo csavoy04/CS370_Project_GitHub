@@ -37,6 +37,11 @@ public class OnClick : MonoBehaviour
         spriteRenderer.sprite = images[i];
     }
 
+    public int getI()
+    {
+        return i;
+    }
+
     void OnMouseDown()
     {
         Debug.Log("clicked");
