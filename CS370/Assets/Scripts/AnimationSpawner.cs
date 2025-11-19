@@ -4,6 +4,14 @@ public class AnimationSpawner : MonoBehaviour
 {
     public GameObject bitePrefab;
     public GameObject lightningPrefab;
+    public GameObject FireBallPreFab;
+
+    public GameObject iceSpikePrefab;
+
+    public GameObject tacklePrefab;
+
+    public GameObject stompPrefab;
+
     public Transform spawnPoint;
 
     public void SpawnAnimation(Unit Defender, string MoveName, float duration)
@@ -69,6 +77,22 @@ public class AnimationSpawner : MonoBehaviour
                 break;
             case "Lightning Bolt":
                 animation = Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            case "Fireball":
+                animation = Instantiate(FireBallPreFab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            case "Ice Spike":
+                animation = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            case "Tackle":
+                animation = Instantiate(tacklePrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            case "Stomp":
+                animation = Instantiate(stompPrefab, spawnPos, Quaternion.identity);
                 Destroy(animation, duration);
                 break;
             default:

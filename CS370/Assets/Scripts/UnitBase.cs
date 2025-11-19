@@ -421,7 +421,8 @@ public class Unit
             var handler = UnityEngine.Object.FindFirstObjectByType<CombatHandler>();
             if (handler != null)
             {
-                handler.SpawnDamageText(Amount.ToString());
+                handler.popupQueue.Enqueue(Amount);
+                //handler.SpawnDamageText(Amount.ToString());
             }
         }
     }
@@ -620,7 +621,8 @@ public class Unit
                     var handler = UnityEngine.Object.FindFirstObjectByType<CombatHandler>();
                     if (handler != null)
                     {
-                        handler.SpawnDamageText(StatusEffects[i].Damage.ToString());
+                        handler.popupQueue.Enqueue(StatusEffects[i].Damage);
+                        //handler.SpawnDamageText(StatusEffects[i].Damage.ToString());
                     }
                     Debug.Log(StatusEffects[i].Damage + " Burning Damage Taken");
                     break;

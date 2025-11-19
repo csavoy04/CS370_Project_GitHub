@@ -20,6 +20,10 @@ public class CombatHandler : MonoBehaviour
     public GameObject enemyprefab;
     public GameObject DamagePopUp;
 
+    public Queue<float> popupQueue = new();
+    private bool popupQueueRunning = false;
+
+
     public QuickTimeEvents QTE;
 
     //Battle State
@@ -184,6 +188,10 @@ public class CombatHandler : MonoBehaviour
             {
                 BattleEnd();
             }
+            if (popupQueue.Count != 0 && !popupQueueRunning)
+        {
+            StartCoroutine(Dequeue(popupQueue, DeleteDamagePopUp.delayBeforeDelete));
+        }
         }
     }
 
@@ -452,12 +460,12 @@ public class CombatHandler : MonoBehaviour
         switch (AnimationName)
         {
             case "Slash":
-            case "Fireball":
+            
             case "Backstab":
                 duration = 1;
                 break;
             case "Shield Bash":
-            case "Ice Spike":
+            
             case "Poison Dart":
                 duration = 1;
                 break;
@@ -466,8 +474,10 @@ public class CombatHandler : MonoBehaviour
                 duration = 1;
                 break;
             case "Tackle":
+                duration = 0.75f;
+                break;
             case "Stomp":
-                duration = 1;
+                duration = 0.5f;
                 break;
             case "Bite":
                 duration = 1.167f;
@@ -475,6 +485,12 @@ public class CombatHandler : MonoBehaviour
             case "Lightning Bolt":
                 duration = 0.667f;
                 break;
+            case "Fireball":
+                duration = 1f;
+                break;
+            case "Ice Spike":
+                duration = 1.167f;
+                break; 
             default:
                 duration = 1;
                 break;
@@ -660,24 +676,25 @@ public class CombatHandler : MonoBehaviour
     {
         return CurrentUnit.MoveSet[index];
     }
-
-    public void SpawnDamageText(String Amount)
+    
+    private IEnumerator Dequeue(Queue<float> coroutines, float delay)
     {
-        if (DamagePopUp)
-        {
-            // Determine spawn position from the unit's health bar if available
-            Vector3 spawnPos = Vector3.zero;
+        popupQueueRunning = true;
+
+        Vector3 spawnPos = Vector3.zero;
             if (Defender != null && Defender.HealthBar != null)
             {
-                spawnPos = Defender.HealthBar.transform.position + new Vector3(UnityEngine.Random.Range(1f,-2f), 1, 0);
+                spawnPos = Defender.HealthBar.transform.position + new Vector3(-2, 1, 0);
             }
-            // Instantiate the damage text prefab at the computed position and set its text
-            GameObject dmgObj = Instantiate(DamagePopUp, spawnPos, Quaternion.identity);   
-            dmgObj.GetComponentInChildren<TextMesh>().text = Amount;
-    
+        while(coroutines.TryDequeue(out float damageNumber))
+        {
+            GameObject damageNumberInstance = Instantiate(DamagePopUp, spawnPos, Quaternion.identity); // get displayPosition from somewhere
+            damageNumberInstance.GetComponentInChildren<TextMesh>().text = damageNumber.ToString(); // or something similar, I don't know the methods
+            yield return new WaitForSeconds(delay);
         }
-    }
 
+        popupQueueRunning = false;
+    }
 }
 
 //Status effects can be added later as needed
