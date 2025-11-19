@@ -282,7 +282,7 @@ public class CombatHandler : MonoBehaviour
             {
                 Debug.Log(CurrentUnit.GetName() + "'s " + SelectedMove + " missed!");
 
-                //RunAnimation(SelectedMove);
+                BState = BattleState.CheckEnd;
 
             }
         }
@@ -462,7 +462,6 @@ public class CombatHandler : MonoBehaviour
                 duration = 1;
                 break;
             case "War Cry":
-            case "Lightning Bolt":
             case "Vanish":
                 duration = 1;
                 break;
@@ -472,13 +471,15 @@ public class CombatHandler : MonoBehaviour
                 break;
             case "Bite":
                 duration = 1.167f;
-                AnimationSpawner.SpawnBite(Defender);
+                break;
+            case "Lightning Bolt":
+                duration = 0.667f;
                 break;
             default:
                 duration = 1;
                 break;
         }
-
+        AnimationSpawner.SpawnAnimation(Defender, AnimationName, duration);
         StartCoroutine(TimerCoroutine(duration, AnimationName));
 
         BState = BattleState.AnimationWait;

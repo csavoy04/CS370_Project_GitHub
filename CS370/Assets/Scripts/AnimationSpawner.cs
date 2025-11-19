@@ -3,9 +3,10 @@ using UnityEngine;
 public class AnimationSpawner : MonoBehaviour
 {
     public GameObject bitePrefab;
+    public GameObject lightningPrefab;
     public Transform spawnPoint;
 
-    public void SpawnBite(Unit Defender)
+    public void SpawnAnimation(Unit Defender, string MoveName, float duration)
     {
         float x = 0;
         float z = 0;
@@ -59,8 +60,23 @@ public class AnimationSpawner : MonoBehaviour
         }
 
         Vector3 spawnPos = new Vector3(x, offsety, z);
-        GameObject bite = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
-        bite.transform.forward = Camera.main.transform.forward;
-        Destroy(bite, 1.167f);
+        GameObject animation;
+        switch (MoveName)
+        {
+            case "Bite":
+                animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            case "Lightning Bolt":
+                animation = Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+            default:
+                animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
+                Destroy(animation, duration);
+                break;
+
+        }
+        animation.transform.forward = Camera.main.transform.forward;
     }
 }
