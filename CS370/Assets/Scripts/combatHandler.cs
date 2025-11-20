@@ -340,6 +340,9 @@ public class CombatHandler : MonoBehaviour
             int TempExpGain = 0;
             int MoneyGain = 0;
 
+            //Tracks Number of Allies
+            int NoAllies = 0;
+
             //For each unit in battle list, check if health <= 0 and party class is enemy
             foreach (Unit unit in PartySystem.Instance.EnemyParty)
             {
@@ -354,12 +357,21 @@ public class CombatHandler : MonoBehaviour
             //Add Money to Player
             GameHandler.Instance.Money += MoneyGain;
 
+            //Count Number of Player Units     
+            foreach (Unit unit in PartySystem.Instance.PlayerParty)
+            {
+                if (unit.GetPartyClass() != "Empty")
+                {
+                    NoAllies += 1;
+                }
+            }
+
             //Distribute Exp to Player Party
             foreach (Unit unit in PartySystem.Instance.PlayerParty)
             {
                 if (unit.GetPartyClass() != "Empty")
                 {
-                    unit.ResetStats(TempExpGain);
+                    unit.ResetStats(TempExpGain / NoAllies);
                 }
             }
 
