@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 
 public class AnimationSpawner : MonoBehaviour
 {
+
     public GameObject bitePrefab;
     public GameObject lightningPrefab;
     public GameObject FireBallPreFab;
@@ -12,17 +14,23 @@ public class AnimationSpawner : MonoBehaviour
 
     public GameObject stompPrefab;
 
-    public Transform spawnPoint;
+    float DefenderX = 0;
+    float DefenderY = 0;
+    float DefenderZ = 0;
+
+    float AttackerX = 0;
+    float AttackerY = 0;
+    float AttackerZ = 0;
+
+    public Vector3 SpawnPos;
+    public Vector3 TargetPos;
+
+    public bool IsMovingAnimation = false;
 
     public void SpawnAnimation(Unit Attacker, Unit Defender, string MoveName, float duration)
     {
-        float DefenderX = 0;
-        float DefenderY = 0;
-        float DefenderZ = 0;
 
-        float AttackerX = 0;
-        float AttackerY = 0;
-        float AttackerZ = 0;
+        GameObject animation;
 
         if (Defender.GetPartyClass() == "Player")
         {
@@ -116,44 +124,56 @@ public class AnimationSpawner : MonoBehaviour
                 break;
         }
 
-        Vector3 spawnPos;
         switch (MoveName)
         {
             case "Fireball":
             case "Ice Spike":
-                spawnPos = new Vector3(AttackerX, AttackerY, AttackerZ);
+                SpawnPos = new Vector3(AttackerX, AttackerY, AttackerZ);
+                TargetPos = new Vector3(DefenderX, DefenderY, DefenderZ);
+                IsMovingAnimation = true;
                 break;
             default:
-                spawnPos = new Vector3(DefenderX, DefenderY, DefenderZ);
+                SpawnPos = new Vector3(DefenderX, DefenderY, DefenderZ);
                 break;
         }
-        GameObject animation;
+
         switch (MoveName)
         {
             case "Bite":
-                animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(bitePrefab, SpawnPos, Quaternion.identity);
                 break;
             case "Lightning Bolt":
-                animation = Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(lightningPrefab, SpawnPos, Quaternion.identity);
                 break;
             case "Fireball":
-                animation = Instantiate(FireBallPreFab, spawnPos, Quaternion.identity);
+                animation = Instantiate(FireBallPreFab, SpawnPos, Quaternion.identity);
                 break;
             case "Ice Spike":
-                animation = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(iceSpikePrefab, SpawnPos, Quaternion.identity);
                 break;
             case "Tackle":
-                animation = Instantiate(tacklePrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(tacklePrefab, SpawnPos, Quaternion.identity);
                 break;
             case "Stomp":
-                animation = Instantiate(stompPrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(stompPrefab, SpawnPos, Quaternion.identity);
                 break;
             default:
-                animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
+                animation = Instantiate(bitePrefab, SpawnPos, Quaternion.identity);
                 break;
 
         }
+        StartCoroutine(TimerCoroutine(duration));
         Destroy(animation, duration);
         animation.transform.forward = Camera.main.transform.forward;
+    }
+
+    IEnumerator TimerCoroutine(float Seconds)
+    {
+
+        //Start Timer
+        yield return new WaitForSeconds(Seconds);
+
+        IsMovingAnimation = false;
+
     }
 }
