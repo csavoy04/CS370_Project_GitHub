@@ -42,5 +42,11 @@
             </ui:VisualElement>
             <ui:Button text="Back" name="PartyBackBtn" style="align-content: auto; justify-content: flex-start; bottom: auto; position: relative;" />
         </ui:VisualElement>
+        <ui:VisualElement name="Bag-Menu" class="menu" style="flex-grow: 1; background-color: rgba(127, 255, 212, 0.75);">
+            <ui:VisualElement name="Item-Holder" style="flex-grow: 1; width: 80%; height: 80%; max-height: 80%; background-color: rgba(102, 238, 203, 0.75);">
+                <ui:ListView item-template="project://database/Assets/UI/Item_Template.uxml?fileID=9197481963319205126&amp;guid=0238341cc64b2bc4aab4615836d5ffa2&amp;type=3#Item_Template" tabindex="0" name="Item-List" show-border="false" virtualization-method="DynamicHeight" style="height: 50%; width: 524px; max-height: 50%; min-height: auto;" />
+            </ui:VisualElement>
+            <ui:Button text="Back" name="BagBackBtn" style="align-content: auto; justify-content: flex-start; bottom: auto; position: relative;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
