@@ -321,7 +321,15 @@ public class Unit
     // Heals the unit, increasing current health
     public void Heal(int Amount)
     {
-        CurrentHealth += Amount;
+        if (CurrentHealth + Amount > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+        else
+        {
+            CurrentHealth += Amount;
+        }
+
         HealthBar.UpdateHealthBar(GetHealthPercent());
     }
 

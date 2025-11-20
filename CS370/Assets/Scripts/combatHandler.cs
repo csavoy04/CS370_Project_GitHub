@@ -594,8 +594,8 @@ public class CombatHandler : MonoBehaviour
                     EnemyName = "Slime" + (i + 1);
 
                     //PartyClass, Name, UnitClass, Level, Health, Mana, Attack, Defense, Speed, CritChance, MoveSet
-                    //PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }, new Unit.StatusEffect[] { }));
-                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Bite" }, new Unit.StatusEffect[] { }));
+                    PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Tackle", "Bite", "Stomp" }, new Unit.StatusEffect[] { }));
+                    //PartySystem.Instance.EnemyParty.Add(new Unit(Unit.PartyClass.Enemy, EnemyName, Unit.UnitClass.Slime, EnemyLevel, EnemyHealth, EnemyMana, EnemyAttack, EnemyDefense, EnemySpeed, EnemyCritChance, EnemyDodgeChance, EnemyAccuracy, new string[] { "Bite" }, new Unit.StatusEffect[] { }));
                     //EnemyParty.Add(new Unit(Unit.PartyClass.Empty, "Empty", Unit.UnitClass.Empty, 0, 0, 0, 0, 0, 0, new string[] { "", "", "" }));
                 }
                 break;
