@@ -335,14 +335,20 @@ public class Unit
 
     //Deal Damage to another unit
 
-    public void DealDamage(Unit Target, string MoveName)
+    public void ExecuteMove(Unit Target, string MoveName)
     {
         //Calculate Enemy Accuracy
         int AccuracyHitChance = UnityEngine.Random.Range(1, 101); // Random number between 1 and 100
         if (AccuracyHitChance <= CurrentAccuracy && GetPartyClass() == "Enemy" || GetPartyClass() == "Player")
         {
-            Target.TakeDamage(CalculateDamage(Target, MoveName));
-            ApplyStatusEffects(Target, MoveName);
+            if (MoveName != "Heal")
+            {
+                Target.TakeDamage(CalculateDamage(Target, MoveName));
+                ApplyStatusEffects(Target, MoveName);
+            } else
+            {
+                Target.Heal((int)(GetAttack() * 0.5f));
+            }
         } 
         else if(GetPartyClass() == "Enemy")
         {

@@ -559,7 +559,7 @@ public class CombatHandler : MonoBehaviour
         //Start Timer
         yield return new WaitForSeconds(Seconds);
 
-        CurrentUnit.DealDamage(Defender, MoveName);
+        CurrentUnit.ExecuteMove(Defender, MoveName);
 
         //End Turn
         CurrentUnitIndex = NextTurn(CurrentUnitIndex);
