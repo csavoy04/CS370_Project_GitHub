@@ -14,14 +14,17 @@ public class AnimationSpawner : MonoBehaviour
 
     public Transform spawnPoint;
 
-    public void SpawnAnimation(Unit Defender, string MoveName, float duration)
+    public void SpawnAnimation(Unit Attacker, Unit Defender, string MoveName, float duration)
     {
-        float x = 0;
-        float z = 0;
+        float DefenderX = 0;
+        float DefenderY = 0;
+        float DefenderZ = 0;
 
-        float offsety = 0;
+        float AttackerX = 0;
+        float AttackerY = 0;
+        float AttackerZ = 0;
 
-        if(Defender.GetPartyClass() == "Player")
+        if (Defender.GetPartyClass() == "Player")
         {
             int allyCount = PartySystem.Instance.PlayerParty != null ? PartySystem.Instance.PlayerParty.Count : 0;
             for (int NoOfAllies = 0; NoOfAllies < allyCount; NoOfAllies++)
@@ -30,12 +33,12 @@ public class AnimationSpawner : MonoBehaviour
                 {
                     if (Defender == PartySystem.Instance.PlayerParty[NoOfAllies])
                     {
-                        z = (NoOfAllies - 1) * 3 - 0.7f;
+                        DefenderZ = (NoOfAllies - 1) * 3 - 0.7f;
                     }
                 }
             }
 
-            x = -4.85f;
+            DefenderX = -4.85f;
         } 
         else
         {
@@ -44,12 +47,43 @@ public class AnimationSpawner : MonoBehaviour
             {
                 if (PartySystem.Instance.EnemyParty[NoOfEnemies] == Defender) 
                 {
-                    z = (NoOfEnemies - 1) * 3 - 0.7f;
+                    DefenderZ = (NoOfEnemies - 1) * 3 - 0.7f;
                 }
                 
             }
 
-            x = 4.85f;
+            DefenderX = 4.85f;
+        }
+
+        if (Attacker.GetPartyClass() == "Player")
+        {
+            int allyCount = PartySystem.Instance.PlayerParty != null ? PartySystem.Instance.PlayerParty.Count : 0;
+            for (int NoOfAllies = 0; NoOfAllies < allyCount; NoOfAllies++)
+            {
+                if (PartySystem.Instance.PlayerParty[NoOfAllies].GetPartyClass() != "Empty" && PartySystem.Instance.PlayerParty[NoOfAllies].GetCurrentHealth() > 0)
+                {
+                    if (Attacker == PartySystem.Instance.PlayerParty[NoOfAllies])
+                    {
+                        AttackerZ = (NoOfAllies - 1) * 3 - 0.7f;
+                    }
+                }
+            }
+
+            AttackerX = -4.85f;
+        }
+        else
+        {
+            int enemyCount = PartySystem.Instance.EnemyParty != null ? PartySystem.Instance.EnemyParty.Count : 0;
+            for (int NoOfEnemies = 0; NoOfEnemies < enemyCount; NoOfEnemies++)
+            {
+                if (PartySystem.Instance.EnemyParty[NoOfEnemies] == Defender)
+                {
+                    AttackerZ = (NoOfEnemies - 1) * 3 - 0.7f;
+                }
+
+            }
+
+            AttackerX = 4.85f;
         }
 
         switch (Defender.GetUnitClass())
@@ -57,50 +91,69 @@ public class AnimationSpawner : MonoBehaviour
             case "Warrior":
             case "Mage":
             case "Rogue":
-                offsety = 1;
+                DefenderY = 1;
                 break;
             case "Slime":
-                offsety = 1;
+                DefenderY = 1;
                 break;
             default:
-                offsety = 0;
+                DefenderY = 0;
                 break;
         }
 
-        Vector3 spawnPos = new Vector3(x, offsety, z);
+        switch (Attacker.GetUnitClass())
+        {
+            case "Warrior":
+            case "Mage":
+            case "Rogue":
+                AttackerY = 1;
+                break;
+            case "Slime":
+                AttackerY = 1;
+                break;
+            default:
+                AttackerY = 0;
+                break;
+        }
+
+        Vector3 spawnPos;
+        switch (MoveName)
+        {
+            case "Fireball":
+            case "Ice Spike":
+                spawnPos = new Vector3(AttackerX, AttackerY, AttackerZ);
+                break;
+            default:
+                spawnPos = new Vector3(DefenderX, DefenderY, DefenderZ);
+                break;
+        }
         GameObject animation;
         switch (MoveName)
         {
             case "Bite":
                 animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             case "Lightning Bolt":
                 animation = Instantiate(lightningPrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             case "Fireball":
                 animation = Instantiate(FireBallPreFab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             case "Ice Spike":
                 animation = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             case "Tackle":
                 animation = Instantiate(tacklePrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             case "Stomp":
                 animation = Instantiate(stompPrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
             default:
                 animation = Instantiate(bitePrefab, spawnPos, Quaternion.identity);
-                Destroy(animation, duration);
                 break;
 
         }
+        Destroy(animation, duration);
         animation.transform.forward = Camera.main.transform.forward;
     }
 }

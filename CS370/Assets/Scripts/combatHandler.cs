@@ -290,6 +290,8 @@ public class CombatHandler : MonoBehaviour
             {
                 Debug.Log(CurrentUnit.GetName() + "'s " + SelectedMove + " missed!");
 
+                //End Turn
+                CurrentUnitIndex = NextTurn(CurrentUnitIndex);
                 BState = BattleState.CheckEnd;
 
             }
@@ -507,7 +509,7 @@ public class CombatHandler : MonoBehaviour
                 duration = 1;
                 break;
         }
-        AnimationSpawner.SpawnAnimation(Defender, AnimationName, duration);
+        AnimationSpawner.SpawnAnimation(CurrentUnit, Defender, AnimationName, duration);
         StartCoroutine(TimerCoroutine(duration, AnimationName));
 
         BState = BattleState.AnimationWait;
