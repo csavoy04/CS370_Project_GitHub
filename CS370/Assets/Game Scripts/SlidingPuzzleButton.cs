@@ -6,6 +6,7 @@ public class SlidingPuzzleButton : MonoBehaviour
 {
     [Header("Variables")]
     public string curScene;
+    public bool completed;
 
     public Dictionary<string, float> locations = new Dictionary<string, float>()
     {
@@ -23,11 +24,13 @@ public class SlidingPuzzleButton : MonoBehaviour
         if (collision.gameObject.CompareTag("SlidingCube"))
         {
             Debug.Log("Puzzle Completed");
+            completed = true;
         }
     }
 
     void OnTriggerExit(Collider collision) 
     {
         Debug.Log("Puzzle Uncompleted");
+        completed = false;
     }
 }
