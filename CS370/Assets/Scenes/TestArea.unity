@@ -322,9 +322,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1589809049}
-  - {fileID: 564007027}
-  - {fileID: 935422080}
   - {fileID: 1051869886}
+  - {fileID: 620323379}
   - {fileID: 1716967473}
   - {fileID: 1827402668}
   - {fileID: 1461602015}
@@ -1025,11 +1024,11 @@ Transform:
   m_GameObject: {fileID: 564007023}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.1956, y: -18.642971, z: 25.6125}
+  m_LocalPosition: {x: 30.188957, y: -16.51971, z: 25.6125}
   m_LocalScale: {x: 133.74896, y: 10, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 149700890}
+  m_Father: {fileID: 620323379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &564007028
 MonoBehaviour:
@@ -1273,6 +1272,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5621822600963074456, guid: b733ba13ea08bd9498668e243253b827, type: 3}
   m_PrefabInstance: {fileID: 601268750}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &620323378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620323379}
+  m_Layer: 0
+  m_Name: TotalGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620323379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620323378}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.0066395, y: -2.1232605, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 564007027}
+  - {fileID: 935422080}
+  m_Father: {fileID: 149700890}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &642007571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,11 +1934,11 @@ Transform:
   m_GameObject: {fileID: 935422079}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.1956, y: -18.68, z: 15.612499}
+  m_LocalPosition: {x: 30.188957, y: -16.55674, z: 15.612499}
   m_LocalScale: {x: 230, y: 10, z: 70}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 149700890}
+  m_Father: {fileID: 620323379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &935422081
 BoxCollider:
