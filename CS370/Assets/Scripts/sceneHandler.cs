@@ -31,7 +31,7 @@ public class sceneHandler : MonoBehaviour
         {"TestAreaWorld2", new Vector3(100f, 2f, 0f)},
         {"World3World2", new Vector3(-20f, 2f, 0f)},
         {"World2World3", new Vector3(158f, 2f, 0f)},
-        {"World3World4", new Vector3(85f, 2f, -16f)},
+        {"World3World4", new Vector3(88f, 2f, -13f)},
         {"World4World3", new Vector3(-20f, 2f, 0f)},
         {"World4BlackSmith", new Vector3(-6.8f, 2f, 7f)}
     };
