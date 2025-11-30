@@ -37,3 +37,4 @@ public class HealthSystem
         return (float)CurrentHealth / MaxHealth;
     }
 }
+

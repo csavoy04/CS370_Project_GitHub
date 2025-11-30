@@ -13862,8 +13862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5254dca3903f10b43bfea4be59308bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::combatHandler
-  playerprefab: {fileID: 7345129318622150237, guid: 43b88c49ae8b2d844b003e5d6dfd39fa, type: 3}
-  enemyprefab: {fileID: 7340851059801259576, guid: 7a66a198045b4c0499d2f145d7b8a43c, type: 3}
+  playerprefab: {fileID: 2846769664365851348, guid: ab09bfaf0f840614c8172ae2f308c25f, type: 3}
+  enemyprefab: {fileID: 4261449114458509036, guid: 58e3f24b64b1bed41ab657c5d7be7690, type: 3}
   DamagePopUp: {fileID: 1641267910363137572, guid: b9a903081a16deb4a9a96f5acd043eec, type: 3}
   QTE: {fileID: 2113566661}
   BState: 0
@@ -13871,6 +13871,7 @@ MonoBehaviour:
   UnitBattleList: []
   CurrentUnit:
     HealthBar: {fileID: 0}
+    ManaBar: {fileID: 0}
     PartyType: 0
     Name: 
     ClassType: 0
@@ -13898,6 +13899,7 @@ MonoBehaviour:
   CurrentUnitIndex: 0
   Defender:
     HealthBar: {fileID: 0}
+    ManaBar: {fileID: 0}
     PartyType: 0
     Name: 
     ClassType: 0

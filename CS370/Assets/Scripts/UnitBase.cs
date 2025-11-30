@@ -7,6 +7,8 @@ public class Unit
 {
     public HealthBar HealthBar;
 
+    public ManaBar ManaBar;
+
     //Stats
     public PartyClass PartyType;        // Party Type (Player or Enemy)
     public string Name;                 // Unit Name
@@ -252,6 +254,11 @@ public class Unit
         return MaxMana;
     }
 
+    public float GetManaPercent()
+    {
+        return (float)CurrentMana / MaxMana;
+    }
+
     public string GetName()
     {
         return Name;
@@ -359,6 +366,10 @@ public class Unit
         {
             Target.HealthBar.UpdateHealthBar(Target.GetHealthPercent());
         }
+        else if (Target.ManaBar != null)
+        {
+            Target.ManaBar.UpdateManaBar(Target.GetManaPercent());
+        }
         else
         {
             Debug.LogWarning($"Target {Target.Name} has no HealthBar assigned.");
@@ -436,7 +447,6 @@ public class Unit
             if (handler != null)
             {
                 handler.popupQueue.Enqueue(Amount);
-                //handler.SpawnDamageText(Amount.ToString());
             }
         }
     }
@@ -485,6 +495,7 @@ public class Unit
         } else
         {
             CurrentMana += Amount;
+            ManaBar.UpdateManaBar(GetManaPercent());
         }
     }
 
@@ -499,24 +510,29 @@ public class Unit
             case "Shield Bash":
             case "War Cry":
                 Amount = 5;         //Mana cost
+                ManaBar.UpdateManaBar(GetManaPercent());
                 break;
             case "Tackle":
             case "Bite":
             case "Stomp":
                 Amount = 5;         //Mana cost
+                ManaBar.UpdateManaBar(GetManaPercent());
                 break;
             case "Fireball":
             case "Ice Spike":
             case "Lightning Bolt":
                 Amount = 5;         //Mana cost
+                ManaBar.UpdateManaBar(GetManaPercent());
                 break;
             case "Backstab":
             case "Poison Dart":
             case "Vanish":
                 Amount = 5;         //Mana cost
+                ManaBar.UpdateManaBar(GetManaPercent());
                 break;
             default:
                 Amount = 5;         //Mana cost
+                ManaBar.UpdateManaBar(GetManaPercent());
                 break;
         }
 
