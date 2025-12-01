@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 /* Script made by: Coleman
         - Script that takes in the user's input and corelates it to a given transform command
@@ -19,6 +20,7 @@ public class Movement : MonoBehaviour
     CharacterController controller;
     CapsuleCollider capsuleCollider;
     Rigidbody rb;
+    public Animator Animator;
 
     [Header("Variables")]
     public bool isCrouching = false;
@@ -45,6 +47,17 @@ public class Movement : MonoBehaviour
         controller.height = 2.0f;
         capsuleCollider = GetComponent<CapsuleCollider>();
         capsuleCollider.height = 2.0f;
+        Animator = GetComponent<Animator>();
+    }
+
+    void resetAnim()
+    {
+        Animator.SetBool("idle", true);
+        Animator.SetBool("goback", false);
+        Animator.SetBool("goleft", false);
+        Animator.SetBool("goright", false);
+        Animator.SetBool("gofront", false);
+        Animator.SetBool("jump", false);
     }
 
     /*--------------------------------------- RAYCAST ---------------------------------*/
@@ -70,6 +83,8 @@ public class Movement : MonoBehaviour
     // Updates per frame
     void Update()
     {
+        resetAnim();
+
         /*---------------------------------- SPEED CONTROLER ------------------------------*/
         if (isRunning && moveable)
         {
@@ -90,23 +105,28 @@ public class Movement : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.forward, 1) * Time.deltaTime * speed);
+                Animator.SetBool("goback", true);
             }
             if (Input.GetKey(KeyCode.S))
             {
                 rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.back, 1) * Time.deltaTime * speed);
+                Animator.SetBool("gofront", true);
             }
             if (Input.GetKey(KeyCode.A))
             {
                 rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.left, 1) * Time.deltaTime * speed);
+                Animator.SetBool("goleft", true);
             }
             if (Input.GetKey(KeyCode.D))
             {
                 rb.MovePosition(rb.position + Vector3.ClampMagnitude(Vector3.right, 1) * Time.deltaTime * speed);
+                Animator.SetBool("goright", true);
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && grounded)
             {
                 Jump();
+                Animator.SetBool("jump", true);
             }
 
             /*-------------------------------------- RUNNING -----------------------------------*/

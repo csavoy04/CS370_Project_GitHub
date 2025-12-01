@@ -3079,6 +3079,7 @@ GameObject:
   - component: {fileID: 1152818462}
   - component: {fileID: 1152818461}
   - component: {fileID: 1152818460}
+  - component: {fileID: 1152818470}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3156,6 +3157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   moveDirection: {x: 0, y: 0, z: 0}
   jump: {x: 0, y: 1, z: 0}
+  anim: {fileID: 0}
   isCrouching: 0
   isRunning: 0
   dashing: 0
@@ -3314,6 +3316,28 @@ Transform:
   - {fileID: 331722477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1152818470
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152818459}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7658ab6bbc4e9de4fa4e2737e3c915ca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1153133736
 GameObject:
   m_ObjectHideFlags: 0
