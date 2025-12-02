@@ -23870,10 +23870,14 @@ MonoBehaviour:
   bitePrefab: {fileID: 2347088507974524377, guid: 136eb2f00eb1a9c4d8a33d3d0b58df21, type: 3}
   lightningPrefab: {fileID: 924293848396406173, guid: 3990b865331359f4182973ca710217a6, type: 3}
   FireBallPreFab: {fileID: 7631277838521410424, guid: 83a0688f40902184abe272d925f55b9a, type: 3}
-  iceSpikePrefab: {fileID: 915236529035269410, guid: 86ce8fd743aadc549b8b3fd3b9ddcc8a, type: 3}
+  IceBulletPrefab: {fileID: 915236529035269410, guid: 86ce8fd743aadc549b8b3fd3b9ddcc8a, type: 3}
   tacklePrefab: {fileID: 1457847421795068933, guid: ac157ed23dc506048b36e8df3e4dad97, type: 3}
   stompPrefab: {fileID: 181770987218076091, guid: 483a6256400cfa646968a066265f421d, type: 3}
   spawnPoint: {fileID: 1495046472}
+  SpawnPos: {x: 0, y: 0, z: 0}
+  TargetPos: {x: 0, y: 0, z: 0}
+  IsMovingAnimation: 0
+  CurrentMoveName: 
 --- !u!4 &1949994906
 Transform:
   m_ObjectHideFlags: 0
