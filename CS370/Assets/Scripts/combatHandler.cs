@@ -628,6 +628,15 @@ public class CombatHandler : MonoBehaviour
             GameObject go = Instantiate(enemyprefab, new UnityEngine.Vector3(5, 0, (NoOfEnemies - 1) * 3), UnityEngine.Quaternion.identity);
             // Try to find a FloatingHealthBar component on the instantiated prefab (or its children)
             HealthBar fhb = go.GetComponentInChildren<HealthBar>();
+            ManaBar mb = go.GetComponentInChildren<ManaBar>();
+            if (mb != null)
+            {
+                PartySystem.Instance.EnemyParty[NoOfEnemies].ManaBar = mb;
+            }
+            else
+            {
+                Debug.LogWarning($"SpawnEnemy: spawned enemy prefab at index {NoOfEnemies} has no ManaBar component.");
+            }
             if (fhb != null)
             {
                 PartySystem.Instance.EnemyParty[NoOfEnemies].HealthBar = fhb;
@@ -650,6 +659,15 @@ public class CombatHandler : MonoBehaviour
             {
                 GameObject go = Instantiate(playerprefab, new UnityEngine.Vector3(-5, 0, (NoOfAllies - 1) * 3), UnityEngine.Quaternion.identity);
                 HealthBar fhb = go.GetComponentInChildren<HealthBar>();
+                ManaBar mb = go.GetComponentInChildren<ManaBar>();
+                if (mb != null)
+                {
+                    PartySystem.Instance.PlayerParty[NoOfAllies].ManaBar = mb;
+                }
+                else
+                {
+                    Debug.LogWarning($"SpawnPlayerTeam: spawned player prefab at index {NoOfAllies} has no ManaBar component.");
+                }
                 if (fhb != null)
                 {
                     PartySystem.Instance.PlayerParty[NoOfAllies].HealthBar = fhb;
