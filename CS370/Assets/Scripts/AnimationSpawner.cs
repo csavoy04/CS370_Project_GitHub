@@ -4,6 +4,8 @@ using System.Collections;
 public class AnimationSpawner : MonoBehaviour
 {
 
+    public AudioSource audioSource;
+
     public GameObject bitePrefab;
     public GameObject lightningPrefab;
     public GameObject FireBallPreFab;
@@ -175,6 +177,7 @@ public class AnimationSpawner : MonoBehaviour
         yield return new WaitForSeconds(Seconds);
 
         IsMovingAnimation = false;
+        audioSource.Play();
 
     }
 }
