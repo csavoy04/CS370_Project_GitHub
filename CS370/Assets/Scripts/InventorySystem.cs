@@ -35,6 +35,9 @@ public class InventorySystem : MonoBehaviour
             {
                 Inventory.Add(new Item(Item.ItemType.Empty, 0, ""));
             }
+
+            Inventory.RemoveAt(0);
+            Inventory.Insert(0, new Item(Item.ItemType.HealthPotion, 1, "Heals 1 Party Member"));
         }
     }
 

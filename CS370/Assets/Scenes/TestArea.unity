@@ -497,7 +497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3286091406657419309, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.585779
+      value: -12.005779
       objectReference: {fileID: 0}
     - target: {fileID: 3286091406657419309, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -530,7 +530,7 @@ PrefabInstance:
     - target: {fileID: 4283983863585605634, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 405249989}
     - target: {fileID: 4564465858542139896, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -2132,7 +2132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3286091406657419309, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.7156372
+      value: -27.72911
       objectReference: {fileID: 0}
     - target: {fileID: 3286091406657419309, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2173,7 +2173,7 @@ PrefabInstance:
     - target: {fileID: 4283983863585605634, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 405249989}
     - target: {fileID: 4564465858542139896, guid: 768b29671bad6ce4ca0553225d51b55a, type: 3}
       propertyPath: m_Name
       value: Slime (1)
@@ -4300,7 +4300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868af0904f25fe34a831e3fc45237468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlimeMovement
-  player: {fileID: 0}
+  player: {fileID: 405249989}
   chaseRange: 10
 --- !u!195 &2097482999
 NavMeshAgent:

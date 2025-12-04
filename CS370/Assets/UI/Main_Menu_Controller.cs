@@ -155,13 +155,16 @@ public class Main_Menu_Controller : MonoBehaviour
         var menuBag = root.Q<VisualElement>("Bag-Menu");
         menuBag.style.display = DisplayStyle.Flex;
 
+        var itemUse = root.Q<VisualElement>("UseBtn");
+        itemUse.RegisterCallback<ClickEvent>(UseItemEvent);
+
         ListView itemList = root.Q<ListView>("Item-List");
 
         var bagItems = new List<string>(){ };
         
         for (int i = 0; i < InventorySystem.Instance.Inventory.Count; i++)
         {
-            string item = "" + InventorySystem.Instance.Inventory[i].GetType();
+            string item = "" + InventorySystem.Instance.Inventory[i].GetType() + " [" + InventorySystem.Instance.Inventory[i].ItemCount + "]";
             bagItems.Add("Slot " + (i + 1) + ": " + item);
         }
 
@@ -191,6 +194,12 @@ public class Main_Menu_Controller : MonoBehaviour
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #endif
+    }
+
+    private void UseItemEvent(ClickEvent evt)
+    {
+        
+
     }
 
     private void PartyBackEvent(ClickEvent evt)
