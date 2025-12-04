@@ -17,32 +17,46 @@ public class Dash : MonoBehaviour
 {
     [Header("References")]
     Coroutine Timer;
-    RaycastHit hit;
+    // RaycastHit hit;
     public Vector3 direction;
     public Vector3 dashDistance;
-    public float distance = 0f;
+    public float distance;
+    Rigidbody rb;
 
     [Header("Variables")]
     float dashCooldown = 0f;
     bool dashing = false;
 
-    // Function that gets the player direction and sets the dash distance accordingly
-    void getDashDistance()
+    void Start()
     {
-        if (Physics.Raycast(transform.position, direction, 10f))
+        rb = GetComponent<Rigidbody>();
+    }
+
+    // Function that gets the player direction and sets the dash distance accordingly
+    void dash()
+    {
+        // Old dash script scrapped due to there be so many bugs with this stupid script
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0.5f, Input.GetAxisRaw("Vertical"));
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(direction * 4f, ForceMode.Impulse);
+
+        /* if (Physics.Raycast(transform.position, direction * 10f))
         {
-            distance = (hit.distance / 10f) - 0.1f;
+            distance = hit.distance - 1f;
         }
-        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        else
+        {
+            distance = 10f;
+        }
         if (direction.x != 0)
         {
-            dashDistance = (direction.x > 0) ? new Vector3((1f-distance), 0f, 0f) : new Vector3((-1f+distance), 0f, 0f);
+            dashDistance = (direction.x > 0) ? new Vector3((-0.5f*distance), 0f, 0f) : new Vector3((0.5f*distance), 0f, 0f);
         }
         else if (direction.z != 0)
         {
-            dashDistance = (direction.z > 0) ? new Vector3(0f, 0f, (1f-distance)) : new Vector3(0f, 0f, (-1f+distance));
+            dashDistance = (direction.z > 0) ? new Vector3(0f, 0f, (-0.5f*distance)) : new Vector3(0f, 0f, (0.5f*distance));
         }
-        transform.position += dashDistance;
+        transform.position += dashDistance; */
     }
 
     // Update is called once per frame
@@ -56,7 +70,7 @@ public class Dash : MonoBehaviour
 
         if (dashing == true)
         {
-            getDashDistance();
+            dash();
             Timer = StartCoroutine(TimerCoroutine(0.1f));
         }
 
