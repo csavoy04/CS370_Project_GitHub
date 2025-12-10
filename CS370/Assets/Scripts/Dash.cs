@@ -21,6 +21,7 @@ public class Dash : MonoBehaviour
     public Vector3 direction;
     public Vector3 dashDistance;
     public float distance = 0f;
+    Rigidbody rb;
 
     [Header("Variables")]
     float dashCooldown = 0f;
@@ -29,6 +30,9 @@ public class Dash : MonoBehaviour
     // Function that gets the player direction and sets the dash distance accordingly
     void getDashDistance()
     {
+        direction = new Vector3(Input.GetAxisRaw("Horizontal"), 1f, Input.GetAxisRaw("Vertical")).normalized;
+        rb.AddForce(direction, ForceMode.Impulse);
+        /*
         if (Physics.Raycast(transform.position, direction, 10f))
         {
             distance = (hit.distance / 10f) - 0.1f;
@@ -42,7 +46,12 @@ public class Dash : MonoBehaviour
         {
             dashDistance = (direction.z > 0) ? new Vector3(0f, 0f, (1f-distance)) : new Vector3(0f, 0f, (-1f+distance));
         }
-        transform.position += dashDistance;
+        transform.position += dashDistance; */
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
