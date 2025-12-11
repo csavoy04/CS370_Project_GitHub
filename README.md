@@ -15,6 +15,10 @@
 	your party looks? No worries! In Journey22 you can play how YOU like by swapping out party
 	members to your liking!
 
+https://github.com/user-attachments/assets/20384527-2373-44ff-b373-4db828961eb9
+
+
+
 		 Delve deep into the complex combat with many unique and fun moves to utilize the many
 	stats, so get ready to plan out your attack strategy!
 
