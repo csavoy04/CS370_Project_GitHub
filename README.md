@@ -1,3 +1,32 @@
+# Journey22
+**The next big 2.5D RPG**
+
+	## EXPLORE
+		Explore 4 worlds with 3 Unique themes, frollik through the planes of worlds 1 and 2,
+	shiver in the cold expanse of world 3, and siege world 4 with it's magnificient castle.
+
+		On your adventures you must battle enemies to strengthen your team and hone your skills
+	as an adventurer in the Journey22 world. Stretch your brain with mind melting puzzles, or 
+	maybe even chat with the local blacksmith who seems to be at every step of your journey.
+
+	## BATTLE
+		You aren't the only one traversing the uniqu landscape of Journey22. Prepare youre party
+	for battle by beating easy foes before moving onto more challanging enemies. Don't like how
+	your party looks? No worries! In Journey22 you can play how YOU like by swapping out party
+	members to your liking!
+
+		 Delve deep into the complex combat with many unique and fun moves to utilize the many
+	stats, so get ready to plan out your attack strategy!
+
+	**So what are you waiting for? Get ready to jump into the amazing world of Journey22!**
+	
+
+
+
+
+
+
+
 # CS370 Project Read Me
 
 **[Progress: Workshopping/MVP]**
